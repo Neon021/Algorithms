@@ -32,10 +32,6 @@ public class Algorithms
                 return n + 1;
             }
         }
-        public static void Main()
-        {
-            Console.WriteLine(ack(1, 2));
-        }
     }
 
 
