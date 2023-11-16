@@ -819,4 +819,77 @@ public class Algorithms
 
         return 0;
     }
+
+
+
+
+
+    //LEETCODE
+
+    //Recursive CanJump
+    //First check the number in the given index
+    //If it does not exceed the length of the nums
+    //Send the elements of the array starting from the element we jumped to
+    //Repeat this procces until the element is bigger then the size
+
+    //public static bool CanJump(int[] nums)
+    //{
+    //    int size = nums.Length;
+    //    int element = nums.ElementAt(0);
+
+    //    if (element < size)
+    //    {
+    //        CanJump(nums.ToList().TakeLast(size - element).ToArray());
+    //    }
+
+    //    return element == nums.ElementAt(size - 1);
+    //}
+
+    public static bool CanJump(int[] nums)
+    {
+        int maxReach = 0; // Initialize the maximum reachable position
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (i > maxReach)
+            {
+                return false; // Cannot reach the end
+            }
+
+            maxReach = Math.Max(maxReach, i + nums[i]); // Update maxReach
+        }
+
+        return true; // If the loop completes, it's possible to reach the end
+    }
+
+
+
+
+
+
+
+
+
+
+    //public static string FindDifferentBinaryString(string[] nums)
+    //{
+    //    int n = nums.Length;
+    //    var possible = Enumerable.Range(0, n + 1).Select(i => Convert.ToString(i, 2).PadLeft(n, '0')).ToHashSet();
+    //    foreach (var s in nums)
+    //        possible.Remove(s);
+    //    return possible.First();
+    //}
+
+    public static string FindDifferentBinaryString(string[] nums)
+    {
+        int baseLength = nums.Length;
+        char[] result = new char[baseLength];
+
+        for (int i = 0; i < baseLength; i++)
+        {
+            result[i] = nums[i][i] == '0' ? '1' : '0';
+        }
+
+        return new string(result);
+    }
 }
