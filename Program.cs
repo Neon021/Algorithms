@@ -2,26 +2,151 @@
 {
     public static void Main(string[] args)
     {
-        int[] numbers = { 5, 1, 92, 2828213, 2835, 8235, 23, 25, 823, 12, 9 };
-        BubbleSort(numbers);
-        foreach (int number in numbers)
+        LinkedList<string> list = new();
+
+        Node<string> a = new("aaa");
+        Node<string> b = new("bbb");
+        Node<string> c = new("ccc");
+        Node<string> d = new("ddd");
+        Node<string> e = new("eee");
+
+        list.AddFirst(a);
+        list.AddLast(b);
+        list.AddLast(c);
+        list.AddLast(d);
+        list.AddLast(e);
+        list.AddLast(new("zzzz"));
+        list.AddAfter(new("ffff"), c);
+
+        list.Traverse();
+    }
+
+    public class Node<T>
+    {
+        public T Data { get; set; }
+        public Node<T> Next { get; internal set; }
+
+        public Node(T data)
         {
-            Console.WriteLine(number);
+            this.Data = data;
         }
     }
 
-    public static void BubbleSort(int[] numbers)
+    public class LinkedList<T>
     {
-        for(int i = 0; i < numbers.Length; i++)
-        {
-            for(int j = 0; j < numbers.Length - 1 - i; j++)
-            {
-                if (numbers[j] > numbers[j + 1])
-                {
-                    (numbers[j + 1], numbers[j]) = (numbers[j], numbers[j + 1]);
-                }
+        public Node<T> First { get; private set; }
+        public Node<T> Last { get; private set; }
+        public int Count { get; private set; }
 
+        public LinkedList()
+        {
+            this.First = null;
+            this.Last = null;
+        }
+
+        public void AddFirst(Node<T> newNode)
+        {
+            if (this.First == null)
+            {
+                this.First = newNode;
+                this.Last = newNode;
             }
+            else
+            {
+                newNode.Next = this.First;
+                this.First = newNode;
+            }
+            this.Count++;
+        }
+
+        public void AddLast(Node<T> newNode)
+        {
+            if (this.First == null)
+            {
+                this.First = newNode;
+                this.Last = newNode;
+            }
+            else
+            {
+                this.Last.Next = newNode;
+                Last = newNode;
+            }
+            this.Count++;
+        }
+
+        public void AddAfter(Node<T> newNode, Node<T> existingNode)
+        {
+            if (this.Last == existingNode)
+            {
+                Last = newNode;
+            }
+            newNode.Next = existingNode.Next;
+            existingNode.Next = newNode;
+            this.Count++;
+        }
+
+        public Node<T> Find(T target)
+        {
+            Node<T> currentNode = First;
+
+            while (currentNode != null && !currentNode.Data.Equals(target))
+            {
+                currentNode = currentNode.Next;
+            }
+
+            return currentNode;
+        }
+
+        public void RemoveFirst()
+        {
+            if (First == null || this.Count == 0)
+                return;
+
+            First = First.Next;
+            this.Count--;
+        }
+
+        public void Remove(Node<T> nodeToRemove)
+        {
+            if (First == null || this.Count == 0)
+            {
+                return;
+            }
+            if (this.First == nodeToRemove)
+            {
+                this.RemoveFirst();
+                return;
+            }
+
+            Node<T> previous = First;
+            Node<T> current = previous.Next;
+
+            while (current != null && current != nodeToRemove)
+            {
+                previous = current;
+                current = previous.Next;
+            }
+
+            if (current != null)
+            {
+                previous.Next = current.Next;
+                this.Count--;
+            }
+        }
+
+        public void Traverse()
+        {
+            Console.WriteLine("First:" + First.Data);
+            Console.WriteLine("\nLast:" + Last.Data);
+
+            Node<T> node = this.First;
+
+            while (node.Next is not null)
+            {
+                Console.WriteLine(node.Data);
+                node = node.Next;
+            }
+            Console.WriteLine(node.Data);
         }
     }
 }
