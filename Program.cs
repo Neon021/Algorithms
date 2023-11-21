@@ -2,31 +2,26 @@
 {
     public static void Main(string[] args)
     {
-        bool[] bools = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, };
-        Console.WriteLine(TwoCrystalBalls(bools));
+        int[] numbers = { 5, 1, 92, 2828213, 2835, 8235, 23, 25, 823, 12, 9 };
+        BubbleSort(numbers);
+        foreach (int number in numbers)
+        {
+            Console.WriteLine(number);
+        }
     }
 
-    public static int TwoCrystalBalls(bool[] breaks)
+    public static void BubbleSort(int[] numbers)
     {
-        double jmpAmount = Math.Floor(Math.Sqrt(breaks.Length));
-
-        double i = jmpAmount;
-        for (; i < breaks.Length; i += jmpAmount)
+        for(int i = 0; i < numbers.Length; i++)
         {
-            if (breaks[(int)i])
+            for(int j = 0; j < numbers.Length - 1 - i; j++)
             {
-                break;
+                if (numbers[j] > numbers[j + 1])
+                {
+                    (numbers[j + 1], numbers[j]) = (numbers[j], numbers[j + 1]);
+                }
+
             }
         }
-
-        i -= jmpAmount;
-        for (int j = 0; j <= jmpAmount && i < breaks.Length; ++j, ++i)
-        {
-            if (breaks[(int)i])
-            {
-                return (int)i;
-            }
-        }
-        return -1;
     }
 }
