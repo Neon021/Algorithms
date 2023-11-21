@@ -1,24 +1,10 @@
-﻿public class Codewars
+﻿using System.ComponentModel;
+
+public class Codewars
 {
     public static void Main(string[] args)
     {
-        LinkedList<string> list = new();
 
-        Node<string> a = new("aaa");
-        Node<string> b = new("bbb");
-        Node<string> c = new("ccc");
-        Node<string> d = new("ddd");
-        Node<string> e = new("eee");
-
-        list.AddFirst(a);
-        list.AddLast(b);
-        list.AddLast(c);
-        list.AddLast(d);
-        list.AddLast(e);
-        list.AddLast(new("zzzz"));
-        list.AddAfter(new("ffff"), c);
-
-        list.Traverse();
     }
 
     public class Node<T>
@@ -31,122 +17,57 @@
             this.Data = data;
         }
     }
-
-    public class LinkedList<T>
+    public class Queue<T>
     {
-        public Node<T> First { get; private set; }
-        public Node<T> Last { get; private set; }
-        public int Count { get; private set; }
+        public int Length { get; internal set; }
+        private Node<T>? Head { get; set; }
+        private Node<T>? Tail { get; set; }
 
-        public LinkedList()
+        public Queue()
         {
-            this.First = null;
-            this.Last = null;
+            this.Head = this.Tail = null;
+            this.Length = 0;
         }
 
-        public void AddFirst(Node<T> newNode)
+        public void Enqueue(T data)
         {
-            if (this.First == null)
+            Node<T> node = new(data);
+            this.Length++;
+            if (this.Tail is null)
             {
-                this.First = newNode;
-                this.Last = newNode;
-            }
-            else
-            {
-                newNode.Next = this.First;
-                this.First = newNode;
-            }
-            this.Count++;
-        }
-
-        public void AddLast(Node<T> newNode)
-        {
-            if (this.First == null)
-            {
-                this.First = newNode;
-                this.Last = newNode;
-            }
-            else
-            {
-                this.Last.Next = newNode;
-                Last = newNode;
-            }
-            this.Count++;
-        }
-
-        public void AddAfter(Node<T> newNode, Node<T> existingNode)
-        {
-            if (this.Last == existingNode)
-            {
-                Last = newNode;
-            }
-            newNode.Next = existingNode.Next;
-            existingNode.Next = newNode;
-            this.Count++;
-        }
-
-        public Node<T> Find(T target)
-        {
-            Node<T> currentNode = First;
-
-            while (currentNode != null && !currentNode.Data.Equals(target))
-            {
-                currentNode = currentNode.Next;
-            }
-
-            return currentNode;
-        }
-
-        public void RemoveFirst()
-        {
-            if (First == null || this.Count == 0)
-                return;
-
-            First = First.Next;
-            this.Count--;
-        }
-
-        public void Remove(Node<T> nodeToRemove)
-        {
-            if (First == null || this.Count == 0)
-            {
-                return;
-            }
-            if (this.First == nodeToRemove)
-            {
-                this.RemoveFirst();
+                this.Tail = this.Head = node;
                 return;
             }
 
-            Node<T> previous = First;
-            Node<T> current = previous.Next;
-
-            while (current != null && current != nodeToRemove)
+            this.Tail.Next = node;
+            this.Tail = node;
+        }
+        public T? Deque<T>() where T : class
+        {
+            if (this.Head == null)
             {
-                previous = current;
-                current = previous.Next;
+                return null;
             }
 
-            if (current != null)
+            this.Length--;
+
+            var head = this.Head;
+            this.Head = this.Head.Next;
+
+            // free
+            head.Next = null;
+
+            if (this.Length == 0)
             {
-                previous.Next = current.Next;
-                this.Count--;
+                this.Tail = null;
             }
+
+            return head.Data as T;
         }
 
-        public void Traverse()
+        public T? Peek<T>() where T : class
         {
-            Console.WriteLine("First:" + First.Data);
-            Console.WriteLine("\nLast:" + Last.Data);
-
-            Node<T> node = this.First;
-
-            while (node.Next is not null)
-            {
-                Console.WriteLine(node.Data);
-                node = node.Next;
-            }
-            Console.WriteLine(node.Data);
+            return this.Head is not null ? this.Head.Data as T : null;
         }
     }
 }
