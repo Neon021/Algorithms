@@ -2,6 +2,76 @@
 
 public class Algorithms
 {
+    //Front End Masters The Primeagen(THE MYTH THE LEGEND HIMSELF) Algorithms course
+
+    //Search algorithms
+    public static bool BinarySearch(int[] haystack, int needle)
+    {
+        int low = 0;
+        int high = haystack.Length;
+        do
+        {
+            int index = low + ((high - low) / 2);
+            int value = haystack[index];
+
+            if (value == needle)
+                return true;
+            else if (value > needle)
+                high = index;
+            else
+                low = index + 1;
+
+        } while (low < high);
+
+        return false;
+    }
+
+    public static int TwoCrystalBalls(bool[] breaks)
+    {
+        double jmpAmount = Math.Floor(Math.Sqrt(breaks.Length));
+
+        double i = jmpAmount;
+        for (; i < breaks.Length; i += jmpAmount)
+        {
+            if (breaks[(int)i])
+            {
+                break;
+            }
+        }
+
+        i -= jmpAmount;
+        for (int j = 0; j <= jmpAmount && i < breaks.Length; ++j, ++i)
+        {
+            if (breaks[(int)i])
+            {
+                return (int)i;
+            }
+        }
+        return -1;
+    }
+
+
+
+    //Sort algorithms
+    public static void BubbleSort(int[] numbers)
+    {
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            for (int j = 0; j < numbers.Length - 1 - i; j++)
+            {
+                if (numbers[j] > numbers[j + 1])
+                {
+                    (numbers[j + 1], numbers[j]) = (numbers[j], numbers[j + 1]);
+                }
+
+            }
+        }
+    }
+
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////
     public static bool IsPangram(string input)
     {
         string alphabet = "abcdefghijklmnopqrstuvwxyz";
