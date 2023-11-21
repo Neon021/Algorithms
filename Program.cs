@@ -2,28 +2,31 @@
 {
     public static void Main(string[] args)
     {
-        int[] haystack = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 };
-        Console.WriteLine(BinarySearch(haystack, 10));
+        bool[] bools = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, };
+        Console.WriteLine(TwoCrystalBalls(bools));
     }
 
-    public static bool BinarySearch(int[] haystack, int needle)
+    public static int TwoCrystalBalls(bool[] breaks)
     {
-        int low = 0;
-        int high = haystack.Length;
-        do
+        double jmpAmount = Math.Floor(Math.Sqrt(breaks.Length));
+
+        double i = jmpAmount;
+        for (; i < breaks.Length; i += jmpAmount)
         {
-            int index = low + ((high - low) / 2);
-            int value = haystack[index];
+            if (breaks[(int)i])
+            {
+                break;
+            }
+        }
 
-            if (value == needle)
-                return true;
-            else if(value > needle) 
-                high = index;
-            else
-                low = index + 1;
-
-        } while (low < high);
-
-        return false;
+        i -= jmpAmount;
+        for (int j = 0; j <= jmpAmount && i < breaks.Length; ++j, ++i)
+        {
+            if (breaks[(int)i])
+            {
+                return (int)i;
+            }
+        }
+        return -1;
     }
 }
