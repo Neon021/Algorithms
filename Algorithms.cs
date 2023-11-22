@@ -284,6 +284,36 @@ public class Algorithms
     }
 
 
+    //I love Enumerable <3
+    public static List<string> FizzBuzz(int n)
+    {
+        return Enumerable
+            .Range(1, n)
+            .Aggregate(new List<string>(),
+            (accumulator, element) =>
+            {
+                if ((element % 3) == 0 && (element % 5) == 0)
+                {
+                    accumulator.Add("FizzBuzz");
+                }
+                else if (element % 3 == 0)
+                {
+                    accumulator.Add("Fizz");
+                }
+                else if (element % 5 == 0)
+                {
+                    accumulator.Add("Buzz");
+                }
+                else
+                {
+                    accumulator.Add(element.ToString());
+                }
+
+                return accumulator;
+            });
+    }
+
+
     //ACKERMANN'S FUNCTION:
 
     class GFG
