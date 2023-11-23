@@ -2,15 +2,15 @@
 {
     public static void Main(string[] args)
     {
-        ArrayList<int> arrayList = new(3);
-        arrayList.Push(1);
-        arrayList.Push(2);
-        arrayList.Push(3);
-        arrayList.Push(4);
-        arrayList.Push(5);
-        arrayList.Push(6);
-        arrayList.Enqueue(7);
-        arrayList.Dequeue();
+        ArrayList<string> arrayList = new(3);
+        arrayList.Push("Furkan");
+        arrayList.Push("Bilal");
+        arrayList.Push("AKA");
+        arrayList.Push("Adrian");
+        arrayList.Push("Is");
+        arrayList.Push("The Greatest");
+        arrayList.Enqueue("Mr. ");
+        //arrayList.Dequeue();
         Console.WriteLine(arrayList.Get(0));
         Console.WriteLine(arrayList.Get(1));
         Console.WriteLine(arrayList.Get(2));
