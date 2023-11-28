@@ -2,94 +2,23 @@
 {
     public static void Main(string[] args)
     {
-        ArrayList<string> arrayList = new(3);
-        arrayList.Push("Furkan");
-        arrayList.Push("Bilal");
-        arrayList.Push("AKA");
-        arrayList.Push("Adrian");
-        arrayList.Push("Is");
-        arrayList.Push("The Greatest");
-        arrayList.Enqueue("Mr. ");
-        //arrayList.Dequeue();
-        Console.WriteLine(arrayList.Get(0));
-        Console.WriteLine(arrayList.Get(1));
-        Console.WriteLine(arrayList.Get(2));
-        Console.WriteLine(arrayList.Get(3));
-        Console.WriteLine(arrayList.Get(4));
-        Console.WriteLine(arrayList.Get(5));
-        Console.WriteLine(arrayList.Get(6));
+        Console.WriteLine(PartUp(1000, 1));
+        Console.WriteLine(PartUp(1000, 2));
+        Console.WriteLine(PartUp(1000, 3));
+        Console.WriteLine(PartUp(1000, 4));
     }
 
-    public class ArrayList<T>
+    //Write an alogirhtm that'll output the how many time you can parition m objects into groups of maximum of n elements
+    //n and m are real positive numbers
+    public static int PartUp(int n, int m)
     {
-        public int Length { get; set; } = 0;
-        public int Capacity { get; set; }
-        private T[] Array { get; set; }
+        if (n == 0 || m == 1)
+            return 1;
 
-        public ArrayList(int Capacity)
-        {
-            this.Capacity = Capacity;
-            Array = new T[Capacity];
-        }
+        else if (m == 0 || n < 0)
+            return 0;
 
-        //index <= length - 1???
-        public T? Get(int index) => (Length > 0) && (index >= 0 && index < Length) ? Array[index] : default(T);
-
-        public void Push(T value)
-        {
-            if (Length + 1 <= Capacity)
-            {
-                this.Array[Length] = value;
-                Length++;
-            }
-            else
-            {
-                T[] newArray = new T[Capacity * 2];
-                for (int i = 0; i < this.Length; i++)
-                {
-                    newArray[i] = this.Array[i];
-                }
-                Capacity *= 2;
-                newArray[Length] = value;
-                Length += 1;
-                this.Array = newArray;
-            }
-        }
-
-        public T? Pop() => Length > 0 ? this.Array[Length - 1] : default(T);
-
-        public void Enqueue(T value)
-        {
-            if (Length + 1 <= Capacity)
-            {
-                for (int i = Length - 1; i >= 0; i--)
-                {
-                    this.Array[i + 1] = this.Array[i];
-                }
-                this.Array[0] = value;
-            }
-            else
-            {
-                T[] newArray = new T[Capacity * 2];
-                for (int i = Length - 1; i >= 0; i--)
-                {
-                    newArray[i + 1] = this.Array[i];
-                }
-                Capacity *= 2;
-                newArray[0] = value;
-                Length += 1;
-                this.Array = newArray;
-            }
-        }
-
-        public void Dequeue()
-        {
-            for (int i = 0; i < Length - 1; i++)
-            {
-                this.Array[i] = this.Array[i + 1];
-            }
-            Length--;
-            this.Array[Length] = default(T);
-        }
+        else
+            return (n - m) + PartUp(n, m - 1);
     }
 }
