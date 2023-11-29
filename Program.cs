@@ -2,96 +2,33 @@
 {
     public static void Main(string[] args)
     {
-        string[] maze = {
-            "#####",
-            "#S  #",
-            "# # #",
-            "#   #",
-            "#####"
-        };
+    }
 
-        Point start = new() { x = 1, y = 1 };
-        Point end = new() { x = 3, y = 3 };
+    public record Node<T>
+    {
+        public T Data { get; set; }
+        public Node<T> Left { get; set; }
+        public Node<T> Right { get; set; }
 
-        List<Point> solution = MazeSolver.Solve(maze, "#", start, end);
-
-        Console.WriteLine("Path:");
-        foreach (Point point in solution)
+        public Node(T data, Node<T> left, Node<T> right)
         {
-            Console.WriteLine($"({point.x}, {point.y})");
+            Data = data;
+            Left = left;
+            Right = right;
         }
     }
 
-    public class Point
+    public class BinaryTree<T>
     {
-        public int x;
-        public int y;
-    }
-
-    public class MazeSolver
-    {
-        private static readonly int[][] dir =
+        public T[] Nodes { get; set; }
+        public bool GenerateNode(T input)
         {
-        new int[] { -1, 0 },
-        new int[] { 1, 0 },
-        new int[] { 0, -1 },
-        new int[] { 0, 1 }
-    };
-
-        private static bool Walk(string[] maze, string wall, Point curr, Point end, bool[][] seen, List<Point> path)
-        {
-            if (curr.x < 0 || curr.x >= maze[0].Length ||
-                curr.y < 0 || curr.y >= maze.Length)
+            if (input != null)
             {
-                return false;
-            }
-
-            if (maze[curr.y][curr.x].ToString() == wall)
-            {
-                return false;
-            }
-
-            if (curr.x == end.x && curr.y == end.y)
-            {
+                Node<T> node = new(input, default, default);
                 return true;
             }
-
-            if (seen[curr.y][curr.x])
-            {
-                return false;
-            }
-
-            seen[curr.y][curr.x] = true;
-            path.Add(curr);
-
-            foreach (int[] d in dir)
-            {
-                int x = d[0];
-                int y = d[1];
-                if (Walk(maze, wall, new Point { x = curr.x + x, y = curr.y + y }, end, seen, path))
-                {
-                    return true;
-                }
-            }
-
-            path.RemoveAt(path.Count - 1);
-
             return false;
-        }
-
-        public static List<Point> Solve(string[] maze, string wall, Point start, Point end)
-        {
-            bool[][] seen = new bool[maze.Length][];
-            List<Point> path = new();
-
-            for (int i = 0; i < maze.Length; ++i)
-            {
-                seen[i] = new bool[maze[0].Length];
-            }
-
-            Walk(maze, wall, start, end, seen, path);
-
-            return path;
         }
     }
 
