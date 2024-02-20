@@ -21,8 +21,14 @@ public class Codewars
         //for (int i = 1; i < nums.Length; i++)
         //{
         //    if (nums[i] != nums[i - 1] + 1) { res = i; }
-        //}
+        //} :))<3
         //return res;
+
+        //int length = nums.Length;
+        //int expectedSum = length * (length + 1) / 2;
+        //int actualSum = nums.Sum();
+
+        //return expectedSum - actualSum;
 
         return
      Enumerable
