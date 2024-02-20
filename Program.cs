@@ -1,35 +1,33 @@
-﻿public class Codewars
+﻿using System.Reflection;
+
+public class Codewars
 {
     public static void Main(string[] args)
     {
+        int[] nums = { 0, 1 };
+        MissingNumber(nums);
     }
-
-    public record Node<T>
+    //Given an array nums containing n distinct numbers in the range[0, n],
+    //return the only number in the range that is missing from the array.
+    public static int MissingNumber(int[] nums)
     {
-        public T Data { get; set; }
-        public Node<T> Left { get; set; }
-        public Node<T> Right { get; set; }
+        //Array.Sort(nums);
+        //int res = 0;
+        //if (nums[^1] != nums.Length)
+        //{
+        //    res = nums.Length;
+        //    return res;
+        //}
+        //for (int i = 1; i < nums.Length; i++)
+        //{
+        //    if (nums[i] != nums[i - 1] + 1) { res = i; }
+        //}
+        //return res;
 
-        public Node(T data, Node<T> left, Node<T> right)
-        {
-            Data = data;
-            Left = left;
-            Right = right;
-        }
+        return
+     Enumerable
+     .Range(0, nums.Length + 1)
+     .Except(nums)
+     .FirstOrDefault();
     }
-
-    public class BinaryTree<T>
-    {
-        public T[] Nodes { get; set; }
-        public bool GenerateNode(T input)
-        {
-            if (input != null)
-            {
-                Node<T> node = new(input, default, default);
-                return true;
-            }
-            return false;
-        }
-    }
-
 }
