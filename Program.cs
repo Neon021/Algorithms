@@ -1,46 +1,25 @@
-﻿using System.Reflection;
-
-public class Codewars
+﻿public class Codewars
 {
     public static void Main(string[] args)
     {
-        string[] strs = { "eat", "tea", "tan", "ate", "nat", "bat" };
-        GroupAnagrams(strs);
     }
-    public static IList<IList<string>> GroupAnagrams(string[] strs)
+    public int[] ProductExceptSelf(int[] nums)
     {
-        List<IList<string>> anagramGroup = new();
+        List<int> answer = new List<int>();
 
-        for (int i = 0; i < strs.Length; i++)
+        foreach (int i in nums)
         {
-            int internalIndex = 0;
-            List<string> anagrams = new();
-            while (internalIndex < strs.Length)
+            List<int> list = new List<int> { i };
+            var remainingElements = nums.Except(list);
+
+            int product = 1;
+            foreach (int element in remainingElements)
             {
-                if (IsAnagram(strs[i], strs[internalIndex]) && i != internalIndex)
-                {
-                    anagrams.Add(strs[internalIndex]);
-                    strs[internalIndex] = string.Empty;
-                }
-                internalIndex++;
+                product *= element;
             }
-            anagrams.Add(strs[i]);
-            anagramGroup.Add(anagrams);
-        }
-        return anagramGroup;
-    }
-    public static bool IsAnagram(string s, string t)
-    {
-        if (s.Length != t.Length)
-        {
-            return false;
-        }
-        char[] charArray1 = s.ToCharArray();
-        char[] charArray2 = t.ToCharArray();
 
-        Array.Sort(charArray1);
-        Array.Sort(charArray2);
-
-        return Enumerable.SequenceEqual(charArray1, charArray2);
+            answer.Add(product);
+        }
+        return answer.ToArray();
     }
 }
