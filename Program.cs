@@ -4,36 +4,43 @@ public class Codewars
 {
     public static void Main(string[] args)
     {
-        int[] nums = { 0, 1 };
-        MissingNumber(nums);
+        string[] strs = { "eat", "tea", "tan", "ate", "nat", "bat" };
+        GroupAnagrams(strs);
     }
-    //Given an array nums containing n distinct numbers in the range[0, n],
-    //return the only number in the range that is missing from the array.
-    public static int MissingNumber(int[] nums)
+    public static IList<IList<string>> GroupAnagrams(string[] strs)
     {
-        //Array.Sort(nums);
-        //int res = 0;
-        //if (nums[^1] != nums.Length)
-        //{
-        //    res = nums.Length;
-        //    return res;
-        //}
-        //for (int i = 1; i < nums.Length; i++)
-        //{
-        //    if (nums[i] != nums[i - 1] + 1) { res = i; }
-        //} :))<3
-        //return res;
+        List<IList<string>> anagramGroup = new();
 
-        //int length = nums.Length;
-        //int expectedSum = length * (length + 1) / 2;
-        //int actualSum = nums.Sum();
+        for (int i = 0; i < strs.Length; i++)
+        {
+            int internalIndex = 0;
+            List<string> anagrams = new();
+            while (internalIndex < strs.Length)
+            {
+                if (IsAnagram(strs[i], strs[internalIndex]) && i != internalIndex)
+                {
+                    anagrams.Add(strs[internalIndex]);
+                    strs[internalIndex] = string.Empty;
+                }
+                internalIndex++;
+            }
+            anagrams.Add(strs[i]);
+            anagramGroup.Add(anagrams);
+        }
+        return anagramGroup;
+    }
+    public static bool IsAnagram(string s, string t)
+    {
+        if (s.Length != t.Length)
+        {
+            return false;
+        }
+        char[] charArray1 = s.ToCharArray();
+        char[] charArray2 = t.ToCharArray();
 
-        //return expectedSum - actualSum;
+        Array.Sort(charArray1);
+        Array.Sort(charArray2);
 
-        return
-     Enumerable
-     .Range(0, nums.Length + 1)
-     .Except(nums)
-     .FirstOrDefault();
+        return Enumerable.SequenceEqual(charArray1, charArray2);
     }
 }
