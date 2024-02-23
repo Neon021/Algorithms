@@ -2,6 +2,7 @@
 
 public class Algorithms
 {
+    #region Last Algorithms Course
     //Front End Masters The Primeagen(THE MYTH THE LEGEND HIMSELF) Algorithms course
 
     //Search algorithms
@@ -550,21 +551,9 @@ public class Algorithms
 
 
     //////////////////////////////////////////////////////////////////////////////////
+    #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #region NOVICE 
     public static bool IsPangram(string input)
     {
         string alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -940,7 +929,9 @@ public class Algorithms
         }
     }
 
+    #endregion
 
+    #region MIND EXPANDERS
 
     //Finding The Maximum Sum Of Subarrays -- Kadane's Algorithm
 
@@ -978,41 +969,11 @@ public class Algorithms
 
         return maxSoFar;
     }
+    #endregion
 
 
 
-
-
-
-
-
-
-
-
-
-    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //Algorithms following are from Codewars
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #region CODEWARS
     public static string Likes(string[] names)
     {
         int count = names.Length;
@@ -1412,13 +1373,45 @@ public class Algorithms
 
         return 0;
     }
+    #endregion 
 
+    #region LEETCODE
+    #region Easy
 
+    #region MissingNumber
+    public static int MissingNumber(int[] nums)
+    {
+        //Array.Sort(nums);
+        //int res = 0;
+        //if (nums[^1] != nums.Length)
+        //{
+        //    res = nums.Length;
+        //    return res;
+        //}
+        //for (int i = 1; i < nums.Length; i++)
+        //{
+        //    if (nums[i] != nums[i - 1] + 1) { res = i; }
+        //}
+        //return res;
 
+        //int length = nums.Length;
+        //int expectedSum = length * (length + 1) / 2;
+        //int actualSum = nums.Sum();
 
+        //return expectedSum - actualSum;
 
-    //LEETCODE
+        return
+     Enumerable
+     .Range(0, nums.Length + 1)
+     .Except(nums)
+     .FirstOrDefault();
+    }
+    #endregion
 
+    #endregion
+    #region Medium
+
+    #region CanJump
     //Recursive CanJump
     //First check the number in the given index
     //If it does not exceed the length of the nums
@@ -1454,16 +1447,8 @@ public class Algorithms
 
         return true; // If the loop completes, it's possible to reach the end
     }
-
-
-
-
-
-
-
-
-
-
+    #endregion
+    #region FindDifferentBinaryString
     //public static string FindDifferentBinaryString(string[] nums)
     //{
     //    int n = nums.Length;
@@ -1485,4 +1470,23 @@ public class Algorithms
 
         return new string(result);
     }
+    #endregion
+    #region RangeBitwiseAnd
+    public int RangeBitwiseAnd(int left, int right)
+    {
+        int shift = 0;
+
+        while (left < right)
+        {
+            left >>= 1;
+            right >>= 1;
+            shift++;
+        }
+
+        return left << shift;
+    }
+    #endregion
+
+    #endregion
+    #endregion
 }
