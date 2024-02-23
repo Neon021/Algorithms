@@ -1373,11 +1373,33 @@ public class Algorithms
 
         return 0;
     }
-    #endregion 
+    #endregion
 
     #region LEETCODE
     #region Easy
 
+    #region FindJudge
+    public int FindJudge(int n, int[][] trust)
+    {
+        int[] right = new int[n + 1];
+        int[] left = new int[n + 1];
+
+        foreach (int[] array in trust)
+        {
+            right[array[1]]++;
+            left[array[0]]++;
+        }
+
+        for (int i = 1; i <= n; i++)
+        {
+            if (right[i] == n - 1 && left[i] == 0)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    #endregion
     #region MissingNumber
     public static int MissingNumber(int[] nums)
     {
