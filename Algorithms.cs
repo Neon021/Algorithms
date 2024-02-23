@@ -933,6 +933,7 @@ public class Algorithms
 
     #region MIND EXPANDERS
 
+    #region Kadane's Algorihtm
     //Finding The Maximum Sum Of Subarrays -- Kadane's Algorithm
 
 
@@ -969,6 +970,68 @@ public class Algorithms
 
         return maxSoFar;
     }
+    #endregion
+
+    #region CheapestFlightsWithinKStops
+    public int FindCheapestPrice(int n, int[][] flights, int src, int dst, int k)
+    {
+        PriorityQueue<(int city, int stops, int cost), int> nodes = new();
+        Dictionary<int, List<(int city, int price)>> edges = new();
+
+        foreach (var flight in flights)
+        {
+            if (!edges.ContainsKey(flight[0]))
+            {
+                edges[flight[0]] = new();
+            }
+            edges[flight[0]].Add((flight[1], flight[2]));
+        }
+
+        int[][] djikstras = new int[n][];
+        for (int i = 0; i < n; i++)
+        {
+            djikstras[i] = new int[k + 2];
+            Array.Fill(djikstras[i], -1);
+        }
+
+        nodes.Enqueue((src, 0, 0), 0);
+
+        while (nodes.Count > 0)
+        {
+            (int city, int stops, int cost) curr = nodes.Dequeue();
+
+            if (curr.city == dst)
+            {
+                return curr.cost;
+            }
+
+            if (!edges.ContainsKey(curr.city)) continue;
+
+            foreach (var flight in edges[curr.city])
+            {
+                int city = flight.city;
+                int total = curr.cost + flight.price;
+
+                if (city != dst && curr.stops + 1 > k) continue;
+
+                bool passed = true;
+                for (int i = curr.stops + 1; i > -1; i--)
+                {
+                    if (djikstras[city][i] != -1 && djikstras[city][i] <= total)
+                    { passed = false; break; }
+
+                }
+                if (!passed)
+                    continue;
+
+                djikstras[city][curr.stops + 1] = total;
+                nodes.Enqueue((city, curr.stops + 1, total), total);
+            }
+        }
+        return -1;
+    }
+    #endregion
+
     #endregion
 
 
@@ -1506,6 +1569,65 @@ public class Algorithms
         }
 
         return left << shift;
+    }
+    #endregion
+    #region CheapestFlightsWithinKStops
+    public int FindCheapestPrice1(int n, int[][] flights, int src, int dst, int k)
+    {
+        PriorityQueue<(int city, int stops, int cost), int> nodes = new();
+        Dictionary<int, List<(int city, int price)>> edges = new();
+
+        foreach (var flight in flights)
+        {
+            if (!edges.ContainsKey(flight[0]))
+            {
+                edges[flight[0]] = new();
+            }
+            edges[flight[0]].Add((flight[1], flight[2]));
+        }
+
+        int[][] djikstras = new int[n][];
+        for (int i = 0; i < n; i++)
+        {
+            djikstras[i] = new int[k + 2];
+            Array.Fill(djikstras[i], -1);
+        }
+
+        nodes.Enqueue((src, 0, 0), 0);
+
+        while (nodes.Count > 0)
+        {
+            (int city, int stops, int cost) curr = nodes.Dequeue();
+
+            if (curr.city == dst)
+            {
+                return curr.cost;
+            }
+
+            if (!edges.ContainsKey(curr.city)) continue;
+
+            foreach (var flight in edges[curr.city])
+            {
+                int city = flight.city;
+                int total = curr.cost + flight.price;
+
+                if (city != dst && curr.stops + 1 > k) continue;
+
+                bool passed = true;
+                for (int i = curr.stops + 1; i > -1; i--)
+                {
+                    if (djikstras[city][i] != -1 && djikstras[city][i] <= total)
+                    { passed = false; break; }
+
+                }
+                if (!passed)
+                    continue;
+
+                djikstras[city][curr.stops + 1] = total;
+                nodes.Enqueue((city, curr.stops + 1, total), total);
+            }
+        }
+        return -1;
     }
     #endregion
 
