@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using static Codewars;
 
 public class Algorithms
 {
@@ -286,7 +287,7 @@ public class Algorithms
     }
 
 
-//Stack
+    //Stack
 
     public class Stack<T>
     {
@@ -1525,6 +1526,40 @@ public class Algorithms
         //return result;
     }
     #endregion
+    #region IsSameTree
+    public class TreeNode
+    {
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
+        public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+        {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+    public class Solution
+    {
+        public bool IsSameTree(TreeNode p, TreeNode q)
+        {
+            // Base case: if both nodes are null, they are equal
+            if (p == null && q == null)
+            {
+                return true;
+            }
+
+            // If one of the nodes is null and the other is not, they are not equal
+            if (p == null || q == null)
+            {
+                return false;
+            }
+
+            // Check the current node values and recursively check left and right subtrees
+            return (p.val == q.val) && IsSameTree(p.left, q.left) && IsSameTree(p.right, q.right);
+        }
+    }
+    #endregion
     #endregion
     #region Medium
 
@@ -1707,6 +1742,29 @@ public class Algorithms
 
 
         return Array.Empty<int>();
+    }
+    #endregion
+    #region LengthOfLongestSubstring
+    public static int LengthOfLongestSubstring(string s)
+    {
+        HashSet<char> list = new();
+        int left = 0, right = 0, maxLength = 0;
+
+        while (right < s.Length)
+        {
+            if (!list.Contains(s[right]))
+            {
+                list.Add(s[right]);
+                right++;
+                maxLength = Math.Max(maxLength, list.Count);
+            }
+            else
+            {
+                list.Remove(s[left]);
+                left++;
+            }
+        }
+        return maxLength;
     }
     #endregion
     #endregion
