@@ -1847,7 +1847,7 @@ public class Algorithms
         return maxLength;
     }
     #endregion
-    #region
+    #region LongestRepeatingCharacterReplacement
     public static bool CheckInclusion(string s1, string s2)
     {
         int l = 0, r = 0, i = 0;
@@ -1918,7 +1918,38 @@ public class Algorithms
         //return true;
     }
     #endregion
+    #region MinStack
+    //public class MinStack
+    //{
+    //    private readonly Stack<KeyValuePair<int, int>> Stack = new();
 
+    //    public MinStack()
+    //    {
+    //    }
+
+    //    public void Push(int val)
+    //    {
+    //        int min = Stack.Count == 0 ? val : Math.Min(Stack.Peek().Value, val);
+
+    //        Stack.Push(new KeyValuePair<int, int>(val, min));
+    //    }
+
+    //    public void Pop()
+    //    {
+    //        Stack.Pop();
+    //    }
+
+    //    public int Top()
+    //    {
+    //        return Stack.Peek().Key;
+    //    }
+
+    //    public int GetMin()
+    //    {
+    //        return Stack.Peek().Value;
+    //    }
+    //}
+    #endregion
     #endregion
     #endregion
     #endregion
