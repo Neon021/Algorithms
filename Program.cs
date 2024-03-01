@@ -5,48 +5,34 @@ public class Codewars
     public static void Main(string[] args)
     {
     }
-    public bool IsValid(string s)
+    public class MinStack
     {
-        Stack<char> stack = new();
+        private readonly Stack<KeyValuePair<int, int>> Stack = new();
 
-        Dictionary<char, char> dict = new(){
-            {'(', ')'},
-            {'{', '}'},
-            {'[', ']'}
-        };
-
-        for (int i = 0; i < s.Length; i++)
+        public MinStack()
         {
-            if (dict.Keys.Contains(s[i]))
-                stack.Push(s[i]);
-            else if (stack.Count > 0 && s[i] == dict[stack.Peek()])
-                stack.Pop();
-            else
-                return false;
         }
-        return stack.Count == 0;
-        //Stack<char> stk = new();
 
-        //foreach (char c in s)
-        //{
-        //    if (c == '(' || c == '[' || c == '{')
-        //    {
-        //        stk.Push(c);
-        //    }
-        //    else if (c == ')' && (stk.Count == 0 || stk.Pop() != '('))
-        //    {
-        //        return false;
-        //    }
-        //    else if (c == ']' && (stk.Count == 0 || stk.Pop() != '['))
-        //    {
-        //        return false;
-        //    }
-        //    else if (c == '}' && (stk.Count == 0 || stk.Pop() != '{'))
-        //    {
-        //        return false;
-        //    }
+        public void Push(int val)
+        {
+            int min = Stack.Count == 0 ? val : Math.Min(Stack.Peek().Value, val);
 
-        //}
-        //return stk.Count == 0;
+            Stack.Push(new KeyValuePair<int, int>(val, min));
+        }
+
+        public void Pop()
+        {
+            Stack.Pop();
+        }
+
+        public int Top()
+        {
+            return Stack.Peek().Key;
+        }
+
+        public int GetMin()
+        {
+            return Stack.Peek().Value;
+        }
     }
 }
