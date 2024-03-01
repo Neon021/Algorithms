@@ -4,31 +4,44 @@ public class Codewars
 {
     public static void Main(string[] args)
     {
-        GenerateParenthesis(4);
+        var res = DailyTemperatures(new int[] { 73, 74, 75, 71, 69, 72, 76, 68 });
+        foreach (int i in res)
+        {
+            Console.WriteLine(i);
+        }
     }
-    public static IList<string> GenerateParenthesis(int n)
+    public static int[] DailyTemperatures(int[] temperatures)
     {
-        IList<string> result = new List<string>();
-        GenerateValidParentheses(n, n, "", result);
-        return result;
-    }
-
-    private static void GenerateValidParentheses(int openCount, int closeCount, string current, IList<string> result)
-    {
-        if (openCount == 0 && closeCount == 0)
+        Stack<int> stack = new();
+        int[] array = new int[temperatures.Length];
+        for (int i = temperatures.Length - 1; i >= 0; i--)
         {
-            result.Add(current);
-            return;
+            while (stack.Count > 0 && temperatures[stack.Peek()] <= temperatures[i])
+                stack.Pop();
+            if (stack.Count > 0)
+                array[i] = stack.Peek() - i;
+            stack.Push(i);
         }
+        return array;
+        //Dictionary<int, int> dict = new();
+        //int j = 0;
+        //for (int i = 0; i <= temperatures.Length - 1; i++)
+        //{
+        //    dict.Add(temperatures[i], 0);
+        //    while (j < i)
+        //    {
+        //        if (dict.ElementAt(j).Key < temperatures[i])
+        //        {
+        //            dict[temperatures[j]] = i - j;
+        //            j++;
+        //        }
+        //        else
+        //        {
+        //            break;
+        //        }
+        //    }
+        //}
 
-        if (openCount > 0)
-        {
-            GenerateValidParentheses(openCount - 1, closeCount, current + '(', result);
-        }
-
-        if (closeCount > openCount)
-        {
-            GenerateValidParentheses(openCount, closeCount - 1, current + ')', result);
-        }
+        //return dict.Values.ToArray();
     }
 }
