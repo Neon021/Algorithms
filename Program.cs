@@ -4,63 +4,31 @@ public class Codewars
 {
     public static void Main(string[] args)
     {
-        EvalRPN(new string[] { "2", "1", "+", "3", "*" });
+        GenerateParenthesis(4);
     }
-    public static int EvalRPN(string[] tokens)
+    public static IList<string> GenerateParenthesis(int n)
     {
-        Stack<int> stack = new();
+        IList<string> result = new List<string>();
+        GenerateValidParentheses(n, n, "", result);
+        return result;
+    }
 
-        foreach (string token in tokens)
+    private static void GenerateValidParentheses(int openCount, int closeCount, string current, IList<string> result)
+    {
+        if (openCount == 0 && closeCount == 0)
         {
-            if (token == "+" || token == "-" || token == "*" || token == "/")
-            {
-                int secondOperand = stack.Pop();
-                int firstOperand = stack.Pop();
-                int result = token switch
-                {
-                    "+" => firstOperand + secondOperand,
-                    "-" => firstOperand - secondOperand,
-                    "*" => firstOperand * secondOperand,
-                    "/" => firstOperand / secondOperand,
-                    _ => throw new ArgumentOutOfRangeException(nameof(token))
-                };
-                stack.Push(result);
-            }
-            else
-            {
-                stack.Push(int.Parse(token));
-            }
+            result.Add(current);
+            return;
         }
 
-        return stack.Pop();
-        //int result = 0;
-        //Stack<string> stack = new();
-        //for (int i = 0; i < tokens.Length - 1;)
-        //{
-        //    while (tokens[i] != "*" && tokens[i] != "+" && tokens[i] != "-" && tokens[i] != "/")
-        //    {
-        //        stack.Push(tokens[i]);
-        //        i++;
-        //    }
-        //    string @operator = stack.Pop();
-        //    string firstOperand = stack.Pop();
-        //    string secondOperand = stack.Pop();
-        //    switch (@operator)
-        //    {
-        //        case "*":
-        //            result += int.Parse(firstOperand) * int.Parse(secondOperand);
-        //            break;
-        //        case "+":
-        //            result += int.Parse(firstOperand) + int.Parse(secondOperand);
-        //            break;
-        //        case "-":
-        //            result += int.Parse(firstOperand) - int.Parse(secondOperand);
-        //            break;
-        //        case "/":
-        //            result += int.Parse(firstOperand) / int.Parse(secondOperand);
-        //            break;
-        //    }
-        //}
-        //return result;
+        if (openCount > 0)
+        {
+            GenerateValidParentheses(openCount - 1, closeCount, current + '(', result);
+        }
+
+        if (closeCount > openCount)
+        {
+            GenerateValidParentheses(openCount, closeCount - 1, current + ')', result);
+        }
     }
 }
