@@ -1440,8 +1440,8 @@ public class Algorithms
     #endregion
 
     #region LEETCODE
-    #region Easy
 
+    #region Easy
     #region FindJudge
     public int FindJudge(int n, int[][] trust)
     {
@@ -1560,6 +1560,82 @@ public class Algorithms
         }
     }
     #endregion
+    #region MaximumOddBinaryNumber
+    public static string MaximumOddBinaryNumber(string s)
+    {
+        //int numberOfOne = s.Count(x => x == '1');
+        //StringBuilder sb = new();
+        //for (int i = 0; i < numberOfOne - 1; i++)
+        //{
+        //    sb.Append('1');
+        //}
+        //for (int i = 0; i < s.Length - numberOfOne; i++)
+        //{
+        //    sb.Append('0');
+        //}
+        //sb.Append('1');
+        //return sb.ToString();
+        int count = s.Count(x => x == '1');
+        String? rs = new string('1', count - 1) + new string('0', s.Length - count) + new string('1', 1);
+        return rs;
+    }
+    #endregion
+
+    #region SlidingWindow
+
+    #region Valid Parentheses
+    public bool IsValid(string s)
+    {
+        return true;
+        //Stack<char> stack = new();
+
+        //Dictionary<char, char> dict = new(){
+        //    {'(', ')'},
+        //    {'{', '}'},
+        //    {'[', ']'}
+        //};
+
+        //for (int i = 0; i < s.Length; i++)
+        //{
+        //    if (dict.Keys.Contains(s[i]))
+        //        stack.Push(s[i]);
+        //    else if (stack.Count > 0 && s[i] == dict[stack.Peek()])
+        //        stack.Pop();
+        //    else
+        //        return false;
+        //}
+        //return stack.Count == 0;
+        //Stack<char> stk = new();
+
+        //foreach (char c in s)
+        //{
+        //    if (c == '(' || c == '[' || c == '{')
+        //    {
+        //        stk.Push(c);
+        //    }
+        //    else if (c == ')' && (stk.Count == 0 || stk.Pop() != '('))
+        //    {
+        //        return false;
+        //    }
+        //    else if (c == ']' && (stk.Count == 0 || stk.Pop() != '['))
+        //    {
+        //        return false;
+        //    }
+        //    else if (c == '}' && (stk.Count == 0 || stk.Pop() != '{'))
+        //    {
+        //        return false;
+        //    }
+
+        //}
+        //return stk.Count == 0;
+    }
+    #endregion
+
+    #endregion
+    #endregion
+
+    #region
+
     #endregion
     #region Medium
 
