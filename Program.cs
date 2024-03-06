@@ -7,74 +7,33 @@ public class Codewars
     {
 
     }
-    //Definition for singly-linked list.
-    public class ListNode
+    public int MySqrt(int x)
     {
-        public int val;
-        public ListNode? next;
-        public ListNode(int x)
+        double half = x / 2;
+        while (half * half - x > 0.5)
         {
-            val = x;
-            next = null;
+            half = (half + x / half) / 2;
         }
-    }
-    public ListNode? DetectCycle(ListNode? head)
-    {
-        HashSet<ListNode?> visited = new();
-        while (head != null)
+        return (int)half;
+        if (x == 0)
+            return 0;
+
+        int left = 1;
+        int right = x;
+
+        while (left <= right)
         {
-            if (visited.Contains(head))
-                return head;
-            visited.Add(head);
-            head = head.next;
+            int mid = left + (right - left) / 2;
+            int sqrt = x / mid;
+
+            if (sqrt == mid)
+                return mid;
+            else if (sqrt < mid)
+                right = mid - 1;
+            else
+                left = mid + 1;
         }
-        return null;
-        //ListNode fast = head;
-        //ListNode slow = head;
 
-        //while (fast != null && fast.next != null)
-        //{
-        //    fast = fast.next.next;
-        //    slow = slow.next;
-
-        //    if (fast == slow) break;
-        //}
-        //if (fast == null || fast.next == null) return null;
-
-        //slow = head;
-        //while(slow != fast)
-        //{
-        //    slow = slow.next;
-        //    fast = fast.next;
-        //}
-        //return slow;
-    }
-
-    public bool HasCycle(ListNode? head)
-    {
-        HashSet<ListNode?> visited = new();
-        while (head != null)
-        {
-            if (visited.Contains(head))
-            {
-                return true;
-            }
-            visited.Add(head);
-            head = head.next;
-        }
-        return false;
-        //if (head == null) return false;
-
-        //ListNode fast = head;
-        //ListNode slow = head;
-
-        //while (fast.next != null && fast.next.next != null)
-        //{
-        //    fast = fast.next.next;
-        //    slow = slow.next;
-
-        //    if(fast == slow) return true;
-        //}
-        //return false;
+        return right;
     }
 }
