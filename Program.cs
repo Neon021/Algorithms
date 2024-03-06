@@ -1,75 +1,83 @@
-﻿using Microsoft.VisualBasic;
-using System.Runtime.InteropServices;
-using System.Text;
-
-public class Codewars
+﻿public class Codewars
 {
     public static void Main(string[] args)
     {
-        int[][] graph = new int[][]
-        {
-            new int[] { 0, 1, 1, 0, 0, 0 },
-            new int[] { 1, 0, 0, 1, 0, 0 },
-            new int[] { 1, 0, 0, 1, 1, 0 },
-            new int[] { 0, 1, 1, 0, 1, 1 },
-            new int[] { 0, 0, 1, 1, 0, 0 },
-            new int[] { 0, 0, 0, 1, 0, 0 }
-        };
+        // Example usage
+        int vertexCount = 6;
+        WeightedAdjacencyList graph = new(vertexCount);
+
+        // Add edges to the graph
+        graph.Edges[0].Add(new GraphEdge { To = 1, Weight = 1 });
+        graph.Edges[1].Add(new GraphEdge { To = 2, Weight = 2 });
+        graph.Edges[2].Add(new GraphEdge { To = 3, Weight = 3 });
+
+        graph.Edges[0].Add(new GraphEdge { To = 4, Weight = 4 });
+        graph.Edges[4].Add(new GraphEdge { To = 5, Weight = 5 });
 
         int source = 0;
-        int needle = 5;
+        int needle = 3;
 
-        int[]? result = BFS(graph, source, needle);
+        int[]? result = DFS(graph, source, needle);
 
         if (result != null)
         {
-            Console.WriteLine($"Shortest path from {source} to {needle}: {string.Join(" -> ", result)}");
+            Console.WriteLine("Path found: " + string.Join(" -> ", result));
         }
         else
         {
-            Console.WriteLine($"No path found from {source} to {needle}");
+            Console.WriteLine("Path not found.");
         }
     }
-    public static int[]? BFS(int[][] graph, int source, int needle)
+    public class GraphEdge
     {
-        List<bool> traversedPath = new(Enumerable.Repeat(false, graph.Length));
-        List<int> prev = new(Enumerable.Repeat(-1, graph.Length));
+        public int To { get; set; }
+        public int Weight { get; set; }
+    }
 
-        traversedPath[source] = true;
-        Queue<int> q = new();
-        q.Enqueue(source);
+    public class WeightedAdjacencyList
+    {
+        public List<GraphEdge>[] Edges { get; set; }
 
-        do
+        public WeightedAdjacencyList(int vertexCount)
         {
-            int curr = q.Dequeue();
-            int[] adjs = graph[curr];
-
-            if (curr == needle) break;
-
-            for (int i = 0; i < adjs.Length; i++)
+            Edges = new List<GraphEdge>[vertexCount];
+            for (int i = 0; i < vertexCount; i++)
             {
-                if (adjs[i] == 0 || traversedPath[i]) continue;
-
-                traversedPath[i] = true;
-                prev[i] = curr;
-                q.Enqueue(i);
+                Edges[i] = new List<GraphEdge>();
             }
+        }
+    }
+    private static bool Walk(WeightedAdjacencyList graph, int curr, int needle, List<bool> seen, List<int> path)
+    {
+        if (seen[curr]) return false;
 
-        } while (q.Count > 0);
+        seen[curr] = true;
 
-        if (prev[needle] == -1) return null;
+        //recurse
+        //pre
+        path.Add(curr);
+        if (curr == needle) return true;
 
-        int current = needle;
-        List<int> path = new();
-        while (prev[current] != -1)
+        //recurse
+        List<GraphEdge> list = graph.Edges[curr];
+        for (int i = 0; i < list.Count; i++)
         {
-            path.Add(current);
-            current = prev[current];
+            GraphEdge edge = list[i];
+            if (Walk(graph, edge.To, needle, seen, path)) return true;
         }
 
-        path.Add(source);
-        path.Reverse();
+        //post
+        path.RemoveAt(path.Count - 1);
 
-        return path.ToArray();
+        return false;
+    }
+    public static int[]? DFS(WeightedAdjacencyList graph, int source, int needle)
+    {
+        List<bool> seen = new(Enumerable.Repeat(false, graph.Edges.Length));
+        List<int> path = new();
+
+        Walk(graph, source, needle, seen, path);
+
+        return path.Count == 0 ? null : path.ToArray();
     }
 }
