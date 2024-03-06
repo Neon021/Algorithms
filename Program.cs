@@ -1,47 +1,80 @@
-﻿using System.Text;
+﻿using Microsoft.VisualBasic;
+using System.Text;
 
 public class Codewars
 {
     public static void Main(string[] args)
     {
-        var res = DailyTemperatures(new int[] { 73, 74, 75, 71, 69, 72, 76, 68 });
-        foreach (int i in res)
+
+    }
+    //Definition for singly-linked list.
+    public class ListNode
+    {
+        public int val;
+        public ListNode? next;
+        public ListNode(int x)
         {
-            Console.WriteLine(i);
+            val = x;
+            next = null;
         }
     }
-    public static int[] DailyTemperatures(int[] temperatures)
+    public ListNode? DetectCycle(ListNode? head)
     {
-        Stack<int> stack = new();
-        int[] array = new int[temperatures.Length];
-        for (int i = temperatures.Length - 1; i >= 0; i--)
+        HashSet<ListNode?> visited = new();
+        while (head != null)
         {
-            while (stack.Count > 0 && temperatures[stack.Peek()] <= temperatures[i])
-                stack.Pop();
-            if (stack.Count > 0)
-                array[i] = stack.Peek() - i;
-            stack.Push(i);
+            if (visited.Contains(head))
+                return head;
+            visited.Add(head);
+            head = head.next;
         }
-        return array;
-        //Dictionary<int, int> dict = new();
-        //int j = 0;
-        //for (int i = 0; i <= temperatures.Length - 1; i++)
-        //{
-        //    dict.Add(temperatures[i], 0);
-        //    while (j < i)
-        //    {
-        //        if (dict.ElementAt(j).Key < temperatures[i])
-        //        {
-        //            dict[temperatures[j]] = i - j;
-        //            j++;
-        //        }
-        //        else
-        //        {
-        //            break;
-        //        }
-        //    }
-        //}
+        return null;
+        //ListNode fast = head;
+        //ListNode slow = head;
 
-        //return dict.Values.ToArray();
+        //while (fast != null && fast.next != null)
+        //{
+        //    fast = fast.next.next;
+        //    slow = slow.next;
+
+        //    if (fast == slow) break;
+        //}
+        //if (fast == null || fast.next == null) return null;
+
+        //slow = head;
+        //while(slow != fast)
+        //{
+        //    slow = slow.next;
+        //    fast = fast.next;
+        //}
+        //return slow;
+    }
+
+    public bool HasCycle(ListNode? head)
+    {
+        HashSet<ListNode?> visited = new();
+        while (head != null)
+        {
+            if (visited.Contains(head))
+            {
+                return true;
+            }
+            visited.Add(head);
+            head = head.next;
+        }
+        return false;
+        //if (head == null) return false;
+
+        //ListNode fast = head;
+        //ListNode slow = head;
+
+        //while (fast.next != null && fast.next.next != null)
+        //{
+        //    fast = fast.next.next;
+        //    slow = slow.next;
+
+        //    if(fast == slow) return true;
+        //}
+        //return false;
     }
 }
