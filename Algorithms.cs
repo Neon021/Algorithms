@@ -1,12 +1,11 @@
 ﻿using System.Text;
-using static Codewars;
 
 public class Algorithms
 {
     #region Last Algorithms Course
     //Front End Masters The Primeagen(THE MYTH THE LEGEND HIMSELF) Algorithms course
-
-    //Search algorithms
+    #region Search
+    #region BinarySearch
     public static bool BinarySearch(int[] haystack, int needle)
     {
         int low = 0;
@@ -27,7 +26,8 @@ public class Algorithms
 
         return false;
     }
-
+    #endregion
+    #region TwoCrystalBalls
     public static int TwoCrystalBalls(bool[] breaks)
     {
         double jmpAmount = Math.Floor(Math.Sqrt(breaks.Length));
@@ -51,9 +51,11 @@ public class Algorithms
         }
         return -1;
     }
+    #endregion
+    #endregion
 
-
-
+    #region Sort
+    #region BubbleSort
     //Sort algorithms
     public static void BubbleSort(int[] numbers)
     {
@@ -69,15 +71,11 @@ public class Algorithms
             }
         }
     }
+    #endregion
+    #endregion
 
-
-
-
-
-
-
-
-
+    #region Lists
+    #region DOUBLY Linked-List
     //Data Structures
 
     //public static void Main(string[] args)
@@ -229,8 +227,8 @@ public class Algorithms
             Console.WriteLine(node.Data);
         }
     }
-
-
+    #endregion
+    #region Queue
     //Queue
     public class Queue<T>
     {
@@ -337,10 +335,8 @@ public class Algorithms
             return this.Head is not null ? this.Head.Data as T : null;
         }
     }
-
-
-
-
+    #endregion
+    #region ArrayList
     //Array List
     //public static void Main(string[] args)
     //{
@@ -434,21 +430,8 @@ public class Algorithms
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    #endregion
+    #region MazeSolver
     //Recursion 
     //public static void Main(string[] args)
     //{
@@ -546,10 +529,82 @@ public class Algorithms
             return path;
         }
     }
+    #endregion
+    #endregion
 
+    #region Graphs
+    #region BFSGraphmatrix
+    //public static void Main(string[] args)
+    //{
+    //    int[][] graph = new int[][]
+    //    {
+    //        new int[] { 0, 1, 1, 0, 0, 0 },
+    //        new int[] { 1, 0, 0, 1, 0, 0 },
+    //        new int[] { 1, 0, 0, 1, 1, 0 },
+    //        new int[] { 0, 1, 1, 0, 1, 1 },
+    //        new int[] { 0, 0, 1, 1, 0, 0 },
+    //        new int[] { 0, 0, 0, 1, 0, 0 }
+    //    };
 
+    //    int source = 0;
+    //    int needle = 5;
 
+    //    int[]? result = BFS(graph, source, needle);
 
+    //    if (result != null)
+    //    {
+    //        Console.WriteLine($"Shortest path from {source} to {needle}: {string.Join(" -> ", result)}");
+    //    }
+    //    else
+    //    {
+    //        Console.WriteLine($"No path found from {source} to {needle}");
+    //    }
+    //}
+    //public static int[]? BFS(int[][] graph, int source, int needle)
+    //{
+    //    List<bool> traversedPath = new(Enumerable.Repeat(false, graph.Length));
+    //    List<int> prev = new(Enumerable.Repeat(-1, graph.Length));
+
+    //    traversedPath[source] = true;
+    //    Queue<int> q = new();
+    //    q.Enqueue(source);
+
+    //    do
+    //    {
+    //        int curr = q.Dequeue();
+    //        int[] adjs = graph[curr];
+
+    //        if (curr == needle) break;
+
+    //        for (int i = 0; i < adjs.Length; i++)
+    //        {
+    //            if (adjs[i] == 0 || traversedPath[i]) continue;
+
+    //            traversedPath[i] = true;
+    //            prev[i] = curr;
+    //            q.Enqueue(i);
+    //        }
+
+    //    } while (q.Count > 0);
+
+    //    if (prev[needle] == -1) return null;
+
+    //    int current = needle;
+    //    List<int> path = new();
+    //    while (prev[current] != -1)
+    //    {
+    //        path.Add(current);
+    //        current = prev[current];
+    //    }
+
+    //    path.Add(source);
+    //    path.Reverse();
+
+    //    return path.ToArray();
+    //}
+    #endregion
+
+    #endregion
 
     //////////////////////////////////////////////////////////////////////////////////
     #endregion
