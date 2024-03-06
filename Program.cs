@@ -1,39 +1,75 @@
 ﻿using Microsoft.VisualBasic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 public class Codewars
 {
     public static void Main(string[] args)
     {
+        int[][] graph = new int[][]
+        {
+            new int[] { 0, 1, 1, 0, 0, 0 },
+            new int[] { 1, 0, 0, 1, 0, 0 },
+            new int[] { 1, 0, 0, 1, 1, 0 },
+            new int[] { 0, 1, 1, 0, 1, 1 },
+            new int[] { 0, 0, 1, 1, 0, 0 },
+            new int[] { 0, 0, 0, 1, 0, 0 }
+        };
 
+        int source = 0;
+        int needle = 5;
+
+        int[]? result = BFS(graph, source, needle);
+
+        if (result != null)
+        {
+            Console.WriteLine($"Shortest path from {source} to {needle}: {string.Join(" -> ", result)}");
+        }
+        else
+        {
+            Console.WriteLine($"No path found from {source} to {needle}");
+        }
     }
-    public int MySqrt(int x)
+    public static int[]? BFS(int[][] graph, int source, int needle)
     {
-        double half = x / 2;
-        while (half * half - x > 0.5)
+        List<bool> traversedPath = new(Enumerable.Repeat(false, graph.Length));
+        List<int> prev = new(Enumerable.Repeat(-1, graph.Length));
+
+        traversedPath[source] = true;
+        Queue<int> q = new();
+        q.Enqueue(source);
+
+        do
         {
-            half = (half + x / half) / 2;
-        }
-        return (int)half;
-        if (x == 0)
-            return 0;
+            int curr = q.Dequeue();
+            int[] adjs = graph[curr];
 
-        int left = 1;
-        int right = x;
+            if (curr == needle) break;
 
-        while (left <= right)
+            for (int i = 0; i < adjs.Length; i++)
+            {
+                if (adjs[i] == 0 || traversedPath[i]) continue;
+
+                traversedPath[i] = true;
+                prev[i] = curr;
+                q.Enqueue(i);
+            }
+
+        } while (q.Count > 0);
+
+        if (prev[needle] == -1) return null;
+
+        int current = needle;
+        List<int> path = new();
+        while (prev[current] != -1)
         {
-            int mid = left + (right - left) / 2;
-            int sqrt = x / mid;
-
-            if (sqrt == mid)
-                return mid;
-            else if (sqrt < mid)
-                right = mid - 1;
-            else
-                left = mid + 1;
+            path.Add(current);
+            current = prev[current];
         }
 
-        return right;
+        path.Add(source);
+        path.Reverse();
+
+        return path.ToArray();
     }
 }
