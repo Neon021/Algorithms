@@ -2,42 +2,65 @@
 {
     public static void Main(string[] args)
     {
-        int[][] ints = { new int[] { 1 }, new int[] { 10, 11, 16, 20 }, new int[] { 23, 30, 34, 60 } };
-        SearchMatrix(ints, 13);
+        Console.WriteLine(MinEatingSpeed(new int[] { 3, 6, 7, 11 }, 8));
     }
-
-    public static bool SearchMatrix(int[][] matrix, int target)
+    public static int MinEatingSpeed(int[] piles, int h)
     {
-        int index = 0;
+        int left = 1;
+        int right = piles.Max();
 
-        if (matrix.Length == 1 && matrix[0].Length == 1)
+        while (left < right)
         {
-            return matrix[0][0] == target;
-        }
+            int mid = left + (right - left) / 2;
+            int totalHours = CalculateTotalHours(piles, mid);
 
-        while (index < matrix.Length)
-        {
-            if (!(matrix[index][0] <= target && target <= matrix[index][^1]))
+            if (totalHours > h)
             {
-                index++;
-                continue;
+                left = mid + 1;
             }
             else
             {
-                int left = 0, right = matrix[index].Length - 1;
-                while (left <= right)
-                {
-                    int i = (left + right) / 2;
-                    if (target > matrix[index][i])
-                        left = i + 1;
-                    else if (target < matrix[index][i])
-                        right = i - 1;
-                    else
-                        return true;
-                }
-                return false;
+                right = mid;
             }
         }
-        return false;
+
+        return left;
+        static int CalculateTotalHours(int[] piles, int speed)
+        {
+            int totalHours = 0;
+
+            foreach (int pile in piles)
+            {
+                totalHours += (int)Math.Ceiling((double)pile / speed);
+            }
+
+            return totalHours;
+        }
+        //int[] possibleKs = Enumerable.Range(1, piles.Max()).ToArray();
+        //int res = h;
+
+        //int left = 0, right = possibleKs.Length - 1;
+        //while (left <= right)
+        //{
+        //    int index = (left + right) / 2;
+        //    int currK = possibleKs[index];
+
+        //    int totalHours = 0;
+        //    foreach (int pile in piles)
+        //    {
+        //        totalHours += (int)Math.Ceiling((double)pile / currK);
+        //    }
+
+        //    if (totalHours <= h)
+        //    {
+        //        res = Math.Min(res, currK);
+        //        right = index + 1;
+        //    }
+        //    else if(totalHours >= h)
+        //    {
+        //        left = index - 1;
+        //    }
+        //}
+        //return res;
     }
 }
