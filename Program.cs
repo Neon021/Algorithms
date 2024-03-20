@@ -1,21 +1,50 @@
 ﻿public class Codewars
 {
-    public static void Main(string[] args)
+    static void Main(string[] args)
     {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-        head.next.next = new ListNode(3);
-        head.next.next.next = new ListNode(4);
-        head.next.next.next.next = new ListNode(5);
+        // Test cases
+        ListNode list1 = new ListNode(1);
+        list1.next = new ListNode(2);
+        list1.next.next = new ListNode(4);
 
-        Console.WriteLine("Original List:");
-        PrintList(head);
+        ListNode list2 = new ListNode(1);
+        list2.next = new ListNode(3);
+        list2.next.next = new ListNode(4);
 
-        // Reversing the linked list
-        ListNode reversedHead = ReverseList(head);
+        Console.WriteLine("Input List 1:");
+        PrintList(list1);
+        Console.WriteLine("Input List 2:");
+        PrintList(list2);
 
-        Console.WriteLine("\nReversed List:");
-        PrintList(reversedHead);
+        ListNode mergedList = MergeTwoLists(list1, list2);
+        Console.WriteLine("Merged List:");
+        PrintList(mergedList);
+
+        // Additional test cases
+        ListNode emptyList1 = null;
+        ListNode emptyList2 = null;
+
+        ListNode mergedEmptyLists = MergeTwoLists(emptyList1, emptyList2);
+        Console.WriteLine("Merged Empty Lists:");
+        PrintList(mergedEmptyLists);
+
+        ListNode emptyList3 = null;
+        ListNode list3 = new ListNode(0);
+
+        ListNode mergedListWithEmpty = MergeTwoLists(emptyList3, list3);
+        Console.WriteLine("Merged List With Empty:");
+        PrintList(mergedListWithEmpty);
+    }
+
+    static void PrintList(ListNode head)
+    {
+        ListNode current = head;
+        while (current != null)
+        {
+            Console.Write(current.val + " ");
+            current = current.next;
+        }
+        Console.WriteLine();
     }
     public class ListNode
     {
@@ -28,36 +57,27 @@
         }
     }
 
-    public static ListNode ReverseList(ListNode head)
+    public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
     {
-        ListNode previousNode = null;
-        while (head != null)
-        {
-            ListNode currNext = head.next;
-            head.next = previousNode;
-            previousNode = head;
-            head = currNext;
-        }
-        return previousNode;
-        //ListNode previous = null;
-        //ListNode curr = head;
-        //while(curr != null)
-        //{
-        //    ListNode next = curr.next;
-        //    curr.next = previous;
-        //    previous = curr;
-        //    curr = next;
-        //}
-        //return previous;
-    }
+        ListNode dummy = new();
+        ListNode current = dummy;
 
-    public static void PrintList(ListNode head)
-    {
-        while (head != null)
+        while (list1 != null && list2 != null)
         {
-            Console.Write(head.val + " -> ");
-            head = head.next;
+            if (list1.val < list2.val)
+            {
+                current.next = list1;
+                list1 = list1.next;
+            }
+            else
+            {
+                current.next = list2;
+                list2 = list2.next;
+            }
+            current = current.next;
         }
-        Console.WriteLine("null");
+        current.next = list1 != null ? list1 : list2;
+
+        return dummy.next;
     }
 }
