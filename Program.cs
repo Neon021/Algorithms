@@ -2,65 +2,62 @@
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine(MinEatingSpeed(new int[] { 3, 6, 7, 11 }, 8));
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        head.next.next = new ListNode(3);
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
+
+        Console.WriteLine("Original List:");
+        PrintList(head);
+
+        // Reversing the linked list
+        ListNode reversedHead = ReverseList(head);
+
+        Console.WriteLine("\nReversed List:");
+        PrintList(reversedHead);
     }
-    public static int MinEatingSpeed(int[] piles, int h)
+    public class ListNode
     {
-        int left = 1;
-        int right = piles.Max();
-
-        while (left < right)
+        public int val;
+        public ListNode? next;
+        public ListNode(int val = 0, ListNode? next = null)
         {
-            int mid = left + (right - left) / 2;
-            int totalHours = CalculateTotalHours(piles, mid);
-
-            if (totalHours > h)
-            {
-                left = mid + 1;
-            }
-            else
-            {
-                right = mid;
-            }
+            this.val = val;
+            this.next = next;
         }
+    }
 
-        return left;
-        static int CalculateTotalHours(int[] piles, int speed)
+    public static ListNode ReverseList(ListNode head)
+    {
+        ListNode previousNode = null;
+        while (head != null)
         {
-            int totalHours = 0;
-
-            foreach (int pile in piles)
-            {
-                totalHours += (int)Math.Ceiling((double)pile / speed);
-            }
-
-            return totalHours;
+            ListNode currNext = head.next;
+            head.next = previousNode;
+            previousNode = head;
+            head = currNext;
         }
-        //int[] possibleKs = Enumerable.Range(1, piles.Max()).ToArray();
-        //int res = h;
-
-        //int left = 0, right = possibleKs.Length - 1;
-        //while (left <= right)
+        return previousNode;
+        //ListNode previous = null;
+        //ListNode curr = head;
+        //while(curr != null)
         //{
-        //    int index = (left + right) / 2;
-        //    int currK = possibleKs[index];
-
-        //    int totalHours = 0;
-        //    foreach (int pile in piles)
-        //    {
-        //        totalHours += (int)Math.Ceiling((double)pile / currK);
-        //    }
-
-        //    if (totalHours <= h)
-        //    {
-        //        res = Math.Min(res, currK);
-        //        right = index + 1;
-        //    }
-        //    else if(totalHours >= h)
-        //    {
-        //        left = index - 1;
-        //    }
+        //    ListNode next = curr.next;
+        //    curr.next = previous;
+        //    previous = curr;
+        //    curr = next;
         //}
-        //return res;
+        //return previous;
+    }
+
+    public static void PrintList(ListNode head)
+    {
+        while (head != null)
+        {
+            Console.Write(head.val + " -> ");
+            head = head.next;
+        }
+        Console.WriteLine("null");
     }
 }
