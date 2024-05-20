@@ -2,21 +2,50 @@
 {
     static void Main(string[] args)
     {
+        //Console.WriteLine(SubsetXORSum(new int[] { 5,1,6}));
     }
-    public int MatrixScore(int[][] grid)
+    public static bool IsEven(int input)
     {
-        int rowNumber = grid.Length;
-        int columnNumber = grid[0].Length;
-        int result = rowNumber;
+        return (input & 1) == 0;
+    }
+    public static int SubsetXORSum(int[] nums)
+    {
+        //int answer = 0;
 
-        for (var j = 1; j < columnNumber; j++)
+        //for (int i = 0; i < nums.Length; i++)
+        //{
+        //    for(int j = i+1;  j < nums.Length; j++)
+        //    {
+        //        answer += nums[i] ^ nums[j];
+        //    }
+        //}
+
+        //return answer;
+        int or = 0;
+
+        foreach (int num in nums)
         {
-            var sum = 0;
-            for (var i = 0; i < rowNumber; i++)
-                sum += grid[i][j] ^ grid[i][0];
-
-            result = (result << 1) + Math.Max(sum, rowNumber - sum);
+            or |= num;
         }
-        return result;
+        return or << (nums.Length - 1);
+        //return or << (nums.Length - 1);
+        //int n = nums.Length;
+        //int totalXORSum = 0;
+        //int subsetCount = 1 << n; // 2^n
+
+        //for (int i = 0; i < subsetCount; i++)
+        //{
+        //    int subsetXOR = 0;
+        //    for (int j = 0; j < n; j++)
+        //    {
+        //        if ((i & (1 << j)) != 0)
+        //        {
+        //            subsetXOR ^= nums[j];
+        //        }
+        //    }
+        //    totalXORSum += subsetXOR;
+        //}
+
+        //return totalXORSum;
     }
 }
