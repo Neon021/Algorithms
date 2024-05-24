@@ -2,7 +2,18 @@
 {
     static void Main(string[] args)
     {
-        //Console.WriteLine(SubsetXORSum(new int[] { 5,1,6}));
+        string s1 = new(new[] { 'H', 'e', 'l', 'l', 'o' });
+        string i1 = string.Intern(s1);
+        bool result1 = ReferenceEquals(s1, i1);
+
+        string s2 = new(new[] { 'H', 'e', 'l', 'l', 'o' });
+        string i2 = string.Intern(s2);
+        bool result2 = ReferenceEquals(s2, i2);
+
+        bool result3 = ReferenceEquals(i1, i2);
+        Console.WriteLine(result1); // Should be False
+        Console.WriteLine(result2); // Should be False
+        Console.WriteLine(result3); // Should be True
     }
     public static bool IsEven(int input)
     {
