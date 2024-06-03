@@ -6,29 +6,21 @@ public class Codewars
     {
         string s = "z";
         string t = "abcde";
-        Console.WriteLine(AppendCharacters(s, t));
+        Console.WriteLine(IsSubsequence(s, t));
     }
     public static bool IsEven(int input)
     {
         return (input & 1) == 0;
     }
-    public static int AppendCharacters(string s, string t)
+    public static bool IsSubsequence(string s, string t)
     {
-        int i = 0, j = 0;
-
-        while(i < s.Length && j < t.Length)
+        int sIdx = 0, tIdx = 0;
+        while(sIdx < s.Length && tIdx < t.Length)
         {
-            if (s[i] == t[j])
-            {
-                i++;
-                j++;
-            }
-            else
-            {
-                i++;
-            }
+            if (s[sIdx] == t[tIdx])
+                sIdx++;
+            tIdx++;
         }
-
-        return t.Length - j;
+        return sIdx == s.Length;
     }
 }
