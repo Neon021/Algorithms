@@ -4,23 +4,27 @@ public class Codewars
 {
     static void Main(string[] args)
     {
-        string s = "z";
-        string t = "abcde";
-        Console.WriteLine(IsSubsequence(s, t));
     }
-    public static bool IsEven(int input)
+    public double MyPow(double x, int n)
     {
-        return (input & 1) == 0;
-    }
-    public static bool IsSubsequence(string s, string t)
-    {
-        int sIdx = 0, tIdx = 0;
-        while(sIdx < s.Length && tIdx < t.Length)
+        long N = n;
+
+        if (N < 0)
         {
-            if (s[sIdx] == t[tIdx])
-                sIdx++;
-            tIdx++;
+            x = 1 / x;
+            N = -N;
         }
-        return sIdx == s.Length;
+        double result = 1.0;
+        while (N > 0)
+        {
+            if ((N % 2) == 1)
+            {
+                result *= x;
+            }
+
+            x *= x;
+            N /= 2;
+        }
+        return result;
     }
 }
