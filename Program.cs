@@ -9,54 +9,23 @@ public class Codewars
     }
     public static int MaxTurbulenceSize(int[] arr)
     {
-        //true '>'
-        //false '<'
-        //if (arr.Length == 1)
-        //    return 1;
-        //int res = 1;
-        //bool currComp = arr[0] > arr[1];
-
-        //for (int i = 1; i < arr.Length - 1; i++)
-        //{
-        //    int temp = 0;
-        //    while (i < arr.Length - 1 && arr[i + 1] > arr[i] is bool comp && comp != currComp && arr[i + 1] != arr[i])
-        //    {
-        //        i++;
-        //        currComp = comp;
-        //        temp++;
-        //    }
-        //    res = temp > res ? temp + 1 : res;
-        //    temp = 0;
-        //    currComp = i < arr.Length - 1 ? arr[i + 1] > arr[i] : currComp;
-        //}
-        //return res;
-        if (arr.Length == 1)
-            return 1;
-
-        int maxLen = 1;
-        int inc = 1, dec = 1;
-
-        for (int i = 1; i < arr.Length; i++)
+        int res = 1;
+        int start = 0;
+        int length = arr.Length;
+        for (int i = 1; i < length; i++)
         {
-            if (arr[i] > arr[i - 1])
+            //_value > value = 1
+            //_value < value = -1
+            int leftComp = arr[i].CompareTo(arr[i - 1]);
+            if(leftComp == 0)
+                start = i;
+            else if(i == length - 1 || leftComp != arr[i].CompareTo(arr[i + 1]))
             {
-                inc = dec + 1;
-                dec = 1;
+                res = Math.Max(res, i - start + 1);
+                start = i;
             }
-            else if (arr[i] < arr[i - 1])
-            {
-                dec = inc + 1;
-                inc = 1;
-            }
-            else
-            {
-                inc = 1;
-                dec = 1;
-            }
-            maxLen = Math.Max(maxLen, Math.Max(inc, dec));
         }
-
-        return maxLen;
+        return res;
     }
 
 }
