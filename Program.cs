@@ -4,28 +4,36 @@ public class Codewars
 {
     static void Main(string[] args)
     {
-        int[] test = { 9, 4, 2, 10, 7, 8, 8, 1, 9 };
-        Console.WriteLine(MaxTurbulenceSize(test));
     }
-    public static int MaxTurbulenceSize(int[] arr)
+    public void SortColors(int[] nums)
     {
-        int res = 1;
-        int start = 0;
-        int length = arr.Length;
-        for (int i = 1; i < length; i++)
+        int lo = 0;
+        int mid = 0;
+        int hi = nums.Length - 1;
+        int tmp = 0;
+        while (mid <= hi)
         {
-            //_value > value = 1
-            //_value < value = -1
-            int leftComp = arr[i].CompareTo(arr[i - 1]);
-            if(leftComp == 0)
-                start = i;
-            else if(i == length - 1 || leftComp != arr[i].CompareTo(arr[i + 1]))
+            if (nums[mid] == 0)
             {
-                res = Math.Max(res, i - start + 1);
-                start = i;
+                tmp = nums[lo];
+                nums[lo] = nums[mid];
+                nums[mid] = tmp;
+
+                mid++;
+                lo++;
+            }
+            else if (nums[mid] == 2)
+            {
+                tmp = nums[hi];
+                nums[hi] = nums[mid];
+                nums[mid] = tmp;
+
+                hi--;
+            }
+            else
+            {
+                mid++;
             }
         }
-        return res;
     }
-
 }

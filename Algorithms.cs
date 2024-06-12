@@ -2338,33 +2338,50 @@ public class Algorithms
         //    currComp = i < arr.Length - 1 ? arr[i + 1] > arr[i] : currComp;
         //}
         //return res;
-        if (arr.Length == 1)
-            return 1;
+        //if (arr.Length == 1)
+        //    return 1;
 
-        int maxLen = 1;
-        int inc = 1, dec = 1;
+        //int maxLen = 1;
+        //int inc = 1, dec = 1;
 
-        for (int i = 1; i < arr.Length; i++)
+        //for (int i = 1; i < arr.Length; i++)
+        //{
+        //    if (arr[i] > arr[i - 1])
+        //    {
+        //        inc = dec + 1;
+        //        dec = 1;
+        //    }
+        //    else if (arr[i] < arr[i - 1])
+        //    {
+        //        dec = inc + 1;
+        //        inc = 1;
+        //    }
+        //    else
+        //    {
+        //        inc = 1;
+        //        dec = 1;
+        //    }
+        //    maxLen = Math.Max(maxLen, Math.Max(inc, dec));
+        //}
+
+        //return maxLen;
+        int res = 1;
+        int start = 0;
+        int length = arr.Length;
+        for (int i = 1; i < length; i++)
         {
-            if (arr[i] > arr[i - 1])
+            //_value > value = 1
+            //_value < value = -1
+            int leftComp = arr[i].CompareTo(arr[i - 1]);
+            if (leftComp == 0)
+                start = i;
+            else if (i == length - 1 || leftComp != arr[i].CompareTo(arr[i + 1]))
             {
-                inc = dec + 1;
-                dec = 1;
+                res = Math.Max(res, i - start + 1);
+                start = i;
             }
-            else if (arr[i] < arr[i - 1])
-            {
-                dec = inc + 1;
-                inc = 1;
-            }
-            else
-            {
-                inc = 1;
-                dec = 1;
-            }
-            maxLen = Math.Max(maxLen, Math.Max(inc, dec));
         }
-
-        return maxLen;
+        return res;
     }
     #endregion
     #endregion
