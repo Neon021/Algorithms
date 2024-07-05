@@ -1859,7 +1859,39 @@ public class Algorithms
     #endregion
 
     #region Medium
+    #region Sorting
+    public void SortColors(int[] nums)
+    {
+        int lo = 0;
+        int mid = 0;
+        int hi = nums.Length - 1;
+        int tmp = 0;
+        while (mid <= hi)
+        {
+            if (nums[mid] == 0)
+            {
+                tmp = nums[lo];
+                nums[lo] = nums[mid];
+                nums[mid] = tmp;
 
+                mid++;
+                lo++;
+            }
+            else if (nums[mid] == 2)
+            {
+                tmp = nums[hi];
+                nums[hi] = nums[mid];
+                nums[mid] = tmp;
+
+                hi--;
+            }
+            else
+            {
+                mid++;
+            }
+        }
+    }
+    #endregion
     #region Arrays
     #region CanJump
     //Recursive CanJump
@@ -2059,6 +2091,33 @@ public class Algorithms
         }
         return result;
     }
+    #endregion
+    #region Permute
+    ////https://leetcode.com/problems/permutations/solutions/5013633/just-a-simple-backtracking/
+    ////I dont have a single idea how this works, actually I do but I couldnt come up with it myself
+    //public IList<IList<int>> Permute(int[] nums)
+    //{
+    //    IList<IList<int>> result = new List<IList<int>>();
+    //    Backtrack(nums, new List<int>(), result);
+    //    return result;
+
+    //    static void Backtrack(int[] nums, List<int> path, IList<IList<int>> result)
+    //    { 
+    //        if (path.Count == nums.Length)
+    //        {
+    //            result.Add(new List<int>(path));
+    //            return;
+    //        }
+    //        foreach (int num in nums)
+    //        {
+    //            if (path.Contains(num)) 
+    //                continue;
+    //            path.Add(num);
+    //            Backtrack(nums, path, result);
+    //            path.RemoveAt(path.Count - 1);
+    //        }
+    //    }
+    //}
     #endregion
     #region ScoreAfterFlippingMatrix
 
