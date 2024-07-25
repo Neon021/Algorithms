@@ -1,46 +1,26 @@
-﻿using System.Globalization;
-using System.Text;
-using static Algorithms;
-
-public class Codewars
+﻿public class Codewars
 {
-    static void Main(string[] args)
+    public static void Main(string[] args)
     {
-        int[] nums = { 1, 2, 3, 1, 1, 3 };
-        Console.WriteLine(NumIdenticalPairs(nums));
     }
-
-    public static int NumIdenticalPairs(int[] nums)
+    public int[] SortJumbled(int[] mapping, int[] nums)
     {
-        //Span<int> counts = stackalloc int[101];
-        //var count = 0;
-        //foreach (var n in nums)
-        //    count += counts[n]++;
-        //return count;
-
-        int res = 0;
-
-        for (int i = 0, j = i + 1; i < nums.Length; i++)
+        foreach (int num in nums)
         {
-            j = i + 1;
-            while (j < nums.Length)
+            Dictionary<char, int> map = new();
+            string s = num.ToString();
+
+            foreach (char digit in s)
             {
-                if (nums[i] == nums[j])
-                    res++;
-                j++;
+                if (!map.ContainsKey(digit))
+                {
+                    int corresponding = mapping[digit];
+                    map.Add(digit, corresponding);
+                    s.Where(x => x == digit).Select(x => x == corresponding);
+                }
             }
         }
-        return res;
 
-        //int res = 0;
-        //for (int i = 0; i < nums.Length; i++)
-        //{
-        //    for(int j = i+1; j < nums.Length; j++)
-        //    {
-        //        if (nums[i] == nums[j])
-        //            res++;
-        //    }
-        //}
-        //return res;
+        return new int[] { };
     }
 }

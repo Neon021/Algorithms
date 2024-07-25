@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 
 public class Algorithms
 {
@@ -560,48 +561,48 @@ public class Algorithms
     //        Console.WriteLine($"No path found from {source} to {needle}");
     //    }
     //}
-    //public static int[]? BFS(int[][] graph, int source, int needle)
-    //{
-    //    List<bool> traversedPath = new(Enumerable.Repeat(false, graph.Length));
-    //    List<int> prev = new(Enumerable.Repeat(-1, graph.Length));
+    public static int[]? BFS(int[][] graph, int source, int needle)
+    {
+        List<bool> traversedPath = new(Enumerable.Repeat(false, graph.Length));
+        List<int> prev = new(Enumerable.Repeat(-1, graph.Length));
 
-    //    traversedPath[source] = true;
-    //    Queue<int> q = new();
-    //    q.Enqueue(source);
+        traversedPath[source] = true;
+        System.Collections.Queue q = new();
+        q.Enqueue(source);
 
-    //    do
-    //    {
-    //        int curr = q.Dequeue();
-    //        int[] adjs = graph[curr];
+        do
+        {
+            int curr = (int)q.Dequeue();
+            int[] adjs = graph[curr];
 
-    //        if (curr == needle) break;
+            if (curr == needle) break;
 
-    //        for (int i = 0; i < adjs.Length; i++)
-    //        {
-    //            if (adjs[i] == 0 || traversedPath[i]) continue;
+            for (int i = 0; i < adjs.Length; i++)
+            {
+                if (adjs[i] == 0 || traversedPath[i]) continue;
 
-    //            traversedPath[i] = true;
-    //            prev[i] = curr;
-    //            q.Enqueue(i);
-    //        }
+                traversedPath[i] = true;
+                prev[i] = curr;
+                q.Enqueue(i);
+            }
 
-    //    } while (q.Count > 0);
+        } while (q.Count > 0);
 
-    //    if (prev[needle] == -1) return null;
+        if (prev[needle] == -1) return null;
 
-    //    int current = needle;
-    //    List<int> path = new();
-    //    while (prev[current] != -1)
-    //    {
-    //        path.Add(current);
-    //        current = prev[current];
-    //    }
+        int current = needle;
+        List<int> path = new();
+        while (prev[current] != -1)
+        {
+            path.Add(current);
+            current = prev[current];
+        }
 
-    //    path.Add(source);
-    //    path.Reverse();
+        path.Add(source);
+        path.Reverse();
 
-    //    return path.ToArray();
-    //}
+        return path.ToArray();
+    }
     #endregion
 
     #endregion
@@ -1885,6 +1886,41 @@ public class Algorithms
         //return totalXORSum;
     }
 
+    #endregion
+    #region NumIdenticalPairs
+    public static int NumIdenticalPairs(int[] nums)
+    {
+        //Span<int> counts = stackalloc int[101];
+        //var count = 0;
+        //foreach (var n in nums)
+        //    count += counts[n]++;
+        //return count;
+
+        int res = 0;
+
+        for (int i = 0, j = i + 1; i < nums.Length; i++)
+        {
+            j = i + 1;
+            while (j < nums.Length)
+            {
+                if (nums[i] == nums[j])
+                    res++;
+                j++;
+            }
+        }
+        return res;
+
+        //int res = 0;
+        //for (int i = 0; i < nums.Length; i++)
+        //{
+        //    for(int j = i+1; j < nums.Length; j++)
+        //    {
+        //        if (nums[i] == nums[j])
+        //            res++;
+        //    }
+        //}
+        //return res;
+    }
     #endregion
     #endregion
 
