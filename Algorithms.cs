@@ -2185,6 +2185,44 @@ public class Algorithms
     //    }
     //}
     #endregion
+    #region SortJumbled
+    public int[] SortJumbled(int[] mapping, int[] nums)
+    {
+        //foreach (int num in nums)
+        //{
+        //    Dictionary<char, int> map = new();
+        //    string s = num.ToString();
+
+        //    foreach (char digit in s)
+        //    {
+        //        if (!map.ContainsKey(digit))
+        //        {
+        //            int corresponding = mapping[digit];
+        //            map.Add(digit, corresponding);
+        //            s.Where(x => x == digit).Select(x => x == corresponding);
+        //        }
+        //    }
+        //}
+
+        //return new int[] { };
+        Dictionary<int, long> mappedValues = new();
+
+        foreach (int num in nums)
+        {
+            string s = num.ToString();
+            char[] mappedChars = new char[s.Length];
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                mappedChars[i] = (char)('0' + mapping[s[i] - '0']);
+            }
+            long mappedValue = long.Parse(new string(mappedChars));
+            mappedValues[num] = mappedValue;
+        }
+
+        return nums.OrderBy(num => mappedValues[num]).ToArray();
+    }
+    #endregion
     #region ScoreAfterFlippingMatrix
 
     #endregion
