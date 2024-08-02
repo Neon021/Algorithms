@@ -1814,7 +1814,19 @@ public class Algorithms
         return depth;
     }
     #endregion
-
+    #region TwoSum
+    //public int[] TwoSum(int[] nums, int target)
+    //{
+    //    Dictionary<int, int> pairs = new();
+    //    for (int i = 0; i < nums.Length; i++)
+    //    {
+    //        if (pairs.ContainsKey(target - nums[i]))
+    //            return new int[] { pairs[target - nums[i]], i };
+    //        else
+    //            pairs.TryAdd(nums[i], i);
+    //    }
+    //    return default;
+    //}
     #region HasCycle
     //public bool HasCycle(ListNode? head)
     //{
@@ -1921,6 +1933,7 @@ public class Algorithms
         //}
         //return res;
     }
+    #endregion
     #endregion
     #endregion
 
@@ -2118,7 +2131,7 @@ public class Algorithms
     //Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order, find two numbers such that they add up to a specific target number.
     //Let these two numbers be numbers[index1] and numbers[index2] where 1 <= index1 < index2 <= numbers.length.
     //Return the indices of the two numbers, index1 and index2, added by one as an integer array[index1, index2] of length 2.
-    public static int[] TwoSum(int[] numbers, int target)
+    public static int[] TwoSumII(int[] numbers, int target)
     {
         if (target != 0)
         {
@@ -2223,8 +2236,62 @@ public class Algorithms
         return nums.OrderBy(num => mappedValues[num]).ToArray();
     }
     #endregion
-    #region ScoreAfterFlippingMatrix
+    #region GroupAnagrams
+    public IList<IList<string>> GroupAnagrams(string[] strs)
+    {
+        Dictionary<string, List<string>> anagramGroups = new();
 
+        foreach (string str in strs)
+        {
+            char[] charArray = str.ToCharArray();
+            Array.Sort(charArray);
+            string sortedStr = new(charArray);
+
+            if (!anagramGroups.TryGetValue(sortedStr, out var anagrams))
+            {
+                anagrams = new List<string>();
+                anagramGroups[sortedStr] = anagrams; //Same as anagramGroups.Add(sortedStr, anagrams)
+            }
+
+            anagrams.Add(str);
+        }
+
+        return anagramGroups.Values.ToList<IList<string>>();
+        //List<IList<string>> anagramGroup = new List<IList<string>>();
+
+        //for (int i = 0; i < strs.Length; i++)
+        //{
+        //    if (strs[i] != null)
+        //    {
+        //        List<string> anagrams = new List<string> { strs[i] };
+        //        for (int j = i + 1; j < strs.Length; j++)
+        //        {
+        //            if (strs[j] != null && IsAnagram(strs[i], strs[j]))
+        //            {
+        //                anagrams.Add(strs[j]);
+        //                strs[j] = null; // Mark the checked string as null to skip it in future iterations
+        //            }
+        //        }
+        //        anagramGroup.Add(anagrams);
+        //    }
+        //}
+
+        //return anagramGroup;
+        //bool IsAnagram(string s, string t)
+        //{
+        //    if (s.Length != t.Length)
+        //    {
+        //        return false;
+        //    }
+        //    char[] charArray1 = s.ToCharArray();
+        //    char[] charArray2 = t.ToCharArray();
+
+        //    Array.Sort(charArray1);
+        //    Array.Sort(charArray2);
+
+        //    return Enumerable.SequenceEqual(charArray1, charArray2);
+        //}
+    }
     #endregion
     #endregion
 
@@ -2993,9 +3060,51 @@ public class Algorithms
         //return true;
     }
     #endregion
+    #region TwoSum
+    public static int[] TwoSum(int[] nums, int target)
+    {
+        int j = 1;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            while (j < nums.Length)
+            {
+                int jIdx = Math.Abs(nums.Length - j);
+                if (i != jIdx)
+                {
+                    if (nums[i] + nums[^j] == target)
+                    {
+                        return new int[] { Math.Min(i, jIdx), Math.Max(i, jIdx) };
+                    }
+                }
+                j++;
+            }
+            j = 1;
+        }
+
+        return Array.Empty<int>();
+
+        //Dictionary<int, int> valIdx = new();
+
+        //for (int i = 0; i < nums.Length; i++)
+        //{
+        //    int diff = target - nums[i];
+        //    if (valIdx.ContainsKey(diff))
+        //        return new int[] { valIdx[diff], i };
+        //    valIdx[nums[i]] = i;
+        //}
+
+        //return default;
+    }
+    #endregion
+
+    #endregion
+    #region Medium
+
+    #region GroupAnagrams
 
     #endregion
 
+    #endregion
     #endregion
 
     #endregion

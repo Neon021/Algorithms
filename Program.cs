@@ -4,34 +4,67 @@ public class Codewars
 {
     public static void Main(string[] args)
     {
-        int[] ints = new int[] { 2,5,5,11 };
-        int t = 10;
-        var res = TwoSum(ints, t);
-        foreach(int i in res)
-        {
-            Console.WriteLine(i);
-        }
+        string[] strs = new string[] { "act", "pots", "tops", "cat", "stop", "hat" };
+        GroupAnagrams(strs);
     }
-    public static int[] TwoSum(int[] nums, int target)
+    public static List<List<string>> GroupAnagrams(string[] strs)
     {
-        int j = 1;
-        for (int i = 0; i < nums.Length; i++)
+        if (strs.Length == 1)
         {
-            while (j < nums.Length)
-            {
-                int jIdx = Math.Abs(nums.Length - j);
-                if (i != jIdx)
-                {
-                    if (nums[i] + nums[^j] == target)
-                    {
-                        return new int[] { Math.Min(i, jIdx), Math.Max(i, jIdx) };
-                    }
-                }
-                j++;
-            }
-            j = 1;
+            return new() { new() { strs[0] } };
         }
 
-        return Array.Empty<int>();
+        bool b = false;
+        Dictionary<string, List<string>> kv = new() { { strs[0], new() { strs[0] } } };
+
+        for (int i = 1; i < strs.Length; i++)
+        {
+            foreach (string str in kv.Keys)
+            {
+                if (IsAnagram(strs[i], str))
+                {
+                    kv[str].Add(strs[i]);
+                    b = true; 
+                    break;
+                }
+                b = false;
+            }
+            if (!b)
+                kv.Add(strs[i], new() { strs[i] });
+        }
+
+        List<List<string>> res = new();
+        foreach (List<string> list in kv.Values)
+        {
+            res.Add(list);
+        }
+
+        return res;
+
+        bool IsAnagram(string s, string t)
+        {
+            int[] count1 = new int[256];
+            int[] count2 = new int[256];
+            int i;
+
+            for (i = 0; i < s.Length && i < t.Length; i++)
+            {
+                count1[s[i]]++;
+                count2[t[i]]++;
+            }
+
+            if (s.Length != t.Length)
+            {
+                return false;
+            }
+
+            for (i = 0; i < 256; i++)
+            {
+                if (count1[i] != count2[i])
+                    return false;
+
+            }
+            return true;
+        }
     }
 }
