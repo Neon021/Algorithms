@@ -4,59 +4,34 @@ public class Codewars
 {
     public static void Main(string[] args)
     {
-        IsAnagram("racecar", "carrace");
+        int[] ints = new int[] { 2,5,5,11 };
+        int t = 10;
+        var res = TwoSum(ints, t);
+        foreach(int i in res)
+        {
+            Console.WriteLine(i);
+        }
     }
-    public static bool IsAnagram(string s, string t)
+    public static int[] TwoSum(int[] nums, int target)
     {
-        int[] count1 = new int[256];
-        int[] count2 = new int[256];
-        int i;
-
-        for (i = 0; i < s.Length && i < t.Length; i++)
+        int j = 1;
+        for (int i = 0; i < nums.Length; i++)
         {
-            count1[s[i]]++;
-            count2[t[i]]++;
+            while (j < nums.Length)
+            {
+                int jIdx = Math.Abs(nums.Length - j);
+                if (i != jIdx)
+                {
+                    if (nums[i] + nums[^j] == target)
+                    {
+                        return new int[] { Math.Min(i, jIdx), Math.Max(i, jIdx) };
+                    }
+                }
+                j++;
+            }
+            j = 1;
         }
 
-        if (s.Length != t.Length)
-        {
-            return false;
-        }
-
-        for (i = 0; i < 256; i++)
-        {
-            if (count1[i] != count2[i])
-                return false;
-
-        }
-        return true;
-        //if (s.Length != t.Length)
-        //    return false;
-
-        //Dictionary<char, int> kv = new();
-
-        //foreach(char c in s)
-        //{
-        //    if (!kv.ContainsKey(c))
-        //        kv.Add(c, 1);
-        //    else
-        //        kv[c]++;
-        //}
-        //foreach(char c in t)
-        //{
-        //    if (!kv.ContainsKey(c))
-        //        return false;
-        //    else if (kv[c])
-        //}
-        //if (s.Length != t.Length)
-        //    return false;
-
-        //char[] chars1 = s.ToCharArray();
-        //foreach(char ch in t)
-        //{
-        //    if(!chars1.Contains(ch))
-        //        return false;
-        //}
-        //return true;
+        return Array.Empty<int>();
     }
 }
