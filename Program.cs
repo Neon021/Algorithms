@@ -4,56 +4,58 @@ public class Codewars
 {
     public static void Main(string[] args)
     {
-    }
-    public bool IsValidSudoku(char[][] board)
-    {
-        for(int rowIdx = 0; rowIdx < 9; rowIdx++)
-        {
-            HashSet<char> rowSet = new();
-            for(int colIdx = 0;  colIdx < 9; colIdx++)
-            {
-                char val = board[rowIdx][colIdx];
-                if(val != '.')
-                {
-                    if (!rowSet.Add(val))
-                        return false;
-                }
-            }
-        }
-        for (int colIdx = 0; colIdx < 9; colIdx++)
-        {
-            HashSet<char> colSet = new();
-            for (int rowIdx = 0; rowIdx < 9; rowIdx++)
-            {
-                char val = board[rowIdx][colIdx];
-                if (val != '.')
-                {
-                    if (!colSet.Add(val))
-                        return false;
-                }
-            }
-        }
-        for (int boxRow = 0; boxRow < 3; boxRow++)
-        {
-            for (int boxCol = 0; boxCol < 3; boxCol++)
-            {
-                HashSet<char> squareSet = new();
+        int[] ints = new int[] { -1, 0, 1, 2, 3 };
+        var res = ProductExceptSelf(ints);
 
-                for (int i = boxRow * 3; i < boxRow * 3 + 3; i++)
+        foreach (int i in res)
+        {
+            Console.WriteLine(i);
+        }
+    }
+    public static int[] ProductExceptSelf(int[] nums)
+    {
+        int product = nums.Aggregate((acc, value) => acc * value);
+        bool hasMoreThanOneZero = nums.Count(x => x == 0) > 1;
+        int productWoZero = -1;
+
+        List<int> answer = new();
+        foreach (int i in nums)
+        {
+            if (i != 0)
+                answer.Add(product / i);
+            else
+            {
+                if (hasMoreThanOneZero)
+                    answer.Add(0);
+                else
                 {
-                    for (int j = boxCol * 3; j < boxCol * 3 + 3; j++)
+                    if (productWoZero != -1)
+                        answer.Add(productWoZero);
+                    else
                     {
-                        char current = board[i][j];
-                        if (current != '.')
-                        {
-                            if (!squareSet.Add(current))
-                                return false;
-                        }
+                        productWoZero = nums.Aggregate((acc, value) => value != i ? acc * value : acc);
+                        answer.Add(productWoZero);
                     }
                 }
             }
         }
 
-        return true;
+        return answer.ToArray();
+
+        //Only works without zeros
+        //foreach (int i in nums)
+        //{
+        //    List<int> list = new() { i };
+        //    var remainingElements = nums.Except(list);
+
+        //    int product = 1;
+        //    foreach (int element in remainingElements)
+        //    {
+        //        product *= element;
+        //    }
+
+        //    answer.Add(product);
+        //}
+        //return answer.ToArray();
     }
 }
