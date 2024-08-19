@@ -3282,7 +3282,64 @@ public class Algorithms
         return true;
     }
     #endregion
+    #region
+    public int LongestConsecutive(int[] nums)
+    {
+        HashSet<int> map = new(nums);
+        int longest = 0;
+
+        foreach (int i in nums)
+        {
+            //To not start another sequence count for a number that is an element in a already calculated sequence
+            if (!map.Contains(i - 1))
+            {
+                int seqLength = 1;
+                while (map.Contains(i + seqLength))
+                {
+                    seqLength++;
+                }
+                longest = Math.Max(longest, seqLength);
+            }
+        }
+
+        return longest;
+    }
     #endregion
+
+    #endregion
+
+    #endregion
+    #region Stack
+
+    #region Valid Parantheses
+    //public bool IsValid(string s)
+    //{
+    //    Stack<char> stack = new();
+
+    //    foreach (char c in s)
+    //    {
+    //        if (c == '(' || c == '[' || c == '{')
+    //        {
+    //            stack.Push(c);
+    //        }
+    //        else if (c == ')' && (stack.Count == 0 || stack.Pop() != '('))
+    //        {
+    //            return false;
+    //        }
+    //        else if (c == ']' && (stack.Count == 0 || stack.Pop() != '['))
+    //        {
+    //            return false;
+    //        }
+    //        else if (c == '}' && (stack.Count == 0 || stack.Pop() != '{'))
+    //        {
+    //            return false;
+    //        }
+
+    //    }
+    //    return stack.Count == 0;
+    //}
+    #endregion
+
     #endregion
 
     #endregion

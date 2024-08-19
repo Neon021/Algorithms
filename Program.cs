@@ -5,25 +5,31 @@ public class Codewars
     public static void Main(string[] args)
     {
     }
-    public int LongestConsecutive(int[] nums)
+
+    public bool IsValid(string s)
     {
-        HashSet<int> map = new (nums);
-        int longest = 0;
+        Stack<char> stack = new();
 
-        foreach(int i in nums)
+        foreach (char c in s)
         {
-            //To not start another sequence count for a number that is an element in a already calculated sequence
-            if (!map.Contains(i - 1))
+            if (c == '(' || c == '[' || c == '{')
             {
-                int seqLength = 1; 
-                while(map.Contains(i + seqLength))
-                {
-                    seqLength++;
-                }
-                longest = Math.Max(longest, seqLength);
+                stack.Push(c);
             }
-        }
+            else if (c == ')' && (stack.Count == 0 || stack.Pop() != '('))
+            {
+                return false;
+            }
+            else if (c == ']' && (stack.Count == 0 || stack.Pop() != '['))
+            {
+                return false;
+            }
+            else if (c == '}' && (stack.Count == 0 || stack.Pop() != '{'))
+            {
+                return false;
+            }
 
-        return longest;
+        }
+        return stack.Count == 0;
     }
 }
