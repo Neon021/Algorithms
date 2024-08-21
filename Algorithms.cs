@@ -3282,7 +3282,7 @@ public class Algorithms
         return true;
     }
     #endregion
-    #region
+    #region LongestConsecutive
     public int LongestConsecutive(int[] nums)
     {
         HashSet<int> map = new(nums);
@@ -3311,6 +3311,7 @@ public class Algorithms
     #endregion
     #region Stack
 
+    #region Easy
     #region Valid Parantheses
     //public bool IsValid(string s)
     //{
@@ -3339,7 +3340,14 @@ public class Algorithms
     //    return stack.Count == 0;
     //}
     #endregion
+    #endregion
+    #region Medium
 
+    #region MinStack
+
+    #endregion
+
+    #endregion
     #endregion
 
     #endregion
