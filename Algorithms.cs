@@ -3510,6 +3510,9 @@ public class Algorithms
         return stack.Pop();
     }
     #endregion
+    #region GenerateParentheses
+
+    #endregion
     #endregion
     #endregion
 
