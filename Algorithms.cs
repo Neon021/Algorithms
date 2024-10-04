@@ -3483,7 +3483,32 @@ public class Algorithms
     //}
     #endregion
     #region RPN
-
+    public static int EvalRPN1(string[] tokens)
+    {
+        Stack<int> stack = new();
+        foreach (string token in tokens)
+        {
+            if (token == "+" || token == "-" || token == "*" || token == "/")
+            {
+                int rightOperand = stack.Pop();
+                int leftOperand = stack.Pop();
+                int result = token switch
+                {
+                    "+" => leftOperand + rightOperand,
+                    "-" => leftOperand - rightOperand,
+                    "*" => leftOperand * rightOperand,
+                    "/" => leftOperand / rightOperand,
+                    _ => 0
+                };
+                stack.Push(result);
+            }
+            else
+            {
+                stack.Push(int.Parse(token));
+            }
+        }
+        return stack.Pop();
+    }
     #endregion
     #endregion
     #endregion
