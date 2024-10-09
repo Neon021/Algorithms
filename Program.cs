@@ -1,36 +1,80 @@
-﻿public class Codewars
+﻿using System.Diagnostics.Metrics;
+
+public class Codewars
 {
     public static void Main(string[] args)
     {
-        GenerateParenthesis(3);
     }
-    public static List<string> GenerateParenthesis(int n)
+    public static int[] DailyTemperatures(int[] temperatures)
     {
-        //1 <= n <= 7
-        //At most, n number of same parantheses can be stacked
-        //if n is 3 "(((.." and the rest is the close parantheses
-        //According to that
-        List<string> result = new();
-        Construct(n, 0, 0, "", result);
-        return result;
+        int[] res = new int[temperatures.Length];
 
-        static void Construct(int n, int openParen, int closeParen, string currPattern, List<string> result)
+        int index = 0;
+        while (index < temperatures.Length)
         {
-            //Base condition for recursion
-            //as there should be n number of coherent parantheses 
-            if (openParen == n && openParen == closeParen)
+            int currTemp = temperatures[index];
+            Stack<int> offsetStack = new(temperatures.Skip(index + 1).Reverse());
+            int dayCount = 0;
+
+            while (offsetStack.Count != 0)
             {
-                result.Add(currPattern);
-                return;
+                int nextTemp = offsetStack.Pop();
+                //What about equal?
+                if (nextTemp > currTemp)
+                {
+                    dayCount++;
+                    res[index] = dayCount;
+                    break;
+                }
+                else
+                {
+                    if (offsetStack.Count == 0)
+                        dayCount = 0;
+                    else
+                        dayCount++;
+                    continue;
+                }
             }
 
-            //If we have less then required amount of parantheses
-            if (openParen < n)
-                Construct(n, openParen + 1, closeParen, currPattern + '(', result);
-
-
-            if (closeParen < openParen)
-                Construct(n, openParen, closeParen + 1, currPattern + ')', result);
+            res[index] = dayCount;
+            index++;
         }
+
+        return res;
+        //Fernando(Queue) is faster than you Stack.
+        //int[] res = new int[temperatures.Length];
+
+        //int index = 0;
+        //while (index < temperatures.Length)
+        //{
+        //    int currTemp = temperatures[index];
+        //    Queue<int> offsetStack = new(temperatures.Skip(index + 1));
+        //    int dayCount = 0;
+
+        //    while (offsetStack.Count != 0)
+        //    {
+        //        int nextTemp = offsetStack.Dequeue();
+        //        //What about equal?
+        //        if (nextTemp > currTemp)
+        //        {
+        //            dayCount++;
+        //            res[index] = dayCount;
+        //            break;
+        //        }
+        //        else
+        //        {
+        //            if (offsetStack.Count == 0)
+        //                dayCount = 0;
+        //            else
+        //                dayCount++;
+        //            continue;
+        //        }
+        //    }
+
+        //    res[index] = dayCount;
+        //    index++;
+        //}
+
+        //return res;
     }
 }
