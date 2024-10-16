@@ -2,68 +2,48 @@
 {
     public static void Main(string[] args)
     {
+        Console.WriteLine(LargestRectangleArea(new int[] { 7, 1, 7, 2, 2, 4 }));
     }
-    public static int CarFleet(int target, int[] position, int[] speed)
+    public static int LargestRectangleArea(int[] heights)
     {
-        //This is practically a linear equation problem.
-        //We should check if cars intersect before or at <target>
-        //If any of the cars time to reach is smaller or equal to another they become a fleet.
+        //You are given an array of integers heights where heights[i] represents the height of a bar. The width of each bar is 1.
+        //Return the area of the largest rectangle that can be formed among the bars.
+        //Input: heights = [7, 1, 7, 2, 2, 4]
+        //Output: 8
+        int result = 0;
+        Stack<int[]> stack = new();
 
-        //Created a jagged array to store position and speed of cars
-        int n = position.Length;
-        double[][] carParams = new double[n][];
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < heights.Length; i++)
         {
-            carParams[i] = new double[] { position[i], speed[i] };
+            //A second index to start from the current bar on the stack
+            //And iterate on the height array until it encounters a higher bar
+            //Or stack is emptide
+            int offSet = i;
+            //we do not have the index data as a parameter for that we utilize offset.
+            //And as we use index to keep track of the width(since every bar is 1 cm index is also equal to the total width at that point starting from the currBar)
+
+            while (stack.Count > 0 && stack.Peek()[1] > heights[i])
+            {
+                //We pop the item here because we are iterating until we hit a higher bar or the stack is empty
+                //So we do not need any prior bar item since we already checked them
+                int[] currBar = stack.Pop();
+                                        //height            //index(width)
+                                        //↓↓↓↓              //↓↓↓↓
+                result = Math.Max(result, currBar[1] * (i - currBar[0]));
+
+                //We set the offset to the index of the current bar since we've checked that the height of the currBar is higher than the bar we've chekched from the heights
+                //we should start it from the index of currBar.
+                offSet = currBar[0];
+            }
+            stack.Push(new int[] { offSet, heights[i] });
         }
 
-        //Sort cars according to their position
-        carParams = carParams.OrderByDescending(arr => arr[0]).ToArray();
-
-        int res = 0;
-        double[] timeToReach = new double[n];
-        for (int i = 0; i < n; i++)
+        //This last foreach is for the bars that are not popped as they are not bigger than the bar after them
+        foreach (int[] bar in stack)
         {
-            //Calculate time to reach of each car
-            //by subtracting its position from target and diving it by its speed
-            //Ex: target = 10, position = 7, speed = 1 => timetoReach = 3
-            //Ex: target = 10, position = 4, speed = 3 => timetoReach = 2
-            timeToReach[i] = (target - carParams[i][0]) / carParams[i][1];
-
-            //If any previous car's time to reach is calculated AND
-            //Refer to the 3rd line in the beginning comments
-            if (i > 0 && timeToReach[i] <= timeToReach[i - 1])
-                timeToReach[i] = timeToReach[i - 1];
-            else
-                res++;
+            result = Math.Max(result, bar[1] * (heights.Length - bar[0]));
         }
 
-        return res;
-
-        //I'm not sure as to why Dictionary implementation does not work
-        //I sense it has somehting to do with indexing
-        //int n = position.Length;
-        //Dictionary<int, double[]> carParamss = new();
-        //for (int i = 0; i < n; i++)
-        //{
-        //    carParamss[i] = new double[] { position[i], speed[i] };
-        //}
-
-        //carParamss = carParamss
-        //    .OrderByDescending(kv => kv.Value[0])
-        //    .ToDictionary(kv => kv.Key, kv => kv.Value);
-
-        //int res = 0;
-        //double[] timeToReach = new double[n];
-        //for (int i = 0; i < n; i++)
-        //{
-        //    timeToReach[i] = (target - carParamss[i][0]) / carParamss[i][1];
-        //    if (i > 0 && timeToReach[i] <= timeToReach[i - 1])
-        //        timeToReach[i] = timeToReach[i - 1];
-        //    else
-        //        res++;
-        //}
-
-        //return res;
+        return result;
     }
 }
