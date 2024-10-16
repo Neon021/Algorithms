@@ -1,36 +1,30 @@
-﻿using System.Threading.Channels;
-
-public class Codewars
+﻿public class Codewars
 {
     public static void Main(string[] args)
     {
-        Decode(Encode(new() { "furkan","bilal","yigit","güzel",})).ForEach(Console.WriteLine);
-    }
-    public static string Encode(List<string> strs)
-    {
-        return string.Concat(strs.SelectMany(s => $"{s.Length}#{s}"));
-    }
-    
-    public static List<string> Decode(string input)
-    {
-        List<string> strings = new();
-        int index = 0;
-        while (index < input.Length)
+        foreach (var item in TwoSum(new int[] { 5, 82, 2, 4, 3, 1, 6, 5, 3, 36, 34 }, 5))
         {
-            string lengthStr = string.Empty;
-            while (input[index] != '#')
+            Console.WriteLine(item);
+        }
+    }
+    public static int[] TwoSum(int[] numbers, int target)
+    {
+        int l = 0, r = 0;
+
+        while (l < numbers.Length - 1)
+        {
+            int leftVal = numbers[l];
+            r = l + 1;
+            while (r < numbers.Length)
             {
-                lengthStr += input[index];
-                index++;
+                int rightVal = numbers[r];
+                if (leftVal + rightVal == target)
+                    return new int[] { l + 1, r + 1 };
+                r++;
             }
-            index++;
-            _ = int.TryParse(lengthStr, out int length);
-            
-            string decoded = input.Substring(index, length);
-            strings.Add(decoded);
-            index += length;
+            l++;
         }
 
-        return strings;
+        return Array.Empty<int>();
     }
 }
