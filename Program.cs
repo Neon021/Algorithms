@@ -1,40 +1,36 @@
-﻿public class Codewars
+﻿using System.Threading.Channels;
+
+public class Codewars
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine(IsPalindrome("Was it a car or a cat I saw?"));
+        Decode(Encode(new() { "furkan","bilal","yigit","güzel",})).ForEach(Console.WriteLine);
     }
-    public static bool IsPalindrome(string s)
+    public static string Encode(List<string> strs)
     {
-        //string normalStr = new(s.Where(char.IsLetterOrDigit).ToArray());
-        //string revStr = new(s.Where(char.IsLetterOrDigit).Reverse().ToArray());
-
-        //return string.Equals(normalStr, revStr, StringComparison.OrdinalIgnoreCase);
-
-        int i = 0, j = s.Length - 1;
-        while (i < j)
+        return string.Concat(strs.SelectMany(s => $"{s.Length}#{s}"));
+    }
+    
+    public static List<string> Decode(string input)
+    {
+        List<string> strings = new();
+        int index = 0;
+        while (index < input.Length)
         {
-            while (!AlphaNum(s[i]) && i < j)
+            string lengthStr = string.Empty;
+            while (input[index] != '#')
             {
-                i++;
+                lengthStr += input[index];
+                index++;
             }
-            while (!AlphaNum(s[j]) && j > i)
-            {
-                j--;
-            }
-
-            if (char.ToLower(s[i]) != char.ToLower(s[j]))
-                return false;
-            i++;
-            j--;
+            index++;
+            _ = int.TryParse(lengthStr, out int length);
+            
+            string decoded = input.Substring(index, length);
+            strings.Add(decoded);
+            index += length;
         }
-        return true;
 
-        static bool AlphaNum(char c)
-        {
-            return (c >= 'A' && c <= 'Z' ||
-                    c >= 'a' && c <= 'z' ||
-                    c >= '0' && c <= '9');
-        }
+        return strings;
     }
 }
