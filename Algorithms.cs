@@ -3688,9 +3688,52 @@ public class Algorithms
     #region Hard
 
     #region LargestRectangleArea
+    //public static void Main(string[] args)
+    //{
+    //    Console.WriteLine(LargestRectangleArea(new int[] { 5, 4, 14, 9, 34, 14, 4, 23, 5, 5 }));
+    //}
+    //public static int LargestRectangleArea(int[] heights)
+    //{
+    //    //You are given an array of integers heights where heights[i] represents the height of a bar. The width of each bar is 1.
+    //    //Return the area of the largest rectangle that can be formed among the bars.
+    //    //Input: heights = [7, 1, 7, 2, 2, 4]
+    //    //Output: 8
 
+    //    int result = 0;
+    //    //We use int array to keep a second parameter as index to keep track of the width(since every bar is 1 cm index is also equal to the total width at that point starting from the currBar)
+    //    Stack<int[]> stack = new();
+
+    //    for (int i = 0; i < heights.Length; i++)
+    //    {
+    //        //A second parameter that will determine the index value of a bar that is shorter than the bar after
+    //        int offSet = i;
+
+    //        while (stack.Count > 0 && stack.Peek()[1] > heights[i])
+    //        {
+    //            //We pop the item here since we encountered a shorter bar
+    //            int[] currBar = stack.Pop();
+    //            //height          //index(width)
+    //            //↓↓↓↓            //↓↓↓↓
+    //            result = Math.Max(result, currBar[1] * (i - currBar[0]));
+
+    //            //We set the offset to the index of the current bar since we've checked that the height of the currBar is higher than the bar we've chekched from the heights
+    //            //we should start it from the index of currBar.
+    //            offSet = currBar[0];
+    //        }
+    //        stack.Push(new int[] { offSet, heights[i] });
+    //    }
+
+    //    //This last foreach is for the bars that are not popped as they are not bigger than the bar after them
+    //    foreach (int[] bar in stack)
+    //    {
+    //        result = Math.Max(result, bar[1] * (heights.Length - bar[0]));
+    //    }
+
+    //    return result;
+    //}
     #endregion
     #endregion
+
     #endregion
 
     #endregion
