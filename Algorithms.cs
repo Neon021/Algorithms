@@ -3802,7 +3802,30 @@ public class Algorithms
         }
     }
     #endregion
+    #region TwoSum
+    //public static int[] TwoSum(int[] numbers, int target)
+    //{
+    //    int leftIdx = 0, rightIdx = 0;
+
+    //    while (leftIdx < numbers.Length - 1)
+    //    {
+    //        int leftVal = numbers[leftIdx];
+    //        rightIdx = leftIdx + 1;
+    //        while (rightIdx < numbers.Length)
+    //        {
+    //            int rightVal = numbers[rightIdx];
+    //            if (leftVal + rightVal == target)
+    //                return new int[] { leftIdx + 1, rightIdx + 1 };
+    //            rightIdx++;
+    //        }
+    //        leftIdx++;
+    //    }
+
+    //    return Array.Empty<int>();
+    //}
+    #endregion
 
     #endregion
+
     #endregion
 }
