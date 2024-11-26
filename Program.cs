@@ -2,62 +2,82 @@
 {
     static void Main(string[] args)
     {
-        // Test Case 1: Empty List
-        Console.WriteLine("Test Case 1: Empty List");
-        LinkedList<int> emptyList = new();
-        TestMiddle(emptyList, 0);
+        // Test Case 1: Empty List (No Loop)
+        Console.WriteLine("Test Case 1: Empty List (No Loop)");
+        LinkedList<int> emptyList = new LinkedList<int>();
+        TestFindLoop(emptyList, false);
 
-        // Test Case 2: Single Element List
-        Console.WriteLine("\nTest Case 2: Single Element List");
-        LinkedList<int> singleElementList = new();
+        // Test Case 2: Single Element List (No Loop)
+        Console.WriteLine("\nTest Case 2: Single Element List (No Loop)");
+        LinkedList<int> singleElementList = new LinkedList<int>();
         singleElementList.AddLast(new Node<int>(10));
+        TestFindLoop(singleElementList, false);
 
-        TestMiddle(singleElementList, 10);
-
-        // Test Case 3: Odd Number of Elements
-        Console.WriteLine("\nTest Case 3: Odd Number of Elements");
-        LinkedList<int> oddList = new();
-        for (int i = 1; i <= 11; i++)
+        // Test Case 3: List with No Loop
+        Console.WriteLine("\nTest Case 3: List with No Loop");
+        LinkedList<int> noLoopList = new LinkedList<int>();
+        int[] noLoopArray = new int[] { 1, 2, 3, 4, 5 };
+        foreach (int value in noLoopArray)
         {
-            oddList.AddLast(new(i));
+            noLoopList.AddLast(new Node<int>(value));
         }
-        TestMiddle(oddList, 6);
+        TestFindLoop(noLoopList, false);
 
-        // Test Case 4: Even Number of Elements
-        Console.WriteLine("\nTest Case 4: Even Number of Elements");
-        LinkedList<int> evenList = new();
-        for (int i = 1; i <= 10; i++)
-        {
-            evenList.AddLast(new(i));
-        }
+        // Test Case 4: List with Loop at End
+        Console.WriteLine("\nTest Case 4: List with Loop at End");
+        LinkedList<int> endLoopList = CreateListWithLoop(new int[] { 1, 2, 3, 4, 5 }, 0);
+        TestFindLoop(endLoopList, true);
 
-        TestMiddle(evenList, 5);
+        // Test Case 5: List with Loop in Middle
+        Console.WriteLine("\nTest Case 5: List with Loop in Middle");
+        LinkedList<int> middleLoopList = CreateListWithLoop(new int[] { 1, 2, 3, 4, 5 }, 2);
+        TestFindLoop(middleLoopList, true);
 
-        // Test Case 5: Large List
-        Console.WriteLine("\nTest Case 5: Large List");
-        LinkedList<int> largeList = new ();
-        for (int i = 1; i <= 100; i++)
-        {
-            largeList.AddLast(new(i));
-        }
-        TestMiddle(largeList, 50);
+        // Test Case 6: List with Single Element Loop
+        Console.WriteLine("\nTest Case 6: List with Single Element Loop");
+        LinkedList<int> singleElementLoopList = CreateListWithLoop(new int[] { 1 }, 0);
+        TestFindLoop(singleElementLoopList, true);
     }
-    static void TestMiddle<T>(LinkedList<T> list, T expectedMiddle)
+
+    // Helper method to create a list with a loop
+    static LinkedList<T> CreateListWithLoop<T>(T[] arr, int loopIndex)
+    {
+        LinkedList<T> list = new LinkedList<T>();
+
+        // Create nodes and add them to the list
+        Node<T>[] nodes = new Node<T>[arr.Length];
+        for (int i = 0; i < arr.Length; i++)
+        {
+            nodes[i] = new Node<T>(arr[i]);
+            list.AddLast(nodes[i]);
+        }
+
+        if (loopIndex >= 0 && loopIndex < nodes.Length)
+        {
+            // Find the last node
+            Node<T> curr = list.First;
+            while (curr.Next != null)
+            {
+                curr = curr.Next;
+            }
+
+            // Connect last node to the loop start node
+            curr.Next = nodes[loopIndex];
+        }
+
+        return list;
+    }
+
+    // Test method to verify loop detection
+    static void TestFindLoop<T>(LinkedList<T> list, bool expectedLoopResult)
     {
         try
         {
-            Node<T> middleNode = list.LinkedListMiddle();
+            bool hasLoop = list.FindLoop();
 
-            if (middleNode == null)
-            {
-                Console.WriteLine("✓ Correctly returned null for empty list");
-            }
-            else
-            {
-                Console.WriteLine(middleNode.Data.Equals(expectedMiddle)
-                    ? $"✓ Correct middle node: {middleNode.Data}"
-                    : $"✗ Expected {expectedMiddle}, but got {middleNode.Data}");
-            }
+            Console.WriteLine(hasLoop == expectedLoopResult
+                ? $"✓ Correctly detected loop: {hasLoop}"
+                : $"✗ Expected loop to be {expectedLoopResult}, but got {hasLoop}");
         }
         catch (Exception ex)
         {
@@ -78,6 +98,7 @@
     public class LinkedList<T>
     {
         public Node<T>? First { get; private set; }
+        public int Count { get; set; }
 
         public LinkedList()
         {
@@ -96,6 +117,8 @@
                 }
                 curr.Next = node;
             }
+
+            Count++;
         }
         public Node<T> LinkedListMiddle()
         {
@@ -104,11 +127,30 @@
             while (leftIdx != null)
             {
                 leftIdx = leftIdx.Next?.Next;
-                if(leftIdx != null)
+                if (leftIdx != null)
                     rightIdx = rightIdx.Next;
             }
 
             return rightIdx;
+        }
+
+        public bool FindLoop()
+        {
+            if (First == null)
+                return false;
+
+            Node<T>? leftIdx = First, rightIdx = First;
+
+            while (leftIdx != null)
+            {
+                leftIdx = leftIdx.Next?.Next;
+                rightIdx = rightIdx.Next;
+
+                if (leftIdx == rightIdx)
+                    return true;
+            }
+
+            return false;
         }
     }
 }
