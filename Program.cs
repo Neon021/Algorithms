@@ -2,34 +2,49 @@
 {
     static void Main(string[] args)
     {
-        LinkedList<int> list = new LinkedList<int>();
-        int[] elements = { 1, 2, 3, 4, 5 };
-        foreach (int value in elements)
-        {
-            list.AddLast(new Node<int>(value));
-        }
+        // Scenario 1: No Intersection
+        LinkedList<int> list1 = CreateList(new int[] { 1, 2, 3, 4 });
+        LinkedList<int> list2 = CreateList(new int[] { 5, 6, 7 });
+        TestIntersection(list1, list2, null);
 
-        // Test cases
-        TestNthFromEnd(list, 1, 5);  // First from end
-        TestNthFromEnd(list, 3, 3);  // Middle from end
-        TestNthFromEnd(list, 5, 1);  // Last from end
-        TestNthFromEnd(list, 6, null);  // Beyond list length
+        // Scenario 2: Intersection at End
+        Node<int> sharedNode = new Node<int>(10);
+        list1.AddLast(sharedNode);
+        list2.AddLast(sharedNode);
+        TestIntersection(list1, list2, sharedNode);
 
+        // Scenario 3: Intersection in Middle
+        LinkedList<int> list3 = CreateList(new int[] { 1, 2 });
+        list3.AddLast(sharedNode);
+        TestIntersection(list1, list3, sharedNode);
+
+        // Scenario 4: One Empty List
         LinkedList<int> emptyList = new LinkedList<int>();
-        TestNthFromEnd(emptyList, 1, null);  // Empty list
+        TestIntersection(list1, emptyList, null);
     }
 
-    static void TestNthFromEnd(LinkedList<int> list, int n, int? expectedValue)
+    static LinkedList<int> CreateList(int[] arr)
     {
-        Node<int>? result = list.NthNodeFromEnd(n);
+        LinkedList<int> list = new LinkedList<int>();
+        foreach (int val in arr)
+        {
+            list.AddLast(new Node<int>(val));
+        }
+        return list;
+    }
 
-        bool isCorrect = (result == null && expectedValue == null) ||
-                         (result != null && result.Data == expectedValue);
+    static void TestIntersection(LinkedList<int> list1, LinkedList<int> list2, Node<int> expectedIntersection)
+    {
+        Node<int>? result = list1.IntersectionPointofTwoLinkedLists(list2);
+        bool isCorrect = result == expectedIntersection;
 
         Console.WriteLine(isCorrect
-            ? $"✓ Correctly found {n}th node from end: {result?.Data}"
-            : $"✗ Expected {expectedValue}, got {result?.Data}");
+            ? "✓ Intersection point correctly identified"
+            : "✗ Incorrect intersection point");
     }
+
+
+
     public class Node<T>
     {
         public T Data { get; set; }
@@ -141,6 +156,44 @@
                 }
 
                 return p;
+            }
+
+            return null;
+        }
+
+        public Node<T>? IntersectionPointofTwoLinkedLists(LinkedList<T> otherLinkedList)
+        {
+            if (otherLinkedList != null && otherLinkedList.First != null && First != null)
+            {
+                Node<T>? p = First;
+                Node<T>? q = otherLinkedList.First;
+
+                if (Count < otherLinkedList.Count)
+                {
+                    int skipCount = otherLinkedList.Count - Count;
+                    while (q != null && skipCount != 0)
+                    {
+                        q = q?.Next;
+                    }
+                }
+                else if (Count > otherLinkedList.Count)
+                {
+                    int skipCount = Count - otherLinkedList.Count;
+                    while (p != null && skipCount != 0)
+                    {
+                        p = p?.Next;
+                        skipCount--;
+                    }
+                }
+
+
+                while (p?.Next != null && q?.Next != null)
+                {
+                    p = p.Next;
+                    q = q.Next;
+                    if (p == q)
+                        return p;
+                }
             }
 
             return null;
