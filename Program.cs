@@ -2,62 +2,33 @@
 {
     static void Main(string[] args)
     {
-        // Test Case 1: Empty List
-        Console.WriteLine("Test Case 1: Empty List");
+        LinkedList<int> list = new LinkedList<int>();
+        int[] elements = { 1, 2, 3, 4, 5 };
+        foreach (int value in elements)
+        {
+            list.AddLast(new Node<int>(value));
+        }
+
+        // Test cases
+        TestNthFromEnd(list, 1, 5);  // First from end
+        TestNthFromEnd(list, 3, 3);  // Middle from end
+        TestNthFromEnd(list, 5, 1);  // Last from end
+        TestNthFromEnd(list, 6, null);  // Beyond list length
+
         LinkedList<int> emptyList = new LinkedList<int>();
-        TestReverse(emptyList, new int[] { });
-
-        // Test Case 2: Single Element List
-        Console.WriteLine("\nTest Case 2: Single Element List");
-        LinkedList<int> singleElementList = CreateList(new int[] { 10 });
-        TestReverse(singleElementList, new int[] { 10 });
-
-        // Test Case 3: Two Element List
-        Console.WriteLine("\nTest Case 3: Two Element List");
-        LinkedList<int> twoElementList = CreateList(new int[] { 1, 2 });
-        TestReverse(twoElementList, new int[] { 2, 1 });
-
-        // Test Case 4: Multiple Element List
-        Console.WriteLine("\nTest Case 4: Multiple Element List");
-        LinkedList<int> multiElementList = CreateList(new int[] { 1, 2, 3, 4, 5 });
-        TestReverse(multiElementList, new int[] { 5, 4, 3, 2, 1 });
+        TestNthFromEnd(emptyList, 1, null);  // Empty list
     }
 
-    // Helper method to create a list
-    static LinkedList<T> CreateList<T>(T[] arr)
+    static void TestNthFromEnd(LinkedList<int> list, int n, int? expectedValue)
     {
-        LinkedList<T> list = new LinkedList<T>();
-        foreach (T value in arr)
-        {
-            list.AddLast(new Node<T>(value));
-        }
-        return list;
-    }
+        Node<int>? result = list.NthNodeFromEnd(n);
 
-    // Test method to verify list reversal
-    static void TestReverse<T>(LinkedList<T> list, T[] expectedOrder)
-    {
-        list.Reverse();
-
-        Node<T> current = list.First;
-        bool isCorrect = true;
-
-        for (int i = 0; i < expectedOrder.Length; i++)
-        {
-            if (current == null || !current.Data.Equals(expectedOrder[i]))
-            {
-                isCorrect = false;
-                break;
-            }
-            current = current.Next;
-        }
-
-        // Check if list length matches
-        isCorrect = isCorrect && (current == null) && (expectedOrder.Length >= 0);
+        bool isCorrect = (result == null && expectedValue == null) ||
+                         (result != null && result.Data == expectedValue);
 
         Console.WriteLine(isCorrect
-            ? "✓ List correctly reversed"
-            : "✗ List reversal failed");
+            ? $"✓ Correctly found {n}th node from end: {result?.Data}"
+            : $"✗ Expected {expectedValue}, got {result?.Data}");
     }
     public class Node<T>
     {
@@ -129,7 +100,7 @@
         }
 
         public void Reverse()
-         {
+        {
             if (!(First == null || Count == 0))
             {
                 Node<T>? prev = null;
@@ -149,6 +120,30 @@
 
                 First = prev;
             }
+        }
+
+        public Node<T>? NthNodeFromEnd(int n)
+        {
+            if (n <= Count)
+            {
+                Node<T>? q = First;
+                Node<T>? p = First;
+
+                for (int i = 0; i < n; i++)
+                {
+                    q = q?.Next;
+                }
+
+                while (q != null)
+                {
+                    q = q?.Next;
+                    p = p?.Next;
+                }
+
+                return p;
+            }
+
+            return null;
         }
     }
 }
