@@ -2,87 +2,62 @@
 {
     static void Main(string[] args)
     {
-        // Test Case 1: Empty List (No Loop)
-        Console.WriteLine("Test Case 1: Empty List (No Loop)");
+        // Test Case 1: Empty List
+        Console.WriteLine("Test Case 1: Empty List");
         LinkedList<int> emptyList = new LinkedList<int>();
-        TestFindLoop(emptyList, false);
+        TestReverse(emptyList, new int[] { });
 
-        // Test Case 2: Single Element List (No Loop)
-        Console.WriteLine("\nTest Case 2: Single Element List (No Loop)");
-        LinkedList<int> singleElementList = new LinkedList<int>();
-        singleElementList.AddLast(new Node<int>(10));
-        TestFindLoop(singleElementList, false);
+        // Test Case 2: Single Element List
+        Console.WriteLine("\nTest Case 2: Single Element List");
+        LinkedList<int> singleElementList = CreateList(new int[] { 10 });
+        TestReverse(singleElementList, new int[] { 10 });
 
-        // Test Case 3: List with No Loop
-        Console.WriteLine("\nTest Case 3: List with No Loop");
-        LinkedList<int> noLoopList = new LinkedList<int>();
-        int[] noLoopArray = new int[] { 1, 2, 3, 4, 5 };
-        foreach (int value in noLoopArray)
-        {
-            noLoopList.AddLast(new Node<int>(value));
-        }
-        TestFindLoop(noLoopList, false);
+        // Test Case 3: Two Element List
+        Console.WriteLine("\nTest Case 3: Two Element List");
+        LinkedList<int> twoElementList = CreateList(new int[] { 1, 2 });
+        TestReverse(twoElementList, new int[] { 2, 1 });
 
-        // Test Case 4: List with Loop at End
-        Console.WriteLine("\nTest Case 4: List with Loop at End");
-        LinkedList<int> endLoopList = CreateListWithLoop(new int[] { 1, 2, 3, 4, 5 }, 0);
-        TestFindLoop(endLoopList, true);
-
-        // Test Case 5: List with Loop in Middle
-        Console.WriteLine("\nTest Case 5: List with Loop in Middle");
-        LinkedList<int> middleLoopList = CreateListWithLoop(new int[] { 1, 2, 3, 4, 5 }, 2);
-        TestFindLoop(middleLoopList, true);
-
-        // Test Case 6: List with Single Element Loop
-        Console.WriteLine("\nTest Case 6: List with Single Element Loop");
-        LinkedList<int> singleElementLoopList = CreateListWithLoop(new int[] { 1 }, 0);
-        TestFindLoop(singleElementLoopList, true);
+        // Test Case 4: Multiple Element List
+        Console.WriteLine("\nTest Case 4: Multiple Element List");
+        LinkedList<int> multiElementList = CreateList(new int[] { 1, 2, 3, 4, 5 });
+        TestReverse(multiElementList, new int[] { 5, 4, 3, 2, 1 });
     }
 
-    // Helper method to create a list with a loop
-    static LinkedList<T> CreateListWithLoop<T>(T[] arr, int loopIndex)
+    // Helper method to create a list
+    static LinkedList<T> CreateList<T>(T[] arr)
     {
         LinkedList<T> list = new LinkedList<T>();
-
-        // Create nodes and add them to the list
-        Node<T>[] nodes = new Node<T>[arr.Length];
-        for (int i = 0; i < arr.Length; i++)
+        foreach (T value in arr)
         {
-            nodes[i] = new Node<T>(arr[i]);
-            list.AddLast(nodes[i]);
+            list.AddLast(new Node<T>(value));
         }
-
-        if (loopIndex >= 0 && loopIndex < nodes.Length)
-        {
-            // Find the last node
-            Node<T> curr = list.First;
-            while (curr.Next != null)
-            {
-                curr = curr.Next;
-            }
-
-            // Connect last node to the loop start node
-            curr.Next = nodes[loopIndex];
-        }
-
         return list;
     }
 
-    // Test method to verify loop detection
-    static void TestFindLoop<T>(LinkedList<T> list, bool expectedLoopResult)
+    // Test method to verify list reversal
+    static void TestReverse<T>(LinkedList<T> list, T[] expectedOrder)
     {
-        try
-        {
-            bool hasLoop = list.FindLoop();
+        list.Reverse();
 
-            Console.WriteLine(hasLoop == expectedLoopResult
-                ? $"✓ Correctly detected loop: {hasLoop}"
-                : $"✗ Expected loop to be {expectedLoopResult}, but got {hasLoop}");
-        }
-        catch (Exception ex)
+        Node<T> current = list.First;
+        bool isCorrect = true;
+
+        for (int i = 0; i < expectedOrder.Length; i++)
         {
-            Console.WriteLine($"✗ Unexpected exception: {ex.Message}");
+            if (current == null || !current.Data.Equals(expectedOrder[i]))
+            {
+                isCorrect = false;
+                break;
+            }
+            current = current.Next;
         }
+
+        // Check if list length matches
+        isCorrect = isCorrect && (current == null) && (expectedOrder.Length >= 0);
+
+        Console.WriteLine(isCorrect
+            ? "✓ List correctly reversed"
+            : "✗ List reversal failed");
     }
     public class Node<T>
     {
@@ -151,6 +126,29 @@
             }
 
             return false;
+        }
+
+        public void Reverse()
+         {
+            if (!(First == null || Count == 0))
+            {
+                Node<T>? prev = null;
+                Node<T>? currNode = First;
+                //If we hadn't nullable types, we would set this to First.
+                Node<T>? nextNode = currNode.Next;
+
+                do
+                {
+                    currNode.Next = prev;
+                    prev = currNode;
+                    currNode = nextNode;
+
+                    nextNode = currNode?.Next;
+                }
+                while (currNode != null);
+
+                First = prev;
+            }
         }
     }
 }

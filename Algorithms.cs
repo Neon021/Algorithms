@@ -1212,9 +1212,163 @@ public class Algorithms
 
     #endregion
     #region Find Loop
+    //static void Main(string[] args)
+    //{
+    //    // Test Case 1: Empty List (No Loop)
+    //    Console.WriteLine("Test Case 1: Empty List (No Loop)");
+    //    LinkedList<int> emptyList = new LinkedList<int>();
+    //    TestFindLoop(emptyList, false);
+
+    //    // Test Case 2: Single Element List (No Loop)
+    //    Console.WriteLine("\nTest Case 2: Single Element List (No Loop)");
+    //    LinkedList<int> singleElementList = new LinkedList<int>();
+    //    singleElementList.AddLast(new Node<int>(10));
+    //    TestFindLoop(singleElementList, false);
+
+    //    // Test Case 3: List with No Loop
+    //    Console.WriteLine("\nTest Case 3: List with No Loop");
+    //    LinkedList<int> noLoopList = new LinkedList<int>();
+    //    int[] noLoopArray = new int[] { 1, 2, 3, 4, 5 };
+    //    foreach (int value in noLoopArray)
+    //    {
+    //        noLoopList.AddLast(new Node<int>(value));
+    //    }
+    //    TestFindLoop(noLoopList, false);
+
+    //    // Test Case 4: List with Loop at End
+    //    Console.WriteLine("\nTest Case 4: List with Loop at End");
+    //    LinkedList<int> endLoopList = CreateListWithLoop(new int[] { 1, 2, 3, 4, 5 }, 0);
+    //    TestFindLoop(endLoopList, true);
+
+    //    // Test Case 5: List with Loop in Middle
+    //    Console.WriteLine("\nTest Case 5: List with Loop in Middle");
+    //    LinkedList<int> middleLoopList = CreateListWithLoop(new int[] { 1, 2, 3, 4, 5 }, 2);
+    //    TestFindLoop(middleLoopList, true);
+
+    //    // Test Case 6: List with Single Element Loop
+    //    Console.WriteLine("\nTest Case 6: List with Single Element Loop");
+    //    LinkedList<int> singleElementLoopList = CreateListWithLoop(new int[] { 1 }, 0);
+    //    TestFindLoop(singleElementLoopList, true);
+    //}
+
+    //// Helper method to create a list with a loop
+    //static LinkedList<T> CreateListWithLoop<T>(T[] arr, int loopIndex)
+    //{
+    //    LinkedList<T> list = new LinkedList<T>();
+
+    //    // Create nodes and add them to the list
+    //    Node<T>[] nodes = new Node<T>[arr.Length];
+    //    for (int i = 0; i < arr.Length; i++)
+    //    {
+    //        nodes[i] = new Node<T>(arr[i]);
+    //        list.AddLast(nodes[i]);
+    //    }
+
+    //    if (loopIndex >= 0 && loopIndex < nodes.Length)
+    //    {
+    //        // Find the last node
+    //        Node<T> curr = list.First;
+    //        while (curr.Next != null)
+    //        {
+    //            curr = curr.Next;
+    //        }
+
+    //        // Connect last node to the loop start node
+    //        curr.Next = nodes[loopIndex];
+    //    }
+
+    //    return list;
+    //}
+
+    //// Test method to verify loop detection
+    //static void TestFindLoop<T>(LinkedList<T> list, bool expectedLoopResult)
+    //{
+    //    try
+    //    {
+    //        bool hasLoop = list.FindLoop();
+
+    //        Console.WriteLine(hasLoop == expectedLoopResult
+    //            ? $"✓ Correctly detected loop: {hasLoop}"
+    //            : $"✗ Expected loop to be {expectedLoopResult}, but got {hasLoop}");
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine($"✗ Unexpected exception: {ex.Message}");
+    //    }
+    //}
+    //public class Node<T>
+    //{
+    //    public T Data { get; set; }
+    //    public Node<T>? Next { get; internal set; }
+
+    //    public Node(T data)
+    //    {
+    //        this.Data = data;
+    //    }
+    //}
+
+    //public class LinkedList<T>
+    //{
+    //    public Node<T>? First { get; private set; }
+    //    public int Count { get; set; }
+
+    //    public LinkedList()
+    //    {
+    //        this.First = null;
+    //    }
+    //    public void AddLast(Node<T> node)
+    //    {
+    //        if (First == null)
+    //            First = node;
+    //        else
+    //        {
+    //            Node<T>? curr = First;
+    //            while (curr.Next != null)
+    //            {
+    //                curr = curr.Next;
+    //            }
+    //            curr.Next = node;
+    //        }
+
+    //        Count++;
+    //    }
+    //    public Node<T> LinkedListMiddle()
+    //    {
+    //        Node<T>? leftIdx = First, rightIdx = First;
+
+    //        while (leftIdx != null)
+    //        {
+    //            leftIdx = leftIdx.Next?.Next;
+    //            if (leftIdx != null)
+    //                rightIdx = rightIdx.Next;
+    //        }
+
+    //        return rightIdx;
+    //    }
+
+    //    public bool FindLoop()
+    //    {
+    //        if (First == null)
+    //            return false;
+
+    //        Node<T>? leftIdx = First, rightIdx = First;
+
+    //        while (leftIdx != null)
+    //        {
+    //            leftIdx = leftIdx.Next?.Next;
+    //            rightIdx = rightIdx.Next;
+
+    //            if (leftIdx == rightIdx)
+    //                return true;
+    //        }
+
+    //        return false;
+    //    }
+    //}
+    #endregion
+    #region 
 
     #endregion
-
     #endregion
 
     #endregion
@@ -2882,89 +3036,89 @@ public class Algorithms
     #region CriticalPointsBetweenNodes
     //static void Main(string[] args)
     //{
-        //// Creating the linked list: 5 -> 3 -> 1 -> 2 -> 5 -> 1 -> 2
-        //ListNode head = new ListNode(5);
-        //head.next = new ListNode(3);
-        //head.next.next = new ListNode(1);
-        //head.next.next.next = new ListNode(2);
-        //head.next.next.next.next = new ListNode(5);
-        //head.next.next.next.next.next = new ListNode(1);
-        //head.next.next.next.next.next.next = new ListNode(2);
+    //// Creating the linked list: 5 -> 3 -> 1 -> 2 -> 5 -> 1 -> 2
+    //ListNode head = new ListNode(5);
+    //head.next = new ListNode(3);
+    //head.next.next = new ListNode(1);
+    //head.next.next.next = new ListNode(2);
+    //head.next.next.next.next = new ListNode(5);
+    //head.next.next.next.next.next = new ListNode(1);
+    //head.next.next.next.next.next.next = new ListNode(2);
 
-        //// Calling the NodesBetweenCriticalPoints method
-        //int[] result = NodesBetweenCriticalPoints(head);
+    //// Calling the NodesBetweenCriticalPoints method
+    //int[] result = NodesBetweenCriticalPoints(head);
 
-        //// Printing the result
-        //Console.WriteLine($"[{result[0]}, {result[1]}]");
-
-
-
-
-
-
-        //// Creating the linked list: 1 -> 3 -> 2 -> 2 -> 3 -> 2 -> 2 -> 2 -> 7
-        //ListNode head = new ListNode(1);
-        //head.next = new ListNode(3);
-        //head.next.next = new ListNode(2);
-        //head.next.next.next = new ListNode(2);
-        //head.next.next.next.next = new ListNode(3);
-        //head.next.next.next.next.next = new ListNode(2);
-        //head.next.next.next.next.next.next = new ListNode(2);
-        //head.next.next.next.next.next.next.next = new ListNode(2);
-        //head.next.next.next.next.next.next.next.next = new ListNode(7);
-
-        //// Calling the NodesBetweenCriticalPoints method
-        //int[] result = NodesBetweenCriticalPoints(head);
-
-        //// Printing the result
-        //Console.WriteLine($"[{result[0]}, {result[1]}]");
+    //// Printing the result
+    //Console.WriteLine($"[{result[0]}, {result[1]}]");
 
 
 
 
 
 
-        //// Creating the linked list with the specified values
-        //int[] values = new int[] {
-        //    19, 35, 33, 43, 53, 85, 15, 27, 86, 23, 80, 30, 37, 86, 32, 59, 90, 99, 68, 44, 20, 68, 47, 15, 19, 23, 73, 30, 70, 74,
-        //    68, 100, 42, 82, 82, 70, 27, 82, 32, 6, 47, 49, 97, 23, 63, 78, 94, 93, 22, 25, 52, 94
-        //};
+    //// Creating the linked list: 1 -> 3 -> 2 -> 2 -> 3 -> 2 -> 2 -> 2 -> 7
+    //ListNode head = new ListNode(1);
+    //head.next = new ListNode(3);
+    //head.next.next = new ListNode(2);
+    //head.next.next.next = new ListNode(2);
+    //head.next.next.next.next = new ListNode(3);
+    //head.next.next.next.next.next = new ListNode(2);
+    //head.next.next.next.next.next.next = new ListNode(2);
+    //head.next.next.next.next.next.next.next = new ListNode(2);
+    //head.next.next.next.next.next.next.next.next = new ListNode(7);
 
-        //ListNode head = new ListNode(values[0]);
-        //ListNode current = head;
-        //for (int i = 1; i < values.Length; i++)
-        //{
-        //    current.next = new ListNode(values[i]);
-        //    current = current.next;
-        //}
+    //// Calling the NodesBetweenCriticalPoints method
+    //int[] result = NodesBetweenCriticalPoints(head);
 
-        //// Calling the NodesBetweenCriticalPoints method
-        //int[] result = NodesBetweenCriticalPoints(head);
-
-        //// Printing the result
-        //Console.WriteLine($"[{result[0]}, {result[1]}]");
+    //// Printing the result
+    //Console.WriteLine($"[{result[0]}, {result[1]}]");
 
 
 
 
-        //// Creating the linked list with the specified values: 6 -> 8 -> 4 -> 1 -> 9 -> 6 -> 6 -> 10 -> 6
-        //int[] values = new int[] { 6, 8, 4, 1, 9, 6, 6, 10, 6 };
 
-        //ListNode head = new ListNode(values[0]);
-        //ListNode current = head;
-        //for (int i = 1; i < values.Length; i++)
-        //{
-        //    current.next = new ListNode(values[i]);
-        //    current = current.next;
-        //}
 
-        //// Calling the NodesBetweenCriticalPoints method
-        //int[] result = NodesBetweenCriticalPoints(head);
+    //// Creating the linked list with the specified values
+    //int[] values = new int[] {
+    //    19, 35, 33, 43, 53, 85, 15, 27, 86, 23, 80, 30, 37, 86, 32, 59, 90, 99, 68, 44, 20, 68, 47, 15, 19, 23, 73, 30, 70, 74,
+    //    68, 100, 42, 82, 82, 70, 27, 82, 32, 6, 47, 49, 97, 23, 63, 78, 94, 93, 22, 25, 52, 94
+    //};
 
-        //// Printing the result
-        //Console.WriteLine($"[{result[0]}, {result[1]}]");
+    //ListNode head = new ListNode(values[0]);
+    //ListNode current = head;
+    //for (int i = 1; i < values.Length; i++)
+    //{
+    //    current.next = new ListNode(values[i]);
+    //    current = current.next;
     //}
-        public static int[] NodesBetweenCriticalPoints(ListNode head)
+
+    //// Calling the NodesBetweenCriticalPoints method
+    //int[] result = NodesBetweenCriticalPoints(head);
+
+    //// Printing the result
+    //Console.WriteLine($"[{result[0]}, {result[1]}]");
+
+
+
+
+    //// Creating the linked list with the specified values: 6 -> 8 -> 4 -> 1 -> 9 -> 6 -> 6 -> 10 -> 6
+    //int[] values = new int[] { 6, 8, 4, 1, 9, 6, 6, 10, 6 };
+
+    //ListNode head = new ListNode(values[0]);
+    //ListNode current = head;
+    //for (int i = 1; i < values.Length; i++)
+    //{
+    //    current.next = new ListNode(values[i]);
+    //    current = current.next;
+    //}
+
+    //// Calling the NodesBetweenCriticalPoints method
+    //int[] result = NodesBetweenCriticalPoints(head);
+
+    //// Printing the result
+    //Console.WriteLine($"[{result[0]}, {result[1]}]");
+    //}
+    public static int[] NodesBetweenCriticalPoints(ListNode head)
     {
         int[] res = new int[] { int.MaxValue, -1 };
         List<int> indexes = new();
