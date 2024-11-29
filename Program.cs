@@ -2,48 +2,44 @@
 {
     static void Main(string[] args)
     {
-        // Scenario 1: No Intersection
-        LinkedList<int> list1 = CreateList(new int[] { 1, 2, 3, 4 });
-        LinkedList<int> list2 = CreateList(new int[] { 5, 6, 7 });
-        TestIntersection(list1, list2, null);
-
-        // Scenario 2: Intersection at End
-        Node<int> sharedNode = new Node<int>(10);
-        list1.AddLast(sharedNode);
-        list2.AddLast(sharedNode);
-        TestIntersection(list1, list2, sharedNode);
-
-        // Scenario 3: Intersection in Middle
-        LinkedList<int> list3 = CreateList(new int[] { 1, 2 });
-        list3.AddLast(sharedNode);
-        TestIntersection(list1, list3, sharedNode);
-
-        // Scenario 4: One Empty List
-        LinkedList<int> emptyList = new LinkedList<int>();
-        TestIntersection(list1, emptyList, null);
+        IDunno(8);
     }
 
-    static LinkedList<int> CreateList(int[] arr)
+    public static void IDunno(int lineCount)
     {
-        LinkedList<int> list = new LinkedList<int>();
-        foreach (int val in arr)
+        int[] fibonacciSeries = new int[lineCount];
+        Fibonacci(lineCount);
+
+        for (int lineNumber = 1; lineNumber < lineCount; lineNumber++)
         {
-            list.AddLast(new Node<int>(val));
+            int firstIntOftheLine = fibonacciSeries[lineNumber];
+            Console.Write(firstIntOftheLine);
+            for (int j = 1; j < lineNumber; j++)
+            {
+                int nextNumber = (firstIntOftheLine + (lineNumber * j));
+                Console.Write(" " + nextNumber);
+            }
+            Console.WriteLine("");
         }
-        return list;
+
+        #region Fibonacci Functions
+        void Fibonacci(int n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                fibonacciSeries[i] = GetFibonacci(i); // Store the Fibonacci result at the current index
+            }
+        }
+
+        int GetFibonacci(int n)
+        {
+            if (n == 0 || n == 1)
+                return n;
+            else
+                return GetFibonacci(n - 1) + GetFibonacci(n - 2);
+        }
+        #endregion
     }
-
-    static void TestIntersection(LinkedList<int> list1, LinkedList<int> list2, Node<int> expectedIntersection)
-    {
-        Node<int>? result = list1.IntersectionPointofTwoLinkedLists(list2);
-        bool isCorrect = result == expectedIntersection;
-
-        Console.WriteLine(isCorrect
-            ? "✓ Intersection point correctly identified"
-            : "✗ Incorrect intersection point");
-    }
-
-
 
     public class Node<T>
     {
