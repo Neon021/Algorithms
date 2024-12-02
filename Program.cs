@@ -43,7 +43,7 @@
         PrintListBackward(GetLastNode(list.First));
 
         // Reverse the list
-        list.Reverse();
+        list.RecursiveReverse(list.First);
 
         // Print reversed list (forward)
         Console.WriteLine("\nReversed List (Forward):");
@@ -149,7 +149,7 @@
             Count++;
         }
 
-        public void Reverse()
+        public void ImperativeReverse()
         {
             if (Count <= 1)
                 return;
@@ -177,6 +177,25 @@
                     currNode = null;
                 }
             }
+        }
+
+        public void RecursiveReverse(Node<T>? currentNode)
+        {
+            if (Count <= 1 || currentNode == null)
+                return;
+
+            Node<T>? currNode = currentNode;
+            Node<T>? prevNode = currentNode?.Previous;
+            Node<T>? nextNode = currentNode?.Next;
+
+
+            currNode.Previous = nextNode;
+            currNode.Next = prevNode;
+            currNode = nextNode;
+
+            //How to avoid settings First at every iteration?
+            First = currentNode;
+            RecursiveReverse(currNode);
         }
     }
 }
