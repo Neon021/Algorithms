@@ -4,24 +4,24 @@
     {
         // Test Case 1: Empty List Reversal
         Console.WriteLine("Test Case 1: Empty List");
-        TestReversal(new LinkedList<int>());
+        TestReversal(new DoublyLinkedList<int>());
 
         // Test Case 2: Single Element List
         Console.WriteLine("\nTest Case 2: Single Element List");
-        var singleElementList = new LinkedList<int>();
+        var singleElementList = new DoublyLinkedList<int>();
         singleElementList.AddLast(new Node<int>(42));
         TestReversal(singleElementList);
 
         // Test Case 3: Two Element List
         Console.WriteLine("\nTest Case 3: Two Element List");
-        var twoElementList = new LinkedList<int>();
+        var twoElementList = new DoublyLinkedList<int>();
         twoElementList.AddLast(new Node<int>(1));
         twoElementList.AddLast(new Node<int>(2));
         TestReversal(twoElementList);
 
         // Test Case 4: Multiple Element List
         Console.WriteLine("\nTest Case 4: Multiple Element List");
-        var multiElementList = new LinkedList<int>();
+        var multiElementList = new DoublyLinkedList<int>();
         multiElementList.AddLast(new Node<int>(1));
         multiElementList.AddLast(new Node<int>(2));
         multiElementList.AddLast(new Node<int>(3));
@@ -31,24 +31,33 @@
     }
 
     // Helper method to test list reversal and print results
-    static void TestReversal(LinkedList<int> list)
+    static void TestReversal(DoublyLinkedList<int> list)
     {
-        // Print original list
-        Console.WriteLine("Original List:");
-        PrintList(list.First);
+        // Print original list (forward)
+        Console.WriteLine("Original List (Forward):");
+        PrintListForward(list.First);
         Console.WriteLine($"Original Count: {list.Count}");
 
-        // Reverse the list
-        list.RecursiveReverse(list.First);
+        // Print original list (backward)
+        Console.WriteLine("\nOriginal List (Backward):");
+        PrintListBackward(GetLastNode(list.First));
 
-        // Print reversed list
-        Console.WriteLine("Reversed List:");
-        PrintList(list.First);
+        // Reverse the list
+        list.Reverse();
+
+        // Print reversed list (forward)
+        Console.WriteLine("\nReversed List (Forward):");
+        PrintListForward(list.First);
+
+        // Print reversed list (backward)
+        Console.WriteLine("\nReversed List (Backward):");
+        PrintListBackward(GetLastNode(list.First));
+
         Console.WriteLine($"Reversed Count: {list.Count}");
     }
 
-    // Helper method to print the list
-    static void PrintList(Node<int>? head)
+    // Helper method to print the list forward
+    static void PrintListForward(Node<int>? head)
     {
         if (head == null)
         {
@@ -65,23 +74,55 @@
         Console.WriteLine("null");
     }
 
+    // Helper method to print the list backward
+    static void PrintListBackward(Node<int>? tail)
+    {
+        if (tail == null)
+        {
+            Console.WriteLine("Empty list");
+            return;
+        }
+
+        Node<int>? current = tail;
+        while (current != null)
+        {
+            Console.Write(current.Data + " -> ");
+            current = current.Previous;
+        }
+        Console.WriteLine("null");
+    }
+
+    // Helper method to get the last node
+    static Node<int>? GetLastNode(Node<int>? head)
+    {
+        if (head == null) return null;
+
+        Node<int>? current = head;
+        while (current.Next != null)
+        {
+            current = current.Next;
+        }
+        return current;
+    }
+
+
     public class Node<T>
     {
         public T Data { get; set; }
         public Node<T>? Next { get; internal set; }
+        public Node<T>? Previous { get; internal set; }
 
         public Node(T data)
         {
             this.Data = data;
         }
     }
-
-    public class LinkedList<T>
+    public class DoublyLinkedList<T>
     {
         public Node<T>? First { get; private set; }
         public int Count { get; set; }
 
-        public LinkedList()
+        public DoublyLinkedList()
         {
             this.First = null;
         }
@@ -89,6 +130,11 @@
         {
             if (First == null)
                 First = node;
+            else if (Count == 1)
+            {
+                First.Next = node;
+                node.Previous = First;
+            }
             else
             {
                 Node<T>? curr = First;
@@ -97,144 +143,40 @@
                     curr = curr.Next;
                 }
                 curr.Next = node;
+                node.Previous = curr;
             }
 
             Count++;
         }
-        public Node<T> LinkedListMiddle()
-        {
-            Node<T>? leftIdx = First, rightIdx = First;
-
-            while (leftIdx != null)
-            {
-                leftIdx = leftIdx.Next?.Next;
-                if (leftIdx != null)
-                    rightIdx = rightIdx.Next;
-            }
-
-            return rightIdx;
-        }
-
-        public bool FindLoop()
-        {
-            if (First == null)
-                return false;
-
-            Node<T>? leftIdx = First, rightIdx = First;
-
-            while (leftIdx != null)
-            {
-                leftIdx = leftIdx.Next?.Next;
-                rightIdx = rightIdx.Next;
-
-                if (leftIdx == rightIdx)
-                    return true;
-            }
-
-            return false;
-        }
 
         public void Reverse()
         {
-            if (!(First == null || Count == 0))
-            {
-                Node<T>? prev = null;
-                Node<T>? currNode = First;
-                //If we hadn't nullable types, we would set this to First.
-                Node<T>? nextNode = currNode.Next;
+            if (Count <= 1)
+                return;
 
-                do
+            Node<T>? currNode = First;
+            Node<T>? nextNode = First?.Next;
+            Node<T>? prevNode = First?.Previous;
+
+            //we could've used do/while but for that we should've cheked the null status of currNode before
+            //since we utilize the nullable types feature of C# we skip that.
+            while (currNode != null)
+            {
+                currNode.Previous = nextNode;
+                currNode.Next = prevNode;
+                if (currNode.Previous != null)
                 {
-                    currNode.Next = prev;
-                    prev = currNode;
                     currNode = nextNode;
 
                     nextNode = currNode?.Next;
+                    prevNode = currNode?.Previous;
                 }
-                while (currNode != null);
-
-                First = prev;
-            }
-        }
-
-        public void RecursiveReverse(Node<T>? currentNode, Node<T>? previousNode = null)
-        {
-            if (currentNode == null)
-                First = previousNode;
-            else
-            {
-                Node<T>? prev = previousNode;
-                Node<T>? currNode = currentNode;
-                Node<T>? nextNode = currNode.Next;
-
-                currentNode.Next = prev;
-                prev = currentNode;
-                currNode = nextNode;
-
-                RecursiveReverse(currNode, prev);
-            }
-        }
-
-        public Node<T>? NthNodeFromEnd(int n)
-        {
-            if (n <= Count)
-            {
-                Node<T>? q = First;
-                Node<T>? p = First;
-
-                for (int i = 0; i < n; i++)
+                else
                 {
-                    q = q?.Next;
-                }
-
-                while (q != null)
-                {
-                    q = q?.Next;
-                    p = p?.Next;
-                }
-
-                return p;
-            }
-
-            return null;
-        }
-
-        public Node<T>? IntersectionPointofTwoLinkedLists(LinkedList<T> otherLinkedList)
-        {
-            if (otherLinkedList != null && otherLinkedList.First != null && First != null)
-            {
-                Node<T>? p = First;
-                Node<T>? q = otherLinkedList.First;
-
-                if (Count < otherLinkedList.Count)
-                {
-                    int skipCount = otherLinkedList.Count - Count;
-                    while (q != null && skipCount != 0)
-                    {
-                        q = q?.Next;
-                    }
-                }
-                else if (Count > otherLinkedList.Count)
-                {
-                    int skipCount = Count - otherLinkedList.Count;
-                    while (p != null && skipCount != 0)
-                    {
-                        p = p?.Next;
-                        skipCount--;
-                    }
-                }
-
-
-                while (p?.Next != null && q?.Next != null)
-                {
-                    p = p.Next;
-                    q = q.Next;
-                    if (p == q)
-                        return p;
+                    First = currNode;
+                    currNode = null;
                 }
             }
-
-            return null;
         }
     }
 }
