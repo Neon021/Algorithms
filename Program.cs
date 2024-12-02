@@ -2,43 +2,67 @@
 {
     static void Main(string[] args)
     {
-        IDunno(8);
+        // Test Case 1: Empty List Reversal
+        Console.WriteLine("Test Case 1: Empty List");
+        TestReversal(new LinkedList<int>());
+
+        // Test Case 2: Single Element List
+        Console.WriteLine("\nTest Case 2: Single Element List");
+        var singleElementList = new LinkedList<int>();
+        singleElementList.AddLast(new Node<int>(42));
+        TestReversal(singleElementList);
+
+        // Test Case 3: Two Element List
+        Console.WriteLine("\nTest Case 3: Two Element List");
+        var twoElementList = new LinkedList<int>();
+        twoElementList.AddLast(new Node<int>(1));
+        twoElementList.AddLast(new Node<int>(2));
+        TestReversal(twoElementList);
+
+        // Test Case 4: Multiple Element List
+        Console.WriteLine("\nTest Case 4: Multiple Element List");
+        var multiElementList = new LinkedList<int>();
+        multiElementList.AddLast(new Node<int>(1));
+        multiElementList.AddLast(new Node<int>(2));
+        multiElementList.AddLast(new Node<int>(3));
+        multiElementList.AddLast(new Node<int>(4));
+        multiElementList.AddLast(new Node<int>(5));
+        TestReversal(multiElementList);
     }
 
-    public static void IDunno(int lineCount)
+    // Helper method to test list reversal and print results
+    static void TestReversal(LinkedList<int> list)
     {
-        int[] fibonacciSeries = new int[lineCount];
-        Fibonacci(lineCount);
+        // Print original list
+        Console.WriteLine("Original List:");
+        PrintList(list.First);
+        Console.WriteLine($"Original Count: {list.Count}");
 
-        for (int lineNumber = 1; lineNumber < lineCount; lineNumber++)
+        // Reverse the list
+        list.RecursiveReverse(list.First);
+
+        // Print reversed list
+        Console.WriteLine("Reversed List:");
+        PrintList(list.First);
+        Console.WriteLine($"Reversed Count: {list.Count}");
+    }
+
+    // Helper method to print the list
+    static void PrintList(Node<int>? head)
+    {
+        if (head == null)
         {
-            int firstIntOftheLine = fibonacciSeries[lineNumber];
-            Console.Write(firstIntOftheLine);
-            for (int j = 1; j < lineNumber; j++)
-            {
-                int nextNumber = (firstIntOftheLine + (lineNumber * j));
-                Console.Write(" " + nextNumber);
-            }
-            Console.WriteLine("");
+            Console.WriteLine("Empty list");
+            return;
         }
 
-        #region Fibonacci Functions
-        void Fibonacci(int n)
+        Node<int>? current = head;
+        while (current != null)
         {
-            for (int i = 0; i < n; i++)
-            {
-                fibonacciSeries[i] = GetFibonacci(i); // Store the Fibonacci result at the current index
-            }
+            Console.Write(current.Data + " -> ");
+            current = current.Next;
         }
-
-        int GetFibonacci(int n)
-        {
-            if (n == 0 || n == 1)
-                return n;
-            else
-                return GetFibonacci(n - 1) + GetFibonacci(n - 2);
-        }
-        #endregion
+        Console.WriteLine("null");
     }
 
     public class Node<T>
@@ -130,6 +154,24 @@
                 while (currNode != null);
 
                 First = prev;
+            }
+        }
+
+        public void RecursiveReverse(Node<T>? currentNode, Node<T>? previousNode = null)
+        {
+            if (currentNode == null)
+                First = previousNode;
+            else
+            {
+                Node<T>? prev = previousNode;
+                Node<T>? currNode = currentNode;
+                Node<T>? nextNode = currNode.Next;
+
+                currentNode.Next = prev;
+                prev = currentNode;
+                currNode = nextNode;
+
+                RecursiveReverse(currNode, prev);
             }
         }
 

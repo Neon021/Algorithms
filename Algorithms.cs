@@ -647,6 +647,41 @@ public class Algorithms
             });
     }
 
+    public static void IDunno(int lineCount)
+    {
+        int[] fibonacciSeries = new int[lineCount];
+        Fibonacci(lineCount);
+
+        for (int lineNumber = 1; lineNumber < lineCount; lineNumber++)
+        {
+            int firstIntOftheLine = fibonacciSeries[lineNumber];
+            Console.Write(firstIntOftheLine);
+            for (int j = 1; j < lineNumber; j++)
+            {
+                int nextNumber = (firstIntOftheLine + (lineNumber * j));
+                Console.Write(" " + nextNumber);
+            }
+            Console.WriteLine("");
+        }
+
+        #region Fibonacci Functions
+        void Fibonacci(int n)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                fibonacciSeries[i] = GetFibonacci(i); // Store the Fibonacci result at the current index
+            }
+        }
+
+        int GetFibonacci(int n)
+        {
+            if (n == 0 || n == 1)
+                return n;
+            else
+                return GetFibonacci(n - 1) + GetFibonacci(n - 2);
+        }
+        #endregion
+    }
 
     //ACKERMANN'S FUNCTION:
 
