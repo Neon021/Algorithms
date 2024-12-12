@@ -208,10 +208,31 @@ public class LinkedList<T>
         for (Node<T>? curr = this.First; curr != null; curr = curr.Next)
         {
             Node<T>? ptr = slow;
+
             //To make sure that ptr points to the first node in the cycle
+            //NO THE ABOVE REASON IS NOT THE CASE FOR THIS WHIILE LOOP
+
+            //Instead, it's here to get the "ptr" to the Node whose "Next" is "curr"; which will be the node that starts the cycle
+            //In short, to find the node that points to the "curr" node
+            //Also the reason for "&&" is to avoid stucking in the while loop
+            //since "slow" doesn't guaranteed to point to the first node in the cycle,
+            //it might be pointing to a middle node in the cycle.
+            //FOR EXAMPLE
+            //1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+            //          ↑-------------------←
+            //"curr" would be "1"
+            //and "ptr" could be "6".
+            //In that case, the first condition of the while will *never* be false
+            //so we need to check if we circled back to "slow" pointer.
+            //Actually, most of the time the second condition will break the loop;
+            //in cases of where the first node is incorporated in the cycle,
+            //that's when the first condition will be helpful.
+
             while (ptr?.Next != curr && ptr?.Next != slow)
                 ptr = ptr?.Next;
 
+
+            //When the "curr" will get to "3" this condiiton will be met
             if (ptr?.Next == curr)
             {
                 ptr.Next = null;
