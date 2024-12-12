@@ -2152,6 +2152,171 @@ public class Algorithms
     #endregion
     #region Remove Cycle
 
+    #region Hashing
+    //    public static void Main()
+    //    {
+    //        Console.WriteLine("Test Case 1: Empty List");
+    //        var emptyList = new LinkedList<int>();
+    //        Console.WriteLine("Before:");
+    //        emptyList.PrintList();
+    //        emptyList.RemoveCycleHashing();
+    //        Console.WriteLine("After:");
+    //        emptyList.PrintList();
+    //        Console.WriteLine();
+
+    //        Console.WriteLine("Test Case 2: Single Node, No Cycle");
+    //        var singleNodeList = new LinkedList<int>();
+    //        singleNodeList.AddLast(new Node<int>(10));
+    //        Console.WriteLine("Before:");
+    //        singleNodeList.PrintList();
+    //        singleNodeList.RemoveCycleHashing();
+    //        Console.WriteLine("After:");
+    //        singleNodeList.PrintList();
+    //        Console.WriteLine();
+
+    //        Console.WriteLine("Test Case 3: Single Node, Cycle");
+    //        var singleNodeCycle = new LinkedList<int>();
+    //        var node = new Node<int>(20);
+    //        node.Next = node; // Create a cycle
+    //        singleNodeCycle.AddLast(node);
+    //        Console.WriteLine("Before:");
+    //        singleNodeCycle.PrintList();
+    //        singleNodeCycle.RemoveCycleHashing();
+    //        Console.WriteLine("After:");
+    //        singleNodeCycle.PrintList();
+    //        Console.WriteLine();
+
+    //        Console.WriteLine("Test Case 4: Multiple Nodes, No Cycle");
+    //        var noCycleList = new LinkedList<int>();
+    //        noCycleList.AddLast(new Node<int>(1));
+    //        noCycleList.AddLast(new Node<int>(2));
+    //        noCycleList.AddLast(new Node<int>(3));
+    //        Console.WriteLine("Before:");
+    //        noCycleList.PrintList();
+    //        noCycleList.RemoveCycleHashing();
+    //        Console.WriteLine("After:");
+    //        noCycleList.PrintList();
+    //        Console.WriteLine();
+
+    //        Console.WriteLine("Test Case 5: Multiple Nodes, Cycle in Middle");
+    //        var midCycleList = new LinkedList<int>();
+    //        var node1 = new Node<int>(1);
+    //        var node2 = new Node<int>(2);
+    //        var node3 = new Node<int>(3);
+    //        midCycleList.AddLast(node1);
+    //        midCycleList.AddLast(node2);
+    //        midCycleList.AddLast(node3);
+    //        node3.Next = node2; // Create a cycle
+    //        Console.WriteLine("Before:");
+    //        midCycleList.PrintList();
+    //        midCycleList.RemoveCycleHashing();
+    //        Console.WriteLine("After:");
+    //        midCycleList.PrintList();
+    //        Console.WriteLine();
+
+    //        Console.WriteLine("Test Case 6: Multiple Nodes, Cycle at End");
+    //        var fullCycleList = new LinkedList<int>();
+    //        var nodeA = new Node<int>(1);
+    //        var nodeB = new Node<int>(2);
+    //        var nodeC = new Node<int>(3);
+    //        fullCycleList.AddLast(nodeA);
+    //        fullCycleList.AddLast(nodeB);
+    //        fullCycleList.AddLast(nodeC);
+    //        nodeC.Next = nodeA; // Create a full cycle
+    //        Console.WriteLine("Before:");
+    //        fullCycleList.PrintList();
+    //        fullCycleList.RemoveCycleHashing();
+    //        Console.WriteLine("After:");
+    //        fullCycleList.PrintList();
+    //        Console.WriteLine();
+    //    }
+    //}
+    //public class Node<T>
+    //{
+    //    public T Data { get; set; }
+    //    public Node<T>? Next { get; internal set; }
+
+    //    public Node(T data)
+    //    {
+    //        this.Data = data;
+    //    }
+    //}
+
+    //public class LinkedList<T>
+    //{
+    //    public Node<T>? First { get; private set; }
+    //    public int Count { get; private set; }
+
+    //    public LinkedList()
+    //    {
+    //        this.First = null;
+    //    }
+
+    //    public void AddLast(Node<T> node)
+    //    {
+    //        if (First == null)
+    //            First = node;
+    //        else
+    //        {
+    //            Node<T>? curr = First;
+    //            while (curr.Next != null)
+    //            {
+    //                curr = curr.Next;
+    //            }
+    //            curr.Next = node;
+    //        }
+    //        Count++;
+    //    }
+
+    //    public void RemoveCycleHashing()
+    //    {
+    //        Node<T>? prev = null;
+    //        Node<T>? curr = this.First;
+    //        HashSet<Node<T>> prevNodes = new();
+
+    //        while (curr != null)
+    //        {
+    //            if (prevNodes.Contains(curr))
+    //            {
+    //                if (prev != null)
+    //                {
+    //                    prev.Next = null;
+    //                }
+    //                return;
+    //            }
+
+
+    //            prevNodes.Add(curr);
+    //            prev = curr;
+    //            curr = curr.Next;
+    //        }
+    //    }
+
+    //    public void PrintList()
+    //    {
+    //        Node<T>? curr = First;
+    //        HashSet<Node<T>> visited = new();
+    //        while (curr != null)
+    //        {
+    //            Console.Write($"{curr.Data} -> ");
+    //            if (visited.Contains(curr))
+    //            {
+    //                Console.WriteLine($"(cycle detected at {curr.Data})");
+    //                break;
+    //            }
+    //            visited.Add(curr);
+    //            curr = curr.Next;
+    //        }
+
+    //        if (curr == null)
+    //            Console.WriteLine("null");
+    //    }
+    //}
+
+    #endregion
+    #region Floyd's Algo
+
+    #endregion
     #endregion
     #endregion
 
@@ -2160,405 +2325,405 @@ public class Algorithms
 
 
     #region CODEWARS
-    public static string Likes(string[] names)
-    {
-        int count = names.Length;
-        switch (count)
-        {
-            case 0:
-                return "no one likes this";
-                break;
-
-            case 1:
-                return $"{names[0]} likes this";
-                break;
-
-            case 2:
-                return $"{names[0]} and {names[1]} like this";
-                break;
-
-            case 3:
-                return $"{names[0]}, {names[1]} and {names[2]} like this";
-
-            default:
-                return $"{names[0]}, {names[1]} and {count - 2} others like this";
-                break;
-        }
-    }
-
-
-    public static int CountBits(int n)
-    {
-        char[] c = Convert.ToString(n, 2).ToCharArray();
-
-        int answer = 0;
-        foreach (char bin in c)
-        {
-            if (bin.Equals('1'))
-            {
-                answer += 1; //? bin.Equals('1) : return;
-            }
-        }
-        return answer;
-    }
-
-
-    public static int CountBits_OneLiner(int n)
-    {
-        return Convert.ToString(n, 2).Count(x => x == '1');
-    }
-
-
-    //MySolution
-    public static string DuplicateEncode(string word)
-    {
-        word = word.ToLower();
-        string result = "";
-        for (int i = 0; i < word.Length; i++)
-        {
-            char ch = word[i];
-            result += word.LastIndexOf(ch) == word.IndexOf(ch) ? '(' : ')';
-        }
-        return result;
-    }
-
-    //Refactored after a year or so
-    public static string DuplicateEncode_Refactored(string word)
-    {
-        word = word.ToLower();
-        string result = "";
-        foreach (char ch in word)
-        {
-            result += word.LastIndexOf(ch) == word.IndexOf(ch) ? '(' : ')';
-        }
-        return result;
-    }
-
-
-    //BestPractice (yersen)
-    public static string DuplicateEncode_BestPractice(string word)
-    {
-        var disct = word.ToUpper().Distinct();
-        Dictionary<char, int> counts = new();
-
-        foreach (var c in word.ToUpper())
-        {
-            if (counts.ContainsKey(c))
-                counts[c]++;
-            else
-                counts.Add(c, 1);
-        }
-
-        StringBuilder builder = new();
-        foreach (var c in word.ToUpper())
-        {
-            if (counts[c] == 1)
-                builder.Append('(');
-            else
-                builder.Append(')');
-        }
-
-        return builder.ToString();
-    }
-
-
-
-
-
-    public static int[] ArrayDiff_Obvious(int[] a, int[] b)
-    {
-        return a.Except(b).ToArray();
-    }
-
-    public static int[] ArrayDiff(int[] a, int[] b)
-    {
-        return a.Where(m => b.Contains(m)).ToArray();
-    }
-
-
-
-
-    public static int[,] MultiplicationTable(int size)
-    {
-        int[,] table = new int[size, size];
-        //for loop will break if the size variable is 0. Apperantly for loop 
-        //incorporates some sort of while logic as well.
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < size; j++)
-            {
-                table[i, j] = (i + 1) * (j + 1);
-            }
-        }
-        return table;
-    }
-
-
-
-    //Bu da C++
-    //#include <vector>
-    //#include <iostream>
-    //using namespace std;
-    //vector<vector<int>> multiplication_table(int n)
+    //public static string Likes(string[] names)
     //{
-    //    vector<vector<int>> res;
-    //    for (int i = 1; i <= n; i++)
+    //    int count = names.Length;
+    //    switch (count)
     //    {
-    //        vector<int> tmp;
-    //        for (int j = 1; j <= n; j++)
-    //        {
-    //            tmp.push_back(i * j);
-    //        }
-    //        res.push_back(tmp);
+    //        case 0:
+    //            return "no one likes this";
+    //            break;
+
+    //        case 1:
+    //            return $"{names[0]} likes this";
+    //            break;
+
+    //        case 2:
+    //            return $"{names[0]} and {names[1]} like this";
+    //            break;
+
+    //        case 3:
+    //            return $"{names[0]}, {names[1]} and {names[2]} like this";
+
+    //        default:
+    //            return $"{names[0]}, {names[1]} and {count - 2} others like this";
+    //            break;
     //    }
-    //    return res;
+    //}
+
+
+    //public static int CountBits(int n)
+    //{
+    //    char[] c = Convert.ToString(n, 2).ToCharArray();
+
+    //    int answer = 0;
+    //    foreach (char bin in c)
+    //    {
+    //        if (bin.Equals('1'))
+    //        {
+    //            answer += 1; //? bin.Equals('1) : return;
+    //        }
+    //    }
+    //    return answer;
+    //}
+
+
+    //public static int CountBits_OneLiner(int n)
+    //{
+    //    return Convert.ToString(n, 2).Count(x => x == '1');
+    //}
+
+
+    ////MySolution
+    //public static string DuplicateEncode(string word)
+    //{
+    //    word = word.ToLower();
+    //    string result = "";
+    //    for (int i = 0; i < word.Length; i++)
+    //    {
+    //        char ch = word[i];
+    //        result += word.LastIndexOf(ch) == word.IndexOf(ch) ? '(' : ')';
+    //    }
+    //    return result;
+    //}
+
+    ////Refactored after a year or so
+    //public static string DuplicateEncode_Refactored(string word)
+    //{
+    //    word = word.ToLower();
+    //    string result = "";
+    //    foreach (char ch in word)
+    //    {
+    //        result += word.LastIndexOf(ch) == word.IndexOf(ch) ? '(' : ')';
+    //    }
+    //    return result;
+    //}
+
+
+    ////BestPractice (yersen)
+    //public static string DuplicateEncode_BestPractice(string word)
+    //{
+    //    var disct = word.ToUpper().Distinct();
+    //    Dictionary<char, int> counts = new();
+
+    //    foreach (var c in word.ToUpper())
+    //    {
+    //        if (counts.ContainsKey(c))
+    //            counts[c]++;
+    //        else
+    //            counts.Add(c, 1);
+    //    }
+
+    //    StringBuilder builder = new();
+    //    foreach (var c in word.ToUpper())
+    //    {
+    //        if (counts[c] == 1)
+    //            builder.Append('(');
+    //        else
+    //            builder.Append(')');
+    //    }
+
+    //    return builder.ToString();
     //}
 
 
 
 
-    //Tatsız olan (ama tek attım)
-    public static int Multipleof3or5(int value)
-    {
-        while (value! <= 0 /*value * -1 != +value && value != 0*/)
-        {
-            int sum = 0;
 
-            for (int i = 0; i < value; i++)
-            {
-                if (i % 3 == 0 && i % 5 == 0)
-                {
-                    sum += i;
-                }
-                else if (i % 3 == 0)
-                {
-                    sum += i;
-                }
-                else if (i % 5 == 0)
-                {
-                    sum += i;
-                }
-                else
-                    continue;
-            }
-            return sum;
-        }
+    //public static int[] ArrayDiff_Obvious(int[] a, int[] b)
+    //{
+    //    return a.Except(b).ToArray();
+    //}
 
-        return 0;
-    }
-
-
-    //Refactored one
-    public static int Multipleof3or5_Refactored(int value)
-    {
-        while (value! <= 0 /*value * -1 != +value && value != 0*/)
-        {
-            int sum = 0;
-
-            for (int i = 0; i < value; i++)
-            {
-                if (i % 3 == 0 || i % 5 == 0)
-                    sum += i;
-                else
-                    continue;
-            }
-            return sum;
-        }
-        return 0;
-    }
+    //public static int[] ArrayDiff(int[] a, int[] b)
+    //{
+    //    return a.Where(m => b.Contains(m)).ToArray();
+    //}
 
 
 
-    //Yine tek attım (https://www.youtube.com/watch?v=OjZcboiOjX4&ab_channel=Aleskut)
-    public static int FindMissing(List<int> list)
-    {
-        int difference = list[1] - list[0];
-        // int answer = 0;
-        // for(int i = 1; i < list.Count(); i++){
-        //     if(list[i] - list[i - 1] != difference){
-        //        return answer = list[i] - difference;
-        //     }
-        //     else
-        //         continue;
-        // } 
-        // return answer;
-        return list.First(x => !list.Contains(x - (x - difference)));
-    }
 
-
-    public static bool IsPrime(int n)
-    {
-        if (n >= 0)
-        {
-            if (n == 1 || n == 0)
-                return false;
-
-            for (int i = 2; i <= Math.Sqrt(n); i++)
-            {
-                if (n % i == 0)
-                    return false;
-            }
-        }
-        else
-        {
-            if (n == -1 || n == 0 || n == -2)
-                return false;
-
-            n = n * -1;
-            for (int i = 2; i <= Math.Sqrt(n); i++)
-            {
-                if (n % i == 0)
-                    return false;
-            }
-        }
-
-        return true;
-    }
-
-
-    //Better solution
-    public static bool IsPrime_OneLiner(int n)
-    {
-        return n > 1 && Enumerable.Range(2, (int)Math.Sqrt(n) - 1).All(i => n % i != 0);
-    }
+    //public static int[,] MultiplicationTable(int size)
+    //{
+    //    int[,] table = new int[size, size];
+    //    //for loop will break if the size variable is 0. Apperantly for loop 
+    //    //incorporates some sort of while logic as well.
+    //    for (int i = 0; i < size; i++)
+    //    {
+    //        for (int j = 0; j < size; j++)
+    //        {
+    //            table[i, j] = (i + 1) * (j + 1);
+    //        }
+    //    }
+    //    return table;
+    //}
 
 
 
-    public static bool Narcissistic(int input)
-    {
-        //Digits
-        List<int> list = input.ToString().Select(x => (int)char.GetNumericValue(x)).ToList();
-
-        //Sum of digits
-        double sum = 0;
-        list.ForEach(x =>
-        {
-            sum += Math.Pow(x, list.Count);
-        });
-
-        return sum == input;
-    }
-
-
-
-    public static string PascalCaseToSnakeCase(string input)
-    {
-        List<char> list = input.ToList();
-
-        for (int i = 0; i < list.Count; i++)
-        {
-            char c = list[i];
-            if (char.IsUpper(c) && i != 0)
-            {
-                list.Insert(i, '_');
-                list[i + 1] = char.ToLower(c);
-            }
-            else
-            {
-                list[i] = char.ToLower(c);
-            }
-        }
-
-        return string.Join("", list);
-    }
+    ////Bu da C++
+    ////#include <vector>
+    ////#include <iostream>
+    ////using namespace std;
+    ////vector<vector<int>> multiplication_table(int n)
+    ////{
+    ////    vector<vector<int>> res;
+    ////    for (int i = 1; i <= n; i++)
+    ////    {
+    ////        vector<int> tmp;
+    ////        for (int j = 1; j <= n; j++)
+    ////        {
+    ////            tmp.push_back(i * j);
+    ////        }
+    ////        res.push_back(tmp);
+    ////    }
+    ////    return res;
+    ////}
 
 
 
-    //çalışmıyor (divide by zero and overflow errors) :(
-    public static double Going(int n)
-    {
-        int factorial = Enumerable.Range(1, n).Aggregate(1, (p, item) => p * item);
-        decimal fraction = decimal.Divide(1, factorial);
 
-        List<int> ints = new();
+    ////Tatsız olan (ama tek attım)
+    //public static int Multipleof3or5(int value)
+    //{
+    //    while (value! <= 0 /*value * -1 != +value && value != 0*/)
+    //    {
+    //        int sum = 0;
 
-        for (int i = 1; i <= n; i++)
-        {
-            int result = Enumerable.Range(1, i).Aggregate(1, (p, item) => p * item);
-            ints.Add(result);
-        }
+    //        for (int i = 0; i < value; i++)
+    //        {
+    //            if (i % 3 == 0 && i % 5 == 0)
+    //            {
+    //                sum += i;
+    //            }
+    //            else if (i % 3 == 0)
+    //            {
+    //                sum += i;
+    //            }
+    //            else if (i % 5 == 0)
+    //            {
+    //                sum += i;
+    //            }
+    //            else
+    //                continue;
+    //        }
+    //        return sum;
+    //    }
 
-        return (double)fraction * ints.Sum();
-    }
-
-
-    //this...this is art f@!?ing beautiful
-    public static double Going_ButArt(int n)
-    {
-        double result = 0;
-        double denominator = 1;
-        for (int i = n; i > 0; i--)
-        {
-            result += 1 / denominator;
-            denominator *= i;
-        }
-        return Math.Round(result, 6);
-    }
-
-
-
-    //gene olmadı :(  (4kyu'lar zorlardı biraz)
-    //IndexOutOfRangeException
-    public static int DblLinear(int n)
-    {
-        List<int> ints = new();
-
-        int index = -1;
-        for (int multiplier = 1; multiplier <= n; multiplier = ints[index])
-        {
-            ints.Add(2 * multiplier + 1);
-            ints.Add(3 * multiplier + 1);
-            ints.Sort((x, y) => x.CompareTo(y));
-            index++;
-        }
-
-        return ints.ElementAt(n - 1);
-    }
+    //    return 0;
+    //}
 
 
+    ////Refactored one
+    //public static int Multipleof3or5_Refactored(int value)
+    //{
+    //    while (value! <= 0 /*value * -1 != +value && value != 0*/)
+    //    {
+    //        int sum = 0;
 
-    public static int DblLinear_Better(int n)
-    {
-        SortedSet<int> answer = new() { 1 };
-
-        while (n > 0)
-        {
-            answer.Add(2 * answer.Min + 1);
-            answer.Add(3 * answer.Min + 1);
-
-            answer.Remove(answer.Min);
-            n--;
-        }
-
-        return answer.Min;
-    }
+    //        for (int i = 0; i < value; i++)
+    //        {
+    //            if (i % 3 == 0 || i % 5 == 0)
+    //                sum += i;
+    //            else
+    //                continue;
+    //        }
+    //        return sum;
+    //    }
+    //    return 0;
+    //}
 
 
-    int IsHappynumber(int n)
-    {
-        if (n == 1 || n == 7)
-            return 1;
-        int sum = n, x = n;
 
-        while (sum > 9)
-        {
-            sum = 0;
-            while (x > 0)
-            {
-                int d = x % 10;
-                sum += d * d;
-                x /= 10;
-            }
-            if (sum == 1)
-                return 1;
+    ////Yine tek attım (https://www.youtube.com/watch?v=OjZcboiOjX4&ab_channel=Aleskut)
+    //public static int FindMissing(List<int> list)
+    //{
+    //    int difference = list[1] - list[0];
+    //    // int answer = 0;
+    //    // for(int i = 1; i < list.Count(); i++){
+    //    //     if(list[i] - list[i - 1] != difference){
+    //    //        return answer = list[i] - difference;
+    //    //     }
+    //    //     else
+    //    //         continue;
+    //    // } 
+    //    // return answer;
+    //    return list.First(x => !list.Contains(x - (x - difference)));
+    //}
 
-            x = sum;
-        }
-        if (sum == 7)
-            return 1;
 
-        return 0;
-    }
+    //public static bool IsPrime(int n)
+    //{
+    //    if (n >= 0)
+    //    {
+    //        if (n == 1 || n == 0)
+    //            return false;
+
+    //        for (int i = 2; i <= Math.Sqrt(n); i++)
+    //        {
+    //            if (n % i == 0)
+    //                return false;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (n == -1 || n == 0 || n == -2)
+    //            return false;
+
+    //        n = n * -1;
+    //        for (int i = 2; i <= Math.Sqrt(n); i++)
+    //        {
+    //            if (n % i == 0)
+    //                return false;
+    //        }
+    //    }
+
+    //    return true;
+    //}
+
+
+    ////Better solution
+    //public static bool IsPrime_OneLiner(int n)
+    //{
+    //    return n > 1 && Enumerable.Range(2, (int)Math.Sqrt(n) - 1).All(i => n % i != 0);
+    //}
+
+
+
+    //public static bool Narcissistic(int input)
+    //{
+    //    //Digits
+    //    List<int> list = input.ToString().Select(x => (int)char.GetNumericValue(x)).ToList();
+
+    //    //Sum of digits
+    //    double sum = 0;
+    //    list.ForEach(x =>
+    //    {
+    //        sum += Math.Pow(x, list.Count);
+    //    });
+
+    //    return sum == input;
+    //}
+
+
+
+    //public static string PascalCaseToSnakeCase(string input)
+    //{
+    //    List<char> list = input.ToList();
+
+    //    for (int i = 0; i < list.Count; i++)
+    //    {
+    //        char c = list[i];
+    //        if (char.IsUpper(c) && i != 0)
+    //        {
+    //            list.Insert(i, '_');
+    //            list[i + 1] = char.ToLower(c);
+    //        }
+    //        else
+    //        {
+    //            list[i] = char.ToLower(c);
+    //        }
+    //    }
+
+    //    return string.Join("", list);
+    //}
+
+
+
+    ////çalışmıyor (divide by zero and overflow errors) :(
+    //public static double Going(int n)
+    //{
+    //    int factorial = Enumerable.Range(1, n).Aggregate(1, (p, item) => p * item);
+    //    decimal fraction = decimal.Divide(1, factorial);
+
+    //    List<int> ints = new();
+
+    //    for (int i = 1; i <= n; i++)
+    //    {
+    //        int result = Enumerable.Range(1, i).Aggregate(1, (p, item) => p * item);
+    //        ints.Add(result);
+    //    }
+
+    //    return (double)fraction * ints.Sum();
+    //}
+
+
+    ////this...this is art f@!?ing beautiful
+    //public static double Going_ButArt(int n)
+    //{
+    //    double result = 0;
+    //    double denominator = 1;
+    //    for (int i = n; i > 0; i--)
+    //    {
+    //        result += 1 / denominator;
+    //        denominator *= i;
+    //    }
+    //    return Math.Round(result, 6);
+    //}
+
+
+
+    ////gene olmadı :(  (4kyu'lar zorlardı biraz)
+    ////IndexOutOfRangeException
+    //public static int DblLinear(int n)
+    //{
+    //    List<int> ints = new();
+
+    //    int index = -1;
+    //    for (int multiplier = 1; multiplier <= n; multiplier = ints[index])
+    //    {
+    //        ints.Add(2 * multiplier + 1);
+    //        ints.Add(3 * multiplier + 1);
+    //        ints.Sort((x, y) => x.CompareTo(y));
+    //        index++;
+    //    }
+
+    //    return ints.ElementAt(n - 1);
+    //}
+
+
+
+    //public static int DblLinear_Better(int n)
+    //{
+    //    SortedSet<int> answer = new() { 1 };
+
+    //    while (n > 0)
+    //    {
+    //        answer.Add(2 * answer.Min + 1);
+    //        answer.Add(3 * answer.Min + 1);
+
+    //        answer.Remove(answer.Min);
+    //        n--;
+    //    }
+
+    //    return answer.Min;
+    //}
+
+
+    //int IsHappynumber(int n)
+    //{
+    //    if (n == 1 || n == 7)
+    //        return 1;
+    //    int sum = n, x = n;
+
+    //    while (sum > 9)
+    //    {
+    //        sum = 0;
+    //        while (x > 0)
+    //        {
+    //            int d = x % 10;
+    //            sum += d * d;
+    //            x /= 10;
+    //        }
+    //        if (sum == 1)
+    //            return 1;
+
+    //        x = sum;
+    //    }
+    //    if (sum == 7)
+    //        return 1;
+
+    //    return 0;
+    //}
     #endregion
 
     #region LEETCODE
