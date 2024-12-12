@@ -122,6 +122,35 @@ public class Program
         largeCycleList.RemoveCycleFloydAlgoFast(slow);
         largeCycleList.PrintList();
         Console.WriteLine();
+
+        // Test Case 10: Multiple Nodes, Cycle at middle
+        Console.WriteLine("Test Case 10: Multiple Nodes, Cycle at middle");
+        var cycleMiddle = new LinkedList<int>();
+        var cycleMiddleNode1 = new Node<int>(1);
+        var cycleMiddleNode2 = new Node<int>(2);
+        var cycleMiddleNode3 = new Node<int>(3);
+        var cycleMiddleNode4 = new Node<int>(4);
+        var cycleMiddleNode5 = new Node<int>(5);
+        var cycleMiddleNode6 = new Node<int>(6);
+        var cycleMiddleNode7 = new Node<int>(7);
+        cycleMiddle.AddLast(cycleMiddleNode1);
+        cycleMiddle.AddLast(cycleMiddleNode2);
+        cycleMiddle.AddLast(cycleMiddleNode3);
+        cycleMiddle.AddLast(cycleMiddleNode4);
+        cycleMiddle.AddLast(cycleMiddleNode5);
+        cycleMiddle.AddLast(cycleMiddleNode6);
+        cycleMiddle.AddLast(cycleMiddleNode7);
+        cycleMiddleNode7.Next = cycleMiddleNode3; // Create a cycle
+        slow = cycleMiddle.FindLoop();
+        Console.WriteLine(slow == null ? "No loop detected" : $"Loop detected at node {slow.Data}");
+        cycleMiddle.RemoveCycleFloydAlgoFast(slow);
+        var fiirst = cycleMiddle.First;
+        while(fiirst != null)
+        {
+            Console.WriteLine(fiirst.Data);
+            fiirst = fiirst.Next;
+        }
+        Console.WriteLine();
     }
 }
 public class Node<T>
@@ -203,6 +232,7 @@ public class LinkedList<T>
 
         return null;
     }
+
     public void RemoveCycleFloydAlgoSlow(Node<T>? slow)
     {
         for (Node<T>? curr = this.First; curr != null; curr = curr.Next)
@@ -243,24 +273,40 @@ public class LinkedList<T>
 
     public void RemoveCycleFloydAlgoFast(Node<T>? slow)
     {
+        //FOR EXAMPLE
+        //1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+        //          ↑-------------------←
+
+
         //count of nodes in the cycle
+        //k = 5
         int k = 1;
+        //Condition here is Next not being slow since slow can be any node in the cycle.
         for (Node<T>? ptr = slow; ptr?.Next != slow; ptr = ptr?.Next)
             k++;
 
         //Get a pointer to the kth node starting from the head
+        //curr = 6
+        //why do we need the for loop tho? can't we just set curr to slow?
+        //Node<T>? curr = slow;
+        //Because slow is not guaranteed to be the first node in the cycle.
         Node<T>? curr = First;
         for (int i = 0; i < k; i++)
             curr = curr?.Next;
 
         Node<T>? head = this.First;
+        //Capture the first node of the cycle!
         while (curr != head)
         {
             curr = curr?.Next;
             head = head?.Next;
         }
 
-        while (curr?.Next != head)
+        //Go to the end node of the cycle.
+        //Can we do it "k" times with for loop?
+        //while (curr?.Next != head)
+        //    curr = curr?.Next;
+        for (int i = 1; i <= k; i++)
             curr = curr?.Next;
 
         if (curr != null)
