@@ -1,4 +1,6 @@
-﻿public class Program
+﻿using static Algorithms;
+
+public class Program
 {
     public static void Main()
     {
@@ -7,7 +9,7 @@
         var emptyList = new LinkedList<int>();
         var slow = emptyList.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : "Loop detected");
-        emptyList.RemoveCycleFloydAlgoSlow(slow);
+        emptyList.RemoveCycleFloydAlgoFast(slow);
         emptyList.PrintList();
         Console.WriteLine();
 
@@ -17,7 +19,7 @@
         singleNodeList.AddLast(new Node<int>(10));
         slow = singleNodeList.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : "Loop detected");
-        singleNodeList.RemoveCycleFloydAlgoSlow(slow);
+        singleNodeList.RemoveCycleFloydAlgoFast(slow);
         singleNodeList.PrintList();
         Console.WriteLine();
 
@@ -29,7 +31,7 @@
         singleNodeCycle.AddLast(node);
         slow = singleNodeCycle.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : $"Loop detected at node {slow.Data}");
-        singleNodeCycle.RemoveCycleFloydAlgoSlow(slow);
+        singleNodeCycle.RemoveCycleFloydAlgoFast(slow);
         singleNodeCycle.PrintList();
         Console.WriteLine();
 
@@ -40,7 +42,7 @@
         twoNodeList.AddLast(new Node<int>(2));
         slow = twoNodeList.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : "Loop detected");
-        twoNodeList.RemoveCycleFloydAlgoSlow(slow);
+        twoNodeList.RemoveCycleFloydAlgoFast(slow);
         twoNodeList.PrintList();
         Console.WriteLine();
 
@@ -54,7 +56,7 @@
         node2.Next = node1; // Create a cycle
         slow = twoNodeCycle.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : $"Loop detected at node {slow.Data}");
-        twoNodeCycle.RemoveCycleFloydAlgoSlow(slow);
+        twoNodeCycle.RemoveCycleFloydAlgoFast(slow);
         twoNodeCycle.PrintList();
         Console.WriteLine();
 
@@ -67,7 +69,7 @@
         noCycleList.AddLast(new Node<int>(4));
         slow = noCycleList.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : "Loop detected");
-        noCycleList.RemoveCycleFloydAlgoSlow(slow);
+        noCycleList.RemoveCycleFloydAlgoFast(slow);
         noCycleList.PrintList();
         Console.WriteLine();
 
@@ -83,7 +85,7 @@
         midNode3.Next = midNode2; // Create a cycle
         slow = midCycleList.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : $"Loop detected at node {slow.Data}");
-        midCycleList.RemoveCycleFloydAlgoSlow(slow);
+        midCycleList.RemoveCycleFloydAlgoFast(slow);
         midCycleList.PrintList();
         Console.WriteLine();
 
@@ -99,7 +101,7 @@
         endNode3.Next = endNode1; // Create a cycle
         slow = endCycleList.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : $"Loop detected at node {slow.Data}");
-        endCycleList.RemoveCycleFloydAlgoSlow(slow);
+        endCycleList.RemoveCycleFloydAlgoFast(slow);
         endCycleList.PrintList();
         Console.WriteLine();
 
@@ -117,7 +119,7 @@
         largeCycleList.AddLast(middle!); // Create a cycle at node 500
         slow = largeCycleList.FindLoop();
         Console.WriteLine(slow == null ? "No loop detected" : $"Loop detected at node {slow.Data}");
-        largeCycleList.RemoveCycleFloydAlgoSlow(slow);
+        largeCycleList.RemoveCycleFloydAlgoFast(slow);
         largeCycleList.PrintList();
         Console.WriteLine();
     }
@@ -218,6 +220,31 @@ public class LinkedList<T>
         }
     }
 
+    public void RemoveCycleFloydAlgoFast(Node<T>? slow)
+    {
+        //count of nodes in the cycle
+        int k = 1;
+        for (Node<T>? ptr = slow; ptr?.Next != slow; ptr = ptr?.Next)
+            k++;
+
+        //Get a pointer to the kth node starting from the head
+        Node<T>? curr = First;
+        for (int i = 0; i < k; i++)
+            curr = curr?.Next;
+
+        Node<T>? head = this.First;
+        while (curr != head)
+        {
+            curr = curr?.Next;
+            head = head?.Next;
+        }
+
+        while (curr?.Next != head)
+            curr = curr?.Next;
+
+        if (curr != null)
+            curr.Next = null;
+    }
     public void PrintList()
     {
         Node<T>? curr = First;
