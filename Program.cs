@@ -8,7 +8,7 @@ public class Program
         Console.WriteLine("Test Case 1: Both Lists Are Empty");
         var emptyList1 = new LinkedList<int>();
         var emptyList2 = new LinkedList<int>();
-        var intersection = emptyList1.GetIntersectionNode(emptyList2.First);
+        var intersection = emptyList1.GetIntersectionNodeTwoPointer(emptyList2.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
 
@@ -16,7 +16,7 @@ public class Program
         Console.WriteLine("Test Case 2: One List Is Empty");
         var singleNodeList = new LinkedList<int>();
         singleNodeList.AddLast(new Node<int>(10));
-        intersection = singleNodeList.GetIntersectionNode(emptyList2.First);
+        intersection = singleNodeList.GetIntersectionNodeTwoPointer(emptyList2.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
 
@@ -32,7 +32,7 @@ public class Program
         list2.AddLast(new Node<int>(5));
         list2.AddLast(new Node<int>(6));
 
-        intersection = list1.GetIntersectionNode(list2.First);
+        intersection = list1.GetIntersectionNodeTwoPointer(list2.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
 
@@ -49,7 +49,7 @@ public class Program
         intersectingList2.AddLast(new Node<int>(4));
         intersectingList2.AddLast(commonNode);
 
-        intersection = intersectingList1.GetIntersectionNode(intersectingList2.First);
+        intersection = intersectingList1.GetIntersectionNodeTwoPointer(intersectingList2.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
 
@@ -66,7 +66,7 @@ public class Program
         endIntersectingList2.AddLast(new Node<int>(30));
         endIntersectingList2.AddLast(lastNode);
 
-        intersection = endIntersectingList1.GetIntersectionNode(endIntersectingList2.First);
+        intersection = endIntersectingList1.GetIntersectionNodeTwoPointer(endIntersectingList2.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
 
@@ -77,7 +77,7 @@ public class Program
         identicalList.AddLast(new Node<int>(8));
         identicalList.AddLast(new Node<int>(9));
 
-        intersection = identicalList.GetIntersectionNode(identicalList.First);
+        intersection = identicalList.GetIntersectionNodeTwoPointer(identicalList.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
 
@@ -94,7 +94,7 @@ public class Program
         shorterList.AddLast(new Node<int>(6));
         shorterList.AddLast(new Node<int>(7));
 
-        intersection = longerList.GetIntersectionNode(shorterList.First);
+        intersection = longerList.GetIntersectionNodeTwoPointer(shorterList.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
 
@@ -115,7 +115,7 @@ public class Program
         complexList2.AddLast(new Node<int>(5));
         complexList2.AddLast(complexNode2);
 
-        intersection = complexList1.GetIntersectionNode(complexList2.First);
+        intersection = complexList1.GetIntersectionNodeTwoPointer(complexList2.First);
         Console.WriteLine(intersection == null ? "No intersection" : $"Intersection at node {intersection.Data}");
         Console.WriteLine();
     }
@@ -227,5 +227,21 @@ public class LinkedList<T>
         }
 
         return null;
+    }
+    public Node<T>? GetIntersectionNodeTwoPointer(Node<T>? otherListHead)
+    {
+        if (First == null || otherListHead == null)
+            return null;
+
+        var ptr1 = First;
+        var ptr2 = otherListHead;
+
+        while (ptr1 != ptr2)
+        {
+            ptr1 = (ptr1 == null) ? otherListHead : ptr1.Next;
+            ptr2 = (ptr2 == null) ? this.First : ptr2.Next;
+        }
+
+        return ptr1;
     }
 }
