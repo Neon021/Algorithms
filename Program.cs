@@ -10,7 +10,7 @@ public class Program
         Console.WriteLine("Test Case 3: One Node in Each List");
         var singleNodeA = new Node<int>(5);
         var singleNodeB = new Node<int>(10);
-        mergedList = MergeLinkedListsImperative(singleNodeA, singleNodeB);
+        mergedList = MergeLinkedLists(singleNodeA, singleNodeB);
         Console.WriteLine("Merged List:");
         PrintList(mergedList);
         Console.WriteLine();
@@ -19,7 +19,7 @@ public class Program
         Console.WriteLine("Test Case 4: Multiple Nodes in Each List, No Overlap");
         var listA = new Node<int>(1) { Next = new Node<int>(3) { Next = new Node<int>(5) } };
         var listB = new Node<int>(6) { Next = new Node<int>(8) { Next = new Node<int>(10) } };
-        mergedList = MergeLinkedListsImperative(listA, listB);
+        mergedList = MergeLinkedLists(listA, listB);
         Console.WriteLine("Merged List:");
         PrintList(mergedList);
         Console.WriteLine();
@@ -28,7 +28,7 @@ public class Program
         Console.WriteLine("Test Case 5: Multiple Nodes in Each List, Overlapping Values");
         var overlappingListA = new Node<int>(1) { Next = new Node<int>(3) { Next = new Node<int>(5) } };
         var overlappingListB = new Node<int>(2) { Next = new Node<int>(3) { Next = new Node<int>(6) } };
-        mergedList = MergeLinkedListsImperative(overlappingListA, overlappingListB);
+        mergedList = MergeLinkedLists(overlappingListA, overlappingListB);
         Console.WriteLine("Merged List:");
         PrintList(mergedList);
         Console.WriteLine();
@@ -37,7 +37,7 @@ public class Program
         Console.WriteLine("Test Case 6: One List Is Subset of the Other");
         var subsetListA = new Node<int>(1) { Next = new Node<int>(2) { Next = new Node<int>(3) } };
         var subsetListB = new Node<int>(2) { Next = new Node<int>(3) { Next = new Node<int>(4) } };
-        mergedList = MergeLinkedListsImperative(subsetListA, subsetListB);
+        mergedList = MergeLinkedLists(subsetListA, subsetListB);
         Console.WriteLine("Merged List:");
         PrintList(mergedList);
         Console.WriteLine();
@@ -46,7 +46,7 @@ public class Program
         Console.WriteLine("Test Case 7: Lists with Identical Elements");
         var identicalListA = new Node<int>(1) { Next = new Node<int>(2) { Next = new Node<int>(3) } };
         var identicalListB = new Node<int>(1) { Next = new Node<int>(2) { Next = new Node<int>(3) } };
-        mergedList = MergeLinkedListsImperative(identicalListA, identicalListB);
+        mergedList = MergeLinkedLists(identicalListA, identicalListB);
         Console.WriteLine("Merged List:");
         PrintList(mergedList);
         Console.WriteLine();
@@ -71,8 +71,7 @@ public class Program
         else if (headB == null)
             return headA;
 
-        Node<int>? res = null;
-
+        Node<int>? res;
         if (headA.Data < headB.Data)
         {
             res = headA;
@@ -94,7 +93,7 @@ public class Program
 
         while (headA != null && headB != null)
         {
-            if(headA.Data < headB.Data)
+            if (headA.Data < headB.Data)
             {
                 currNode.Next = headA;
                 //This would create another object on the heap
@@ -114,28 +113,74 @@ public class Program
 
         return dummyNode.Next;
     }
-    public ListNode MergeTwoLists(ListNode list1, ListNode list2)
-    {
-        ListNode dummy = new();
-        ListNode current = dummy;
 
-        while (list1 != null && list2 != null)
+    public static Node<int> MergeLinkedLists(Node<int> headA, Node<int> headB)
+    {
+        if (headA == null)
+            return headB;
+        if (headB == null)
+            return headA;
+
+        if (headA.Data < headB.Data)
+            return MergeLinkedListsInPlace(headA, headB);
+        else
+            return MergeLinkedListsInPlace(headB, headA);
+    }
+    public static Node<int> MergeLinkedListsInPlace(Node<int> headA, Node<int> headB)
+    {
+        //Example
+        // headA -> 1 -> 3 -> 5
+        // headB -> 2 -> 4 -> 6
+        if (headA.Next == null)
         {
-            if (list1.val < list2.val)
+            headA.Next = headB;
+            return headA;
+        }
+
+        //        1              3
+        Node<int> curr1 = headA, next1 = headA.Next;
+        //         2              4
+        Node<int>? curr2 = headB, next2 = headB.Next;
+
+        while (next1 != null && curr2 != null)
+        {
+            //if the head of the second list is between head of the first list and its next in terms of value
+            if (curr2.Data >= curr1.Data && curr2.Data <= next1.Data)
             {
-                current.next = list1;
-                list1 = list1.next;
+                //This here is to save us from infinite while loop
+                //Now that we have concluded that the head of the second list is between head of the first list and its next
+                //we are going to put it between the first and its next element in the first list.
+                //As a result, the next value of the head of the second list will be altered.
+                //Before that happens we need to establish a pointer to it so that or conneciton to rest of the second list persists.
+                next2 = curr2.Next;
+
+                //Put the head of the second list between the head and its next object of the first list
+                curr1.Next = curr2;
+                curr2.Next = next1;
+
+                //So, after pointing to the head of the second list from curr1Next we should also update curr1 and curr2's pointee right?
+                curr1 = curr2; //Remember we dont set curr1 as the head of the second list, we point to the object on the heap!
+                curr2 = next2;
             }
             else
             {
-                current.next = list2;
-                list2 = list2.next;
+                //If there are more than 2 nodes in the first list and the first two nodes are smaller than the first node in the second list.
+                if (next1.Next != null)
+                {
+                    next1 = next1.Next;
+                    curr1 = curr1.Next;
+                }
+                else
+                {
+                    //if only 2 nodes exist in the first list and they are both smaller than the first node in the second list.
+                    //Just point the rest of the first list to the head of the second list
+                    next1.Next = curr2;
+                    return headA;
+                }
             }
-            current = current.next;
         }
-        current.next = list1 ?? list2;
 
-        return dummy.next;
+        return headA;
     }
 }
 
