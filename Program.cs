@@ -46,20 +46,20 @@
 
     public static Node<int>? CloneLinkedList(Node<int>? head)
     {
-        Dictionary<Node<int>, Node<int>> mapping = new();
+        List<Node<int>> mapping = new();
         return CloneListHelper(head, mapping);
 
-        static Node<int>? CloneListHelper(Node<int>? currNode, Dictionary<Node<int>, Node<int>> map)
+        static Node<int>? CloneListHelper(Node<int>? currNode, List<Node<int>> map)
         {
             if (currNode == null)
                 return null;
 
             //If the currNode has already been cloned.
-            if (map.ContainsKey(currNode))
-                return map[currNode];
+            if (map.Where(n => n.Data == currNode.Data).FirstOrDefault() is Node<int> existingNode)
+                return existingNode;
 
             Node<int> newNode = new(currNode.Data);
-            map[currNode] = newNode;
+            map.Add(newNode);
 
             newNode.Next = CloneListHelper(currNode.Next, map);
             newNode.Random = CloneListHelper(currNode.Random, map);
