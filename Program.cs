@@ -1,4 +1,6 @@
-﻿public class Program
+﻿using System.Runtime.CompilerServices;
+
+public class Program
 {
     public static void Main()
     {
@@ -34,7 +36,7 @@
 
         Console.WriteLine();
 
-        var newListHead = CloneLinkedList(node1);
+        var newListHead = CloneLinkedListFast(node1);
         while (newListHead != null)
         {
             string randomPointerData = newListHead.Random != null ? newListHead.Random.Data.ToString() : "null";
@@ -43,8 +45,38 @@
             newListHead = newListHead.Next;
         }
     }
+    public static Node<int>? CloneLinkedListFast(Node<int>? head)
+    {
+        // Dictionary provides O(1) lookup with minimal memory overhead
+        Dictionary<Node<int>, Node<int>> mapping = new();
+        return CloneListHelper(head, mapping);
 
-    public static Node<int>? CloneLinkedList(Node<int>? head)
+        static Node<int>? CloneListHelper(Node<int>? currNode, Dictionary<Node<int>, Node<int>> map)
+        {
+            if (currNode == null)
+                return null;
+
+            //TryGetValue to avoid double lookup
+            if (map.TryGetValue(currNode, out Node<int>? value))
+            {
+                Console.WriteLine($"This node has already been cloned! {value.Data}");
+                return value;
+            }
+
+            Console.WriteLine($"This node hasn't been cloned! {currNode.Data}");
+            // Create new node only once per original node
+            Node<int> newNode = new(currNode.Data);
+            map[currNode] = newNode;  // Store mapping immediately to prevent cycles
+
+            newNode.Next = CloneListHelper(currNode.Next, map);
+            //Recursive call for random pointers reuse existing nodes through dictionary lookup
+            newNode.Random = CloneListHelper(currNode.Random, map);
+
+            return newNode;
+        }
+    }
+
+    public static Node<int>? CloneLinkedListSlow(Node<int>? head)
     {
         List<Node<int>> mapping = new();
         return CloneListHelper(head, mapping);
