@@ -4,18 +4,20 @@ public class Program
 {
     public static void Main()
     {
+        Random rand = new();
+
         Map<string, int> map = new(10);
-        Entry<string, int> entry = new("furkan", 2);
-        Entry<string, int> entry1 = new("bilal", 2);
-        Entry<string, int> entry3 = new("yigit", 2);
-        Entry<string, int> entry4 = new("ilhan", 2);
-        Entry<string, int> entry5 = new("nermin", 2);
-        Entry<string, int> entry6 = new("tugba", 2);
-        Entry<string, int> entry7 = new("taner", 2);
-        Entry<string, int> entry8 = new("aykat", 2);
-        Entry<string, int> entry9 = new("aykut", 2);
-        Entry<string, int> entry0 = new("aymaz", 2);
-        Entry<string, int> entry10 = new("ayaz", 2);
+        Entry<string, int> entry = new("furkan", rand.Next(-100, 101));
+        Entry<string, int> entry1 = new("bilal", rand.Next(-100, 101));
+        Entry<string, int> entry3 = new("yigit", rand.Next(-100, 101));
+        Entry<string, int> entry4 = new("ilhan", rand.Next(-100, 101));
+        Entry<string, int> entry5 = new("nermin", rand.Next(-100, 101));
+        Entry<string, int> entry6 = new("tugba", rand.Next(-100, 101));
+        Entry<string, int> entry7 = new("taner", rand.Next(-100, 101));
+        Entry<string, int> entry8 = new("aykat", rand.Next(-100, 101));
+        Entry<string, int> entry9 = new("aykut", rand.Next(-100, 101));
+        Entry<string, int> entry0 = new("aymaz", rand.Next(-100, 101));
+        Entry<string, int> entry10 = new("ayaz", rand.Next(-100, 101));
         map.Insert(entry);
         map.Insert(entry1);
         map.Insert(entry3);
@@ -27,6 +29,7 @@ public class Program
         map.Insert(entry9);
         map.Insert(entry0);
         map.Insert(entry10);
+        Console.WriteLine(map.GetEntry("aykat")!.Value);
     }
 }
 public class Node<T>
@@ -121,6 +124,15 @@ public class Map<K, V>
             _length++;
         }
     }
+
+    public Entry<K, V>? GetEntry(K key)
+    {
+        if (key == null)
+            return null;
+
+        int hash = key.GetHashCode();
+        return _arrayList.Get(hash);
+    }
 }
 
 public class Entry<K, V>
@@ -154,6 +166,17 @@ public class ArrayListForMap<K, V>
     {
         this.Capacity = Capacity;
         Array = new Entry<K, V>[Capacity];
+    }
+
+    public Entry<K, V>? Get(int hash)
+    {
+        int index = Math.Abs(hash % Capacity);
+
+        if (Array[index] != null && Array[index].Key!.GetHashCode() == hash)
+        {
+            return Array[index];
+        }
+        return null;
     }
 
     public void Push(Entry<K, V> value, int index = -1)
