@@ -253,11 +253,11 @@
             this.Tail.Next = node;
             this.Tail = node;
         }
-        public T? Deque<T>() where T : class
+        public T? Deque()
         {
             if (this.Head == null)
             {
-                return null;
+                return default;
             }
 
             this.Length--;
@@ -266,25 +266,25 @@
             this.Head = this.Head.Next;
 
             // free
-            head.Next = null;
+            head.Next = default;
 
             if (this.Length == 0)
             {
                 this.Tail = null;
             }
 
-            return head.Data as T;
+            return head.Data;
         }
 
-        public T? Peek<T>() where T : class
+        public T? Peek()
         {
-            return this.Head is not null ? this.Head.Data as T : null;
+            return this.Head is not null ? this.Head.Data : default;
         }
     }
 
 
-    //Stack
-
+    #endregion
+    #region Stack
     public class Stack<T>
     {
         public int Length;
@@ -317,20 +317,20 @@
 
             if (this.Length == 0)
             {
-                Node<T>? head0 = this.Head as Node<T>;
+                Node<T>? head0 = this.Head;
                 this.Head = null;
-                return head0.Data;
+                return head0!.Data;
             }
 
-            Node<T>? head = this.Head as Node<T>;
-            this.Head = head.Prev;
+            Node<T>? head = this.Head;
+            this.Head = head!.Prev;
 
             return head.Data;
         }
 
-        public T? Peek<T>() where T : class
+        public T? Peek()
         {
-            return this.Head is not null ? this.Head.Data as T : null;
+            return this.Head is not null ? this.Head.Data : default;
         }
     }
     #endregion
