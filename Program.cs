@@ -14,12 +14,17 @@
         map.Insert("aykat");
         map.Insert("aykut");
         map.Insert("aymaz");
-        map.Insert("ayaz");
-
         if (map.GetEntry("aykat") is Node<string> existingNode)
             Console.WriteLine(existingNode.Data);
         if (map.GetEntry("ilhan") is Node<string> existingNode1)
             Console.WriteLine(existingNode1.Data);
+
+        map.Insert("ayaz");
+
+        if (map.GetEntry("aykat") is Node<string> existingNode2)
+            Console.WriteLine(existingNode2.Data);
+        if (map.GetEntry("ilhan") is Node<string> existingNode3)
+            Console.WriteLine(existingNode3.Data);
     }
 }
 public class Node<T>
@@ -90,7 +95,7 @@ public class LinkedList<T>
         Node<T>? tailNode = this.Tail;
 
         //In order to avoid making Map Get O(N) worst case we can mitigate it by dividing.
-        while (headNode!.Next != null && headNode.Data!.Equals(data) && tailNode!.Prev != null && tailNode.Data!.Equals(data))
+        while (headNode!.Next != null && !headNode.Data!.Equals(data) && tailNode!.Prev != null && !tailNode.Data!.Equals(data))
         {
             headNode = headNode.Next;
             tailNode = tailNode.Next;
@@ -141,23 +146,15 @@ public class Map<T>
             return;
 
         Node<T> newEntry = new(data);
-        if (_length + 1 <= _capacity)
-        {
-            int hash = newEntry.Data!.GetHashCode();
-            int index = Math.Abs(hash % _capacity);
-
-            _arrayList.Push(newEntry, index);
-            _length++;
-        }
-        else
-        {
+        if (_length + 1 >= _capacity)
             _capacity *= 2;
-            int hash = newEntry.Data!.GetHashCode();
-            int index = Math.Abs(hash % _capacity);
 
-            _arrayList.Push(newEntry, index);
+        int hash = data.GetHashCode();
+        int index = Math.Abs(hash % _capacity);
+
+        bool didResize = _arrayList.Push(newEntry, index);
+        if (didResize)
             _length++;
-        }
     }
 
     public Node<T>? GetEntry(T data)
@@ -166,33 +163,9 @@ public class Map<T>
             return null;
 
         int hash = data.GetHashCode();
-        return _arrayList.Get(hash, data);
-    }
-}
+        int index = Math.Abs(hash % _capacity);
 
-public class Entry<K, V>
-{
-    private readonly K _key;
-
-    private V _value;
-    public K Key
-    {
-        get { return _key; }
-    }
-    public V Value
-    {
-        get { return _value; }
-        set
-        {
-            if (value is V val)
-                this._value = val;
-        }
-    }
-
-    public Entry(K key, V value)
-    {
-        _key = key;
-        _value = value;
+        return _arrayList.Get(index, data);
     }
 }
 
@@ -200,75 +173,88 @@ public class ArrayListForMap<T>
 {
     public int Length { get; set; } = 0;
     public int Capacity { get; set; }
-    private Entry<int, LinkedList<T>>[] Array { get; set; }
+    private LinkedList<T>[] Array { get; set; }
 
     public ArrayListForMap(int Capacity)
     {
         this.Capacity = Capacity;
-        Array = new Entry<int, LinkedList<T>>[Capacity];
+        Array = new LinkedList<T>[Capacity];
     }
 
-    public Node<T>? Get(int hash, T data)
+    public Node<T>? Get(int index, T data)
     {
-        int index = Math.Abs(hash % Capacity);
+        int checkedIndex = index != -1 && index <= Capacity ? index : Length;
 
-        if ((Array[index] is Entry<int, LinkedList<T>> entry) && (entry.Value is LinkedList<T> linkedList && Array[index].Key!.GetHashCode() == hash))
+        if (Array[checkedIndex] is LinkedList<T> linkedList)
         {
             return linkedList.GetNode(data);
         }
         return null;
     }
 
-    public void Push(Node<T> value, int index = -1)
+    public bool Push(Node<T> newNode, int index = -1)
     {
-        int insertIndex = index != -1 && index <= Capacity ? index : Length;
-
         if (Length + 1 <= Capacity)
         {
+            int insertIndex = index != -1 && index <= Capacity ? index : Length;
+
             //CHECK COLLISION
             //rather than checking here, we utilize double linked list to store values with the same hash value.
-            Entry<int, LinkedList<T>> kv = this.Array[insertIndex];
-            if ((kv is Entry<int, LinkedList<T>> _) && kv.Value is LinkedList<T> _)
-                kv.Value.AddLast(value);
-            else
+            LinkedList<T> linkedList = this.Array[insertIndex];
+            if (linkedList is not LinkedList<T> _)
             {
-                kv = new Entry<int, LinkedList<T>>(value.Data!.GetHashCode(), new());
-                kv.Value.AddLast(value);
-                this.Array[insertIndex] = kv;
+                linkedList = new();
+                //Only increment length when a new linked list is created
+                Length++;
             }
-            Length++;
+
+            linkedList.AddLast(newNode);
+            this.Array[insertIndex] = linkedList;
+            //Length++;
+
+            return false;
         }
         else
         {
-            Entry<int, LinkedList<T>>[] newArray = new Entry<int, LinkedList<T>>[Capacity * 2];
-
-            //COPY EXISTING ELEMENTS FROM THE OLD ARRAY
-            foreach (var entry in Array)
-            {
-                if (entry == null)
-                    continue;
-                int newIndex = Math.Abs(entry.Key!.GetHashCode() % (this.Capacity * 2));
-
-                //CHECK COLLISION
-                //Exponential back-off
-                while (newArray[newIndex] is not null && newIndex <= Capacity - 1)
-                    newIndex++;
-
-                newArray[newIndex] = entry;
-            }
-
-            //INSERT NEW ELEMENT
-            if ((newArray[insertIndex] is Entry<int, LinkedList<T>> existingEntry) && existingEntry.Value is LinkedList<T> _)
-                newArray[insertIndex].Value.AddLast(value);
-            else
-            {
-                newArray[insertIndex] = new Entry<int, LinkedList<T>>(value.Data!.GetHashCode(), new());
-                newArray[insertIndex].Value.AddLast(value);
-            }
-
             Capacity *= 2;
-            Length += 1;
+            LinkedList<T>[] newArray = new LinkedList<T>[Capacity];
+
+            //COPY EXISTING LINKEDLISTS FROM THE OLD ARRAY
+            //Not just copy existing linked lists based on their head values hash,
+            //Rather iterate through each node and calculate new index'.
+            foreach (var list in Array)
+            {
+                if (list == null)
+                    continue;
+
+                Node<T>? currNode = list.Head;
+                while (currNode is Node<T> _)
+                {
+                    int newIndex = Math.Abs(currNode.Data!.GetHashCode() % Capacity);
+
+                    if (newArray[newIndex] == null)
+                        newArray[newIndex] = new();
+
+                    newArray[newIndex].AddLast(new Node<T>(currNode.Data));
+                    currNode = currNode.Next;
+                }
+            }
+
+            int newNodeIndex = Math.Abs(newNode.Data!.GetHashCode() % Capacity);
+            //INSERT NEW ELEMENT
+            if (newArray[newNodeIndex] is not LinkedList<T> _)
+            {
+                newArray[newNodeIndex] = new LinkedList<T>();
+                //Only increment length when a new linked list is created
+                Length++;
+            }
+
+            newArray[newNodeIndex].AddLast(newNode);
+            //Length++;
+
             this.Array = newArray;
+
+            return true;
         }
     }
 }
