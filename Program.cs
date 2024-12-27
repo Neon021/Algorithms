@@ -2,15 +2,15 @@
 {
     public static void Main()
     {
-        LRU<string> lruCache = new(5);
-        lruCache.Insert("furkan");
-        lruCache.Insert("bilal");
-        lruCache.Insert("yigit");
-        lruCache.Insert("ilhan");
-        lruCache.Insert("nermin");
+        LRU<string, string> lruCache = new(5);
+        lruCache.Update("furkan_Key", "furkan");
+        lruCache.Update("bilal_Key", "bilal");
+        lruCache.Update("yigit_Key", "yigit");
+        lruCache.Update("ilhan_Key", "ilhan");
+        lruCache.Update("nermi_nKey", "nermin");
 
         lruCache.GetNode("furkan");
-        lruCache.Insert("taner");
+        lruCache.Update("tanerKey", "taner");
     }
 }
 public class Node<T>
@@ -51,45 +51,6 @@ public class LinkedList<T>
             this.Head = newNode;
         }
         Length++;
-    }
-    public void AddLast(Node<T> newNode)
-    {
-        if (Head == null)
-        {
-            Head = newNode;
-            Tail = newNode;
-        }
-        else
-        {
-            newNode.Prev = this.Tail;
-            Tail!.Next = newNode;
-            this.Tail = newNode;
-        }
-
-        Length++;
-    }
-
-    public Node<T>? GetNode(T data)
-    {
-        if (Head == null)
-            return null;
-        else if (Length == 1)
-            return Head;
-
-        Node<T>? headNode = this.Head;
-        Node<T>? tailNode = this.Tail;
-
-        //In order to avoid making Map Get O(N) worst case we can mitigate it by dividing.
-        while (headNode!.Next != null && !headNode.Data!.Equals(data) && tailNode!.Prev != null && !tailNode.Data!.Equals(data))
-        {
-            headNode = headNode.Next;
-            tailNode = tailNode.Next;
-        }
-
-        if (headNode!.Data!.Equals(data))
-            return headNode;
-        else
-            return tailNode;
     }
 
     public void GetNodeToFront(Node<T> node)
@@ -146,47 +107,49 @@ public class HashMap<K, V>
         _entries = new Entry<K, V>[capacity];
     }
 
-    public void Insert(K data, V node)
+    public void Insert(K key, V node)
     {
-        if (data == null || node == null)
+        if (key == null || node == null)
             return;
 
-        int hash = data.GetHashCode();
+        int hash = key.GetHashCode();
         int index = Math.Abs(hash % _capacity);
 
-        Entry<K, V> newEntry = new() { Key = data, Value = node };
+        Entry<K, V> newEntry = new() { Key = key, Value = node };
         //COLLLLIIIIISSSIOOOOOOOOOOOOOOOOOOOOON
         _entries[index] = newEntry;
     }
 
-    public V? GetNode(K data)
+    public V? GetNode(K key)
     {
-        if (data == null)
+        if (key == null)
             return default;
 
-        int hash = data.GetHashCode();
+        int hash = key.GetHashCode();
         int index = Math.Abs(hash % _capacity);
 
         return _entries[index].Value;
     }
 
-    public void RemoveEntry(K data)
+    public void RemoveEntry(K key)
     {
-        if (data == null)
+        if (key == null)
             return;
 
-        int hash = data.GetHashCode();
+        int hash = key.GetHashCode();
         int index = Math.Abs(hash % _capacity);
 
         _entries[index] = default;
     }
 }
 
-public class LRU<T>
+public class LRU<K, V>
 {
     private readonly int _capacity;
-    private readonly LinkedList<T> _linkedList;
-    private readonly HashMap<T, Node<T>> _hashMap;
+    private readonly LinkedList<V> _linkedList;
+    private readonly HashMap<K, Node<V>> _hashMap;
+    //Second lookup table for eviction?
+
     //Hashmap holds type T as the TKey so that we can do this.
     //Node<string> desiredNode = hashMap.GetNode("data");
     //And the TValue is of course the Node<T> itself.
@@ -197,29 +160,34 @@ public class LRU<T>
         _hashMap = new(capacity);
     }
 
-    public void Insert(T data)
+    public void Update(K key, V value)
     {
-        if (data == null)
+        if (key is null)
             return;
 
-        Node<T> newNode = new(data);
+        if (GetNode(key) is Node<V> _)
+            //Prepending Node to the front of the list is done in GetNode.
+            return;
+
+        Node<V> newNode = new(value);
+
         if (_linkedList.Length + 1 >= _capacity)
         {
             _linkedList.RemoveTail();
-            _hashMap.RemoveEntry(data);
+            _hashMap.RemoveEntry(key);
         }
 
         _linkedList.AddFirst(newNode);
 
-        _hashMap.Insert(data, newNode);
+        _hashMap.Insert(key, newNode);
     }
 
-    public Node<T>? GetNode(T data)
+    public Node<V>? GetNode(K key)
     {
-        if (data == null)
+        if (key == null)
             return null;
 
-        Node<T>? retrievedNode = _hashMap.GetNode(data);
+        Node<V>? retrievedNode = _hashMap.GetNode(key);
 
         if (retrievedNode is null)
             return null;
