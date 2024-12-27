@@ -604,6 +604,203 @@
 
     #endregion
 
+    #region Maps & LRU
+
+    #region Map
+    //public class Node<T>
+    //{
+    //    public T Data { get; set; }
+    //    public Node<T>? Next { get; internal set; }
+    //    public Node<T>? Prev { get; internal set; }
+    //    //public Node<T>? Random { get; internal set; }
+
+    //    public Node(T data)
+    //    {
+    //        this.Data = data;
+    //    }
+    //}
+
+    //public class LinkedList<T>
+    //{
+    //    public Node<T>? Head { get; private set; }
+    //    public Node<T>? Tail { get; private set; }
+    //    public int Length { get; private set; }
+
+    //    public LinkedList()
+    //    {
+    //        this.Head = null;
+    //        this.Tail = null;
+    //    }
+
+    //    public void AddFirst(Node<T> newNode)
+    //    {
+    //        if (Head == null)
+    //        {
+    //            Head = newNode;
+    //            Tail = newNode;
+    //        }
+    //        else
+    //        {
+    //            newNode.Next = this.Head;
+    //            Head!.Prev = newNode;
+    //            this.Head = newNode;
+    //        }
+    //        Length++;
+    //    }
+    //    public void AddLast(Node<T> newNode)
+    //    {
+    //        if (Head == null)
+    //        {
+    //            Head = newNode;
+    //            Tail = newNode;
+    //        }
+    //        else
+    //        {
+    //            newNode.Prev = this.Tail;
+    //            Tail!.Next = newNode;
+    //            this.Tail = newNode;
+    //        }
+
+    //        Length++;
+    //    }
+    //}
+    //public class Map<T>
+    //{
+    //    private int _capacity = 0;
+    //    private int _length = 0;
+    //    private readonly ArrayList<T> _arrayList;
+
+    //    public Map(int capacity)
+    //    {
+    //        _capacity = capacity;
+    //        _arrayList = new ArrayList<T>(_capacity);
+    //    }
+
+    //    public void Insert(T data)
+    //    {
+    //        if (data == null)
+    //            return;
+
+    //        Node<T> newEntry = new(data);
+    //        if (_length + 1 >= _capacity)
+    //            _capacity *= 2;
+
+    //        int hash = data.GetHashCode();
+    //        int index = Math.Abs(hash % _capacity);
+
+    //        bool didResize = _arrayList.Push(newEntry, index);
+    //        if (didResize)
+    //            _length++;
+    //    }
+
+    //    public Node<T>? GetEntry(T data)
+    //    {
+    //        if (data == null)
+    //            return null;
+
+    //        int hash = data.GetHashCode();
+    //        int index = Math.Abs(hash % _capacity);
+
+    //        return _arrayList.Get(index, data);
+    //    }
+    //}
+    //public class ArrayList<T>
+    //{
+    //    public int Length { get; set; } = 0;
+    //    public int Capacity { get; set; }
+    //    //LinkedList of LinkedList?
+    //    //LinkedList<LinkedList<T>>
+    //    private LinkedList<T>[] _buckets { get; set; }
+
+    //    public ArrayList(int Capacity)
+    //    {
+    //        this.Capacity = Capacity;
+    //        _buckets = new LinkedList<T>[Capacity];
+    //    }
+
+    //    public Node<T>? Get(int index, T data)
+    //    {
+    //        int checkedIndex = index != -1 && index <= Capacity ? index : Length;
+
+    //        if (_buckets[checkedIndex] is LinkedList<T> linkedList)
+    //        {
+    //            return linkedList.GetNode(data);
+    //        }
+    //        return null;
+    //    }
+
+    //    public bool Push(Node<T> newNode, int index = -1)
+    //    {
+    //        int insertIndex = index != -1 && index <= Capacity ? index : Length;
+    //        LinkedList<T> linkedList = this._buckets[insertIndex];
+
+    //        if (linkedList is not LinkedList<T> _ && Length + 1 <= Capacity)
+    //        {
+    //            linkedList = new();
+    //            linkedList.AddLast(newNode);
+    //            this._buckets[insertIndex] = linkedList;
+    //            //Only increment length when a new linked list is created
+    //            Length++;
+
+    //            return false;
+    //        }
+    //        else if (linkedList is not LinkedList<T> _ && Length + 1 >= Capacity)
+    //        {
+    //            Capacity *= 2;
+    //            LinkedList<T>[] newArray = new LinkedList<T>[Capacity];
+
+    //            //COPY EXISTING LINKEDLISTS FROM THE OLD ARRAY
+    //            //Not just copy existing linked lists based on their head values hash,
+    //            //Rather iterate through each node and calculate new index'.
+    //            foreach (var list in _buckets)
+    //            {
+    //                if (list == null)
+    //                    continue;
+
+    //                Node<T>? currNode = list.Head;
+    //                while (currNode is Node<T> _)
+    //                {
+    //                    int newIndex = Math.Abs(currNode.Data!.GetHashCode() % Capacity);
+
+    //                    if (newArray[newIndex] == null)
+    //                        newArray[newIndex] = new();
+
+    //                    newArray[newIndex].AddLast(new Node<T>(currNode.Data));
+    //                    currNode = currNode.Next;
+    //                }
+    //            }
+
+    //            int newNodeIndex = Math.Abs(newNode.Data!.GetHashCode() % Capacity);
+    //            //INSERT NEW ELEMENT
+    //            if (newArray[newNodeIndex] is not LinkedList<T> _)
+    //            {
+    //                newArray[newNodeIndex] = new LinkedList<T>();
+    //                //Only increment length when a new linked list is created
+    //                Length++;
+    //            }
+
+    //            newArray[newNodeIndex].AddLast(newNode);
+    //            //Length++;
+
+    //            this._buckets = newArray;
+
+    //            return true;
+    //        }
+    //        else
+    //        {
+    //            linkedList.AddLast(newNode);
+    //            return false;
+    //        }
+    //    }
+    //}
+
+    #endregion
+    #region LRU
+
+    #endregion
+
+    #endregion
+
     //////////////////////////////////////////////////////////////////////////////////
     #endregion
 
