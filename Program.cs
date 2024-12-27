@@ -2,29 +2,13 @@
 {
     public static void Main()
     {
-        Map<string> map = new(10);
-
-        map.Insert("furkan");
-        map.Insert("bilal");
-        map.Insert("yigit");
-        map.Insert("ilhan");
-        map.Insert("nermin");
-        map.Insert("tugba");
-        map.Insert("taner");
-        map.Insert("aykat");
-        map.Insert("aykut");
-        map.Insert("aymaz");
-        if (map.GetEntry("aykat") is Node<string> existingNode)
-            Console.WriteLine(existingNode.Data);
-        if (map.GetEntry("ilhan") is Node<string> existingNode1)
-            Console.WriteLine(existingNode1.Data);
-
-        map.Insert("ayaz");
-
-        if (map.GetEntry("aykat") is Node<string> existingNode2)
-            Console.WriteLine(existingNode2.Data);
-        if (map.GetEntry("ilhan") is Node<string> existingNode3)
-            Console.WriteLine(existingNode3.Data);
+        LRU<string> lruCache = new(5);
+        lruCache.Insert("furkan");
+        lruCache.Insert("bilal");
+        lruCache.Insert("yigit");
+        lruCache.Insert("ilhan");
+        lruCache.Insert("nermin");
+        lruCache.GetNode("furkan");
     }
 }
 public class Node<T>
@@ -39,12 +23,11 @@ public class Node<T>
         this.Data = data;
     }
 }
-
 public class LinkedList<T>
 {
     public Node<T>? Head { get; private set; }
     public Node<T>? Tail { get; private set; }
-    public int Count { get; private set; }
+    public int Length { get; private set; }
 
     public LinkedList()
     {
@@ -65,7 +48,7 @@ public class LinkedList<T>
             Head!.Prev = newNode;
             this.Head = newNode;
         }
-        Count++;
+        Length++;
     }
     public void AddLast(Node<T> newNode)
     {
@@ -81,14 +64,14 @@ public class LinkedList<T>
             this.Tail = newNode;
         }
 
-        Count++;
+        Length++;
     }
 
     public Node<T>? GetNode(T data)
     {
         if (Head == null)
             return null;
-        else if (Count == 1)
+        else if (Length == 1)
             return Head;
 
         Node<T>? headNode = this.Head;
@@ -107,37 +90,89 @@ public class LinkedList<T>
             return tailNode;
     }
 
-    public void AssignRandomPointer(ref Node<T> node)
+    public void GetNodeToFront(Node<T> node)
     {
-        //First != null would supress warning with the curr but we are sure that First is not null from AddLast here!
-        if (Count == 1)
+        if (Head == node)
             return;
-
-        Random random = new();
-        int randIndex = random.Next(0, Count + 1);
-        if (randIndex == 0)
-            randIndex++;
-
-        Node<T>? curr = Head;
-        while (curr.Next != null && randIndex != 0)
+        else if (Tail == node)
         {
-            curr = curr.Next;
-            randIndex--;
+            Tail.Next = Head;
+            Head!.Prev = Tail;
+            Head = Tail;
+            Head.Prev = null;
         }
-        //node.Random = curr;
+        else
+        {
+            Node<T> prevNode = node.Prev!;
+            Node<T> nextNode = node.Next!;
+
+            prevNode.Next = nextNode;
+            nextNode.Prev = prevNode;
+
+            node.Next = Head;
+            Head!.Prev = node;
+            Head = node;
+        }
     }
 }
 
-public class Map<T>
+public struct Entry<K, V>
 {
-    private int _capacity = 0;
-    private int _length = 0;
-    private readonly ArrayListForMap<T> _arrayList;
+    public K Key;
 
-    public Map(int capacity)
+    public V Value;
+}
+public class HashMap<K, V>
+{
+    public int Capacity { get; set; }
+    private Entry<K, V>[] _entries;
+
+    public HashMap(int capacity)
+    {
+        Capacity = capacity;
+        _entries = new Entry<K, V>[capacity];
+    }
+
+    public void Insert(K data, V node)
+    {
+        if (data == null || node == null)
+            return;
+
+        int hash = data.GetHashCode();
+        int index = Math.Abs(hash % Capacity);
+
+        Entry<K, V> newEntry = new() { Key = data, Value = node };
+        //COLLLLIIIIISSSIOOOOOOOOOOOOOOOOOOOOON
+        _entries[index] = newEntry;
+    }
+
+    public V? GetNode(K data)
+    {
+        if (data == null)
+            return default;
+
+        int hash = data.GetHashCode();
+        int index = Math.Abs(hash % Capacity);
+
+        return _entries[index].Value;
+    }
+}
+
+public class LRU<T>
+{
+    private readonly int _capacity;
+    private int _length;
+    private readonly LinkedList<T> _linkedList;
+    private readonly HashMap<T, Node<T>> _hashMap;
+    //Hashmap holds type T as the TKey so that we can do this.
+    //Node<string> desiredNode = hashMap.GetNode("data");
+    //And the TValue is of course the Node<T> itself.
+    public LRU(int capacity)
     {
         _capacity = capacity;
-        _arrayList = new ArrayListForMap<T>(_capacity);
+        _length = 0;
+        _linkedList = new();
+        _hashMap = new(capacity);
     }
 
     public void Insert(T data)
@@ -145,116 +180,26 @@ public class Map<T>
         if (data == null)
             return;
 
-        Node<T> newEntry = new(data);
-        if (_length + 1 >= _capacity)
-            _capacity *= 2;
+        Node<T> newNode = new(data);
+        _linkedList.AddFirst(newNode);
 
-        int hash = data.GetHashCode();
-        int index = Math.Abs(hash % _capacity);
+        _hashMap.Insert(data, newNode);
 
-        bool didResize = _arrayList.Push(newEntry, index);
-        if (didResize)
-            _length++;
+        _length++;
     }
 
-    public Node<T>? GetEntry(T data)
+    public Node<T>? GetNode(T data)
     {
         if (data == null)
             return null;
 
-        int hash = data.GetHashCode();
-        int index = Math.Abs(hash % _capacity);
+        Node<T>? retrievedNode = _hashMap.GetNode(data);
 
-        return _arrayList.Get(index, data);
-    }
-}
+        if (retrievedNode is null)
+            return null;
 
-public class ArrayListForMap<T>
-{
-    public int Length { get; set; } = 0;
-    public int Capacity { get; set; }
-    private LinkedList<T>[] Array { get; set; }
+        _linkedList.GetNodeToFront(retrievedNode);
 
-    public ArrayListForMap(int Capacity)
-    {
-        this.Capacity = Capacity;
-        Array = new LinkedList<T>[Capacity];
-    }
-
-    public Node<T>? Get(int index, T data)
-    {
-        int checkedIndex = index != -1 && index <= Capacity ? index : Length;
-
-        if (Array[checkedIndex] is LinkedList<T> linkedList)
-        {
-            return linkedList.GetNode(data);
-        }
-        return null;
-    }
-
-    public bool Push(Node<T> newNode, int index = -1)
-    {
-        if (Length + 1 <= Capacity)
-        {
-            int insertIndex = index != -1 && index <= Capacity ? index : Length;
-
-            //CHECK COLLISION
-            //rather than checking here, we utilize double linked list to store values with the same hash value.
-            LinkedList<T> linkedList = this.Array[insertIndex];
-            if (linkedList is not LinkedList<T> _)
-            {
-                linkedList = new();
-                //Only increment length when a new linked list is created
-                Length++;
-            }
-
-            linkedList.AddLast(newNode);
-            this.Array[insertIndex] = linkedList;
-            //Length++;
-
-            return false;
-        }
-        else
-        {
-            Capacity *= 2;
-            LinkedList<T>[] newArray = new LinkedList<T>[Capacity];
-
-            //COPY EXISTING LINKEDLISTS FROM THE OLD ARRAY
-            //Not just copy existing linked lists based on their head values hash,
-            //Rather iterate through each node and calculate new index'.
-            foreach (var list in Array)
-            {
-                if (list == null)
-                    continue;
-
-                Node<T>? currNode = list.Head;
-                while (currNode is Node<T> _)
-                {
-                    int newIndex = Math.Abs(currNode.Data!.GetHashCode() % Capacity);
-
-                    if (newArray[newIndex] == null)
-                        newArray[newIndex] = new();
-
-                    newArray[newIndex].AddLast(new Node<T>(currNode.Data));
-                    currNode = currNode.Next;
-                }
-            }
-
-            int newNodeIndex = Math.Abs(newNode.Data!.GetHashCode() % Capacity);
-            //INSERT NEW ELEMENT
-            if (newArray[newNodeIndex] is not LinkedList<T> _)
-            {
-                newArray[newNodeIndex] = new LinkedList<T>();
-                //Only increment length when a new linked list is created
-                Length++;
-            }
-
-            newArray[newNodeIndex].AddLast(newNode);
-            //Length++;
-
-            this.Array = newArray;
-
-            return true;
-        }
+        return retrievedNode;
     }
 }
