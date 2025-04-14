@@ -29,7 +29,7 @@
             };
 
             BinaryTree tree = new();
-            int size = tree.SizeImperativePreOrderTraversal(root);
+            int size = tree.SizeImperativePostOrderTraversal(root);
             Console.WriteLine("Size of the tree: " + size);
         }
     }
@@ -74,6 +74,42 @@ namespace Solution
                     stack.Push(currNode.Right);
                 if (currNode.Left != null)
                     stack.Push(currNode.Left);
+            }
+
+            return answer;
+        }
+
+        public int SizeImperativePostOrderTraversal(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int answer = 1;
+            Stack<Node> stack = new();
+            Node? lastNodeVisited = null;
+
+            while (stack.Count > 0 || root != null)
+            {
+                if (root != null)
+                {
+                    stack.Push(root);
+                    root = root.Left;
+                }
+                else
+                {
+                    Node peekNode = stack.Peek();
+
+                    //we check here if a right sub-tree exists when peekNode is the left-most leaf. In which case peekNode.Right != null is true
+                    //in the other constraint we avoid getting stuck on a subtree after printing both of its branches and now we'll print itself.
+                    if (peekNode.Right != null && lastNodeVisited != peekNode.Right)
+                        root = peekNode.Right;
+                    else
+                    {
+                        Console.WriteLine(peekNode.Data);
+                        answer++;
+                        lastNodeVisited = stack.Pop();
+                    }
+                }
             }
 
             return answer;
