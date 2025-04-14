@@ -29,8 +29,7 @@
             };
 
             BinaryTree tree = new();
-            int size = tree.SizeImperativeInOrderTraversal(root);
-            Console.WriteLine("Size of the tree: " + size);
+            tree.BFS(root);
         }
     }
 }
@@ -140,6 +139,27 @@ namespace Solution
             }
 
             return answer;
+        }
+
+        public void BFS(Node root)
+        {
+            if (root == null)
+                return;
+
+            //FIFO
+            Queue<Node> queue = new();
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                Node currNode = queue.Dequeue();
+                Console.WriteLine(currNode.Data);
+
+                if (currNode.Left != null)
+                    queue.Enqueue(currNode.Left);
+                if (currNode.Right != null)
+                    queue.Enqueue(currNode.Right);
+            }
         }
     }
 }
