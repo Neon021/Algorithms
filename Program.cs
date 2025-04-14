@@ -29,7 +29,7 @@
             };
 
             BinaryTree tree = new();
-            int size = tree.SizeImperativePostOrderTraversal(root);
+            int size = tree.SizeImperativeInOrderTraversal(root);
             Console.WriteLine("Size of the tree: " + size);
         }
     }
@@ -109,6 +109,33 @@ namespace Solution
                         answer++;
                         lastNodeVisited = stack.Pop();
                     }
+                }
+            }
+
+            return answer;
+        }
+
+        public int SizeImperativeInOrderTraversal(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int answer = 1;
+            Stack<Node> stack = new();
+
+            while (stack.Count > 0 || root != null)
+            {
+                if (root != null)
+                {
+                    stack.Push(root);
+                    root = root.Left;
+                }
+                else
+                {
+                    root = stack.Pop();
+                    Console.WriteLine(root.Data);
+                    answer++;
+                    root = root.Right;
                 }
             }
 
