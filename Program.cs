@@ -5,7 +5,7 @@
     public class Program
     {
         public static void Main()
-        { 
+        {
             // Create a test binary tree:
             //        1
             //       / \
@@ -29,7 +29,7 @@
             };
 
             BinaryTree tree = new();
-            int size = tree.Size(root);
+            int size = tree.SizeImperativePreOrderTraversal(root);
             Console.WriteLine("Size of the tree: " + size);
         }
     }
@@ -46,12 +46,37 @@ namespace Solution
 
     public class BinaryTree
     {
-        public int Size(Node root)
+        public int SizeRecursive(Node root)
         {
             if (root == null)
                 return 0;
 
-            return Size(root.Left) + Size(root.Right) + 1;
+            return SizeRecursive(root.Left) + SizeRecursive(root.Right) + 1;
+        }
+
+        public int SizeImperativePreOrderTraversal(Node root)
+        {
+            if (root == null)
+                return 0;
+
+            int answer = 1;
+            Stack<Node> stack = new();
+            stack.Push(root);
+
+            while (stack.Count > 0)
+            {
+                Node currNode = stack.Pop();
+                Console.WriteLine(currNode.Data);
+                answer++;
+
+                //Even though its a pre-order you should push right node first so that you don't pop it in the next iteration.
+                if (currNode.Right != null)
+                    stack.Push(currNode.Right);
+                if (currNode.Left != null)
+                    stack.Push(currNode.Left);
+            }
+
+            return answer;
         }
     }
 }
