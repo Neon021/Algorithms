@@ -3275,7 +3275,6 @@
         //}
         #endregion
         #endregion
-
         #region Trees
         #region Stanford -- Binary Tree
         #region MaxDepth
@@ -3437,6 +3436,63 @@
         //    }
         //}
         #endregion
+        #region HasPathSum
+        //public int has_path_sum_recursive(Node root, int currSum, int desiredSum)
+        //{
+        //    if (root == null)
+        //        return 0;
+
+        //    if (root.Left == null && root.Right == null)
+        //        return currSum + root.Data;
+        //    else
+        //    {
+        //        currSum += root.Data;
+        //        int leftBranchSum = has_path_sum_recursive(root.Left, currSum, desiredSum);
+        //        int rightBranchSum = has_path_sum_recursive(root.Right, currSum, desiredSum);
+        //        if (rightBranchSum == desiredSum || leftBranchSum == desiredSum)
+        //            return desiredSum;
+        //    }
+
+        //    return 0;
+        //}
+
+
+        //public bool has_path_sum_imperative(Node root, int sum)
+        //{
+        //    Stack<(Node, int)> stack = new();
+
+        //    stack.Push((root, root.Data));
+        //    Node? lastVisitedNode = root;
+        //    root = root.Left;
+
+        //    while (stack.Count > 0)
+        //    {
+        //        if (root != null)
+        //        {
+        //            int currPathSum = stack.Peek().Item2 + root.Data;
+        //            stack.Push((root, currPathSum));
+        //            root = root.Left;
+        //        }
+        //        else
+        //        {
+        //            (Node peekedNode, int currPathSum) tuple = stack.Peek();
+
+        //            //First condition is to not miss the right child of a node, the second is to avoid getting stuck on the right child
+        //            if (tuple.peekedNode.Right != null && lastVisitedNode != tuple.peekedNode.Right)
+        //                root = tuple.peekedNode.Right;
+        //            else
+        //            {
+        //                Console.WriteLine(tuple.peekedNode.Data);
+        //                //Ensure the peekedNode is a leaf
+        //                if ((tuple.peekedNode.Left == null && tuple.peekedNode.Right == null) && tuple.currPathSum == sum)
+        //                    return true;
+        //                lastVisitedNode = stack.Pop().Item1;
+        //            }
+        //        }
+        //    }
+
+        //    return false;
+        //}
         #endregion
         #region Binary tree traversals (pre, in, post, level order -- BFS)
         //public class Node
@@ -3448,48 +3504,37 @@
 
         //public class BinaryTree
         //{
-        //    public int SizeRecursive(Node root)
+        //    //LNR([root]Node-Left-Right)
+        //    public void pre_order(Node root)
         //    {
-        //        if (root == null)
-        //            return 0;
+        //        if (root == null) return;
 
-        //        return SizeRecursive(root.Left) + SizeRecursive(root.Right) + 1;
-        //    }
-
-        //    public int SizeImperativePreOrderTraversal(Node root)
-        //    {
-        //        if (root == null)
-        //            return 0;
-
-        //        int answer = 1;
         //        Stack<Node> stack = new();
         //        stack.Push(root);
 
         //        while (stack.Count > 0)
         //        {
-        //            Node currNode = stack.Pop();
-        //            Console.WriteLine(currNode.Data);
-        //            answer++;
+        //            root = stack.Pop();
+        //            Console.WriteLine(root.Data);
 
-        //            //Even though its a pre-order you should push right node first so that you don't pop it in the next iteration.
-        //            if (currNode.Right != null)
-        //                stack.Push(currNode.Right);
-        //            if (currNode.Left != null)
-        //                stack.Push(currNode.Left);
+        //            //Because stack is a LIFO structure you need to push right node first to print it last
+        //            if (root.Right != null)
+        //                stack.Push(root.Right);
+        //            if (root.Left != null)
+        //                stack.Push(root.Left);
         //        }
-
-        //        return answer;
         //    }
 
-        //    public int SizeImperativePostOrderTraversal(Node root)
+        //    //LNR(Left-[root]Node-Right)
+        //    public void in_order(Node root)
         //    {
-        //        if (root == null)
-        //            return 0;
+        //        if (root == null) return;
 
-        //        int answer = 1;
         //        Stack<Node> stack = new();
-        //        Node? lastNodeVisited = null;
+        //        stack.Push(root);
+        //        root = root.Left;
 
+        //        //The second condition is active when the all of the nodes in the left sub-tree of the root node is printed and the stack is empty
         //        while (stack.Count > 0 || root != null)
         //        {
         //            if (root != null)
@@ -3499,49 +3544,44 @@
         //            }
         //            else
         //            {
-        //                Node peekNode = stack.Peek();
+        //                Node curr_node = stack.Pop();
+        //                Console.WriteLine(curr_node.Data);
+        //                root = curr_node.Right;
+        //            }
+        //        }
+        //    }
 
-        //                //we check here if a right sub-tree exists when peekNode is the left-most leaf. In which case peekNode.Right != null is true
-        //                //in the other constraint we avoid getting stuck on a subtree after printing both of its branches and now we'll print itself.
-        //                if (peekNode.Right != null && lastNodeVisited != peekNode.Right)
-        //                    root = peekNode.Right;
+        //    //LRN((Left-Right-[root]Node)
+        //    public void post_order(Node root)
+        //    {
+        //        if (root == null) return;
+
+        //        Stack<Node> stack = new();
+        //        stack.Push(root);
+        //        root = root.Left;
+        //        Node? lastVisitedNode = null;
+
+        //        //When the root node is not printed in the first position, you need the second condition!
+        //        while (stack.Count > 0 || root != null)
+        //        {
+        //            if (root != null)
+        //            {
+        //                stack.Push(root);
+        //                root = root.Left;
+        //            }
+        //            else
+        //            {
+        //                Node peekedNode = stack.Peek();
+
+        //                if (peekedNode.Right != null && peekedNode.Right != lastVisitedNode)
+        //                    root = peekedNode.Right;
         //                else
         //                {
-        //                    Console.WriteLine(peekNode.Data);
-        //                    answer++;
-        //                    lastNodeVisited = stack.Pop();
+        //                    Console.WriteLine(peekedNode.Data);
+        //                    lastVisitedNode = stack.Pop();
         //                }
         //            }
         //        }
-
-        //        return answer;
-        //    }
-
-        //    public int SizeImperativeInOrderTraversal(Node root)
-        //    {
-        //        if (root == null)
-        //            return 0;
-
-        //        int answer = 1;
-        //        Stack<Node> stack = new();
-
-        //        while (stack.Count > 0 || root != null)
-        //        {
-        //            if (root != null)
-        //            {
-        //                stack.Push(root);
-        //                root = root.Left;
-        //            }
-        //            else
-        //            {
-        //                root = stack.Pop();
-        //                Console.WriteLine(root.Data);
-        //                answer++;
-        //                root = root.Right;
-        //            }
-        //        }
-
-        //        return answer;
         //    }
         //}
 
@@ -3566,8 +3606,9 @@
         //    }
         //}
         #endregion
-
         #endregion
+        #endregion
+
         #endregion
     }
 }
