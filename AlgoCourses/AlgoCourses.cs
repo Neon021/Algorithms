@@ -3710,13 +3710,6 @@
         //}
         #endregion
         #region Binary tree traversals (pre, in, post, level order -- BFS)
-        //public class Node
-        //{
-        //    public int Data;
-        //    public Node? Left;
-        //    public Node? Right;
-        //}
-
         //public class BinaryTree
         //{
         //    //LNR([root]Node-Left-Right)
@@ -3738,6 +3731,14 @@
         //            if (root.Left != null)
         //                stack.Push(root.Left);
         //        }
+        //    }
+        //    public void pre_order_recursive(Node root)
+        //    {
+        //        if (root == null) return;
+
+        //        Console.WriteLine(root.Data);
+        //        pre_order_recursive(root.Left);
+        //        pre_order_recursive(root.Right);
         //    }
 
         //    //LNR(Left-[root]Node-Right)
@@ -3764,6 +3765,14 @@
         //                root = curr_node.Right;
         //            }
         //        }
+        //    }
+        //    public void in_order_recursive(Node root)
+        //    {
+        //        if (root == null) return;
+
+        //        in_order_recursive(root.Left);
+        //        Console.WriteLine(root.Data);
+        //        in_order_recursive(root.Right);
         //    }
 
         //    //LRN((Left-Right-[root]Node)
@@ -3797,6 +3806,14 @@
         //                }
         //            }
         //        }
+        //    }
+        //    public void post_order_recursive(Node root)
+        //    {
+        //        if (root == null) return;
+
+        //        post_order_recursive(root.Left);
+        //        post_order_recursive(root.Right);
+        //        Console.WriteLine(root.Data);
         //    }
         //}
 
