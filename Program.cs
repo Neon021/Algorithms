@@ -134,21 +134,21 @@ namespace Solution
 
             stack.Push((root, root.Data));
             Node? lastVisitedNode = root;
-            (Node? node, int currPathSum) lastVisitedRootNode = (root, root.Data);
             root = root.Left;
 
             while (stack.Count > 0)
             {
                 if (root != null)
                 {
-                    int currPathSum = root.Data + lastVisitedRootNode.currPathSum;
+                    int currPathSum = stack.Peek().Item2 + root.Data;
                     stack.Push((root, currPathSum));
-                    lastVisitedRootNode = (root, currPathSum);
                     root = root.Left;
                 }
                 else
                 {
                     (Node peekedNode, int currPathSum) tuple = stack.Peek();
+
+                    //First condition is to not miss the right child of a node, the second is to avoid getting stuck on the right child
                     if (tuple.peekedNode.Right != null && lastVisitedNode != tuple.peekedNode.Right)
                         root = tuple.peekedNode.Right;
                     else
@@ -158,9 +158,6 @@ namespace Solution
                         if ((tuple.peekedNode.Left == null && tuple.peekedNode.Right == null) && tuple.currPathSum == sum)
                             return true;
                         lastVisitedNode = stack.Pop().Item1;
-                        //TryPeek because for the last root node popped there will be no tuple to be peeked... lotto learn here.
-                        stack.TryPeek(out (Node, int) result);
-                        lastVisitedRootNode = result;
                     }
                 }
             }
