@@ -42,7 +42,7 @@
                 {
                     Left = new Node(18),
                     Right = new Node(21)
-                    }
+                }
             };
 
             BinaryTree tree = new();
@@ -62,7 +62,7 @@ namespace Solution
         public Node(int data)
         {
             Data = data;
-    }
+        }
     }
     public class BinaryTree
     {
@@ -100,37 +100,167 @@ namespace Solution
         }
 
 
+        public void in_order_traverse_imperative(Node root, List<int> nodes)
         {
             if (root == null) return;
 
-            Node? curr, prev;
-            curr = root;
+            Stack<Node> stack = new();
+            stack.Push(root);
+            root = root.Left;
 
-            while (curr != null)
+            while (stack.Count > 0 || root != null)
             {
-                if (curr.Left == null)
+                if (root != null)
                 {
-                    Console.WriteLine(curr.Data);
-                    curr = curr.Right;
+                    stack.Push(root);
+                    root = root.Left;
                 }
                 else
                 {
-                    prev = curr.Left;
-                    while (prev.Right != null && prev.Right != curr)
-                        prev = prev.Right;
-
-                    if (prev.Right == null)
-                    {
-                        prev.Right = curr;
-                        curr = curr.Left;
-                    }
-                    else
-                    {
-                        prev.Right = null;
-                        Console.WriteLine(curr.Data);
-                        curr = curr.Right;
-                    }
+                    Node curr_node = stack.Pop();
+                    nodes.Add(curr_node.Data);
+                    root = curr_node.Right;
                 }
+            }
+        }
+
+        public Node? build_bst_imperative_queue(List<int> nodes)
+        {
+            int start = 0;
+            int end = nodes.Count - 1;
+            int midIndex = (start + end) / 2;
+            Node rootNode = new(nodes[midIndex]);
+
+            Queue<(Node parent, int currStart, int currEnd)> queue = new();
+
+            //Push rootNode for left and right subtree
+            queue.Enqueue((rootNode, start, midIndex - 1));
+            queue.Enqueue((rootNode, midIndex + 1, end));
+
+            while (queue.Count > 0)
+            {
+                (Node parent, int currStart, int currEnd) = queue.Dequeue();
+                if (currStart > currEnd)
+                    continue;
+
+                int currMidIndex = (currStart + currEnd) / 2;
+                Node currNode = new(nodes[currMidIndex]);
+
+                if (currNode.Data < parent.Data)
+                    parent.Left = currNode;
+                else
+                    parent.Right = currNode;
+
+
+                // Check if any node remaining in the left subtree of the currNode
+                queue.Enqueue((currNode, currStart, currMidIndex - 1));
+                // Check if any node remaining in the right subtree of the currNode
+                queue.Enqueue((currNode, currMidIndex + 1, currEnd));
+            }
+
+            return rootNode;
+        }
+        public Node? build_bst_imperative_stack(List<int> nodes)
+        {
+            int start = 0;
+            int end = nodes.Count - 1;
+            int midIndex = (start + end) / 2;
+            Node rootNode = new(nodes[midIndex]);
+
+            Stack<(Node parent, int currStart, int currEnd)> stack = new();
+
+            //Push rootNode for left and right subtree
+            stack.Push((rootNode, start, midIndex - 1));
+            stack.Push((rootNode, midIndex + 1, end));
+
+            while (stack.Count > 0)
+            {
+                (Node parent, int currStart, int currEnd) = stack.Pop();
+                if (currStart > currEnd)
+                    continue;
+
+                int currentMidIndex = (currStart + currEnd) / 2;
+                Node currentNode = new(nodes[currentMidIndex]);
+
+                if (currentNode.Data < parent.Data)
+                    parent.Left = currentNode;
+                else
+                    parent.Right = currentNode;
+
+
+                // Push sub-trees onto the stack (right first to process left earlier)
+                stack.Push((currentNode, currentMidIndex + 1, currEnd));
+                stack.Push((currentNode, currStart, currentMidIndex - 1));
+            }
+
+            return rootNode;
+        }
+        //public Node? build_bst_imperative(List<int> nodes)
+        //{
+        //    int start, end;
+        //    start = 0; end = nodes.Count - 1;
+
+        //    int midIndex = (start + end) / 2;
+        //    Node rootNode = new(nodes[midIndex]);
+        //    Node? leftLastNode = rootNode.Left;
+        //    Node? rightLastNode = rootNode.Right;
+        //    start++;
+
+        //    while (start <= end)
+        //    {
+        //        int mid_index = (start + end) / 2;
+        //        Node curr_node = new(nodes[mid_index]);
+        //        if (rootNode.Data >= curr_node.Data)
+        //        {
+        //            if (leftLastNode != null)
+        //            {
+        //                if (leftLastNode!.Data >= curr_node.Data)
+        //                    leftLastNode.Left = curr_node;
+
+        //                else
+        //                    leftLastNode.Right = curr_node;
+
+        //                leftLastNode = curr_node;
+        //            }
+        //            else
+        //            {
+        //                leftLastNode = curr_node;
+        //                rootNode.Left = leftLastNode;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            if (rightLastNode != null)
+        //            {
+        //                if (rightLastNode!.Data >= curr_node.Data)
+        //                    rightLastNode.Left = curr_node;
+
+        //                else
+        //                    rightLastNode.Right = curr_node;
+
+        //                rightLastNode = curr_node;
+        //            }
+        //            else
+        //            {
+        //                rightLastNode = curr_node;
+        //                rootNode.Right = rightLastNode;
+        //            }
+        //        }
+
+        //        start++;
+        //    }
+
+        //    return rootNode;
+        //}
+        public Node? balance_bst_imperative(Node root)
+        {
+            List<int> nodes = new();
+
+            in_order_traverse_imperative(root, nodes);
+
+            nodes.Sort();
+            return build_bst_imperative_stack(nodes);
+        }
         public void BFS(Node root)
         {
             if (root == null)

@@ -3709,6 +3709,7 @@
         //    return false;
         //}
         #endregion
+        #endregion
         #region Binary tree traversals (pre, in, post, level order -- BFS)
         //public class BinaryTree
         //{
@@ -3838,6 +3839,41 @@
         //    }
         //}
         #endregion
+        #region Morris Traversal
+        //public void morris_travel(Node root)
+        //{
+        //    if (root == null) return;
+
+        //    Node? curr, prev;
+        //    curr = root;
+
+        //    while (curr != null)
+        //    {
+        //        if (curr.Left == null)
+        //        {
+        //            Console.WriteLine(curr.Data);
+        //            curr = curr.Right;
+        //        }
+        //        else
+        //        {
+        //            prev = curr.Left;
+        //            while (prev.Right != null && prev.Right != curr)
+        //                prev = prev.Right;
+
+        //            if (prev.Right == null)
+        //            {
+        //                prev.Right = curr;
+        //                curr = curr.Left;
+        //            }
+        //            else
+        //            {
+        //                prev.Right = null;
+        //                Console.WriteLine(curr.Data);
+        //                curr = curr.Right;
+        //            }
+        //        }
+        //    }
+        //}
         #endregion
         #endregion
 
