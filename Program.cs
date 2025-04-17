@@ -6,67 +6,47 @@
     {
         public static void Main()
         {
-            //Node root = new();
-            //Node leftMostLeaf = new()
+            //Balanced tree
+            //Node root = new(5)
             //{
-            //    Data = 7,
-            //    InOrderSuccessor = root,
-            //};
-            //Node rightMostLeaf = new()
-            //{
-            //    Data = 7,
-            //    InOrderSuccessor = root,
-            //};
-            //Node leftMostLeafPredecessor = new Node
-            //{
-            //    Data = 11,
-            //    Right = rightMostLeaf,
-            //    Left = leftMostLeaf
-            //};
-
-            //root.Data = 5;
-            //root.Left = new Node
-            //{
-            //    Data = 4,
-            //    Left = leftMostLeafPredecessor,
-            //};
-            //root.Right = new Node
-            //{
-            //    Data = 8,
-            //    Left = new Node { Data = 13 },
-            //    Right = new Node
+            //    Left = new Node(4)
             //    {
-            //        Data = 4,
-            //        Right = new Node { Data = 1 },
+            //        Left = new Node(11)
+            //        {
+            //            Right = new Node(2),
+            //            Left = new Node(7),
+            //        },
+            //    },
+            //    Right = new Node(8)
+            //    {
+            //        Left = new Node(13),
+            //        Right = new Node(4)
+            //        {
+            //            Right = new Node(1),
+            //        }
             //    }
             //};
-            Node root = new()
+
+            //Unbalanced tree
+            Node root = new(7)
             {
-                Data = 5,
-                Left = new Node
+                Left = new Node(23)
                 {
-                    Data = 4,
-                    Left = new Node
+                    Left = new Node(11)
                     {
-                        Data = 11,
-                        Right = new Node { Data = 2, },
-                        Left = new Node { Data = 7 },
+                        Left = new Node(5),
+                        Right = new Node(4),
                     },
                 },
-                Right = new Node
+                Right = new Node(3)
                 {
-                    Data = 8,
-                    Left = new Node { Data = 13 },
-                    Right = new Node
-                    {
-                        Data = 4,
-                        Right = new Node { Data = 1 },
+                    Left = new Node(18),
+                    Right = new Node(21)
                     }
-                }
             };
 
             BinaryTree tree = new();
-            tree.morris_travel(root);
+            tree.BFS(tree.balance_bst_imperative(root));
         }
     }
 }
@@ -78,12 +58,48 @@ namespace Solution
         public int Data;
         public Node? Left;
         public Node? Right;
-        public Node? InOrderSuccessor;
-    }
 
+        public Node(int data)
+        {
+            Data = data;
+    }
+    }
     public class BinaryTree
     {
-        public void morris_travel(Node root)
+        public void in_order_traverse_recursive(Node root, List<int> nodes)
+        {
+            if (root == null) return;
+
+            in_order_traverse_recursive(root.Left, nodes);
+            nodes.Add(root.Data);
+            in_order_traverse_recursive(root.Right, nodes);
+        }
+
+        public Node? build_bst_recursive(List<int> nodes, int start, int end)
+        {
+            if (start > end) return null;
+
+            int midIndex = (start + end) / 2;
+            Node? rootNode = new(nodes[midIndex]);
+
+            rootNode.Left = build_bst_recursive(nodes, start, midIndex - 1);
+            rootNode.Right = build_bst_recursive(nodes, midIndex + 1, end);
+
+            return rootNode;
+        }
+
+        public Node? balance_bst_recursive(Node root)
+        {
+            List<int> nodes = new();
+
+            //store the nodes in_order in nodes list
+            in_order_traverse_recursive(root, nodes);
+
+            nodes.Sort();
+            return build_bst_recursive(nodes, 0, nodes.Count - 1);
+        }
+
+
         {
             if (root == null) return;
 
@@ -115,6 +131,24 @@ namespace Solution
                         curr = curr.Right;
                     }
                 }
+        public void BFS(Node root)
+        {
+            if (root == null)
+                return;
+
+            //FIFO
+            Queue<Node> queue = new();
+            queue.Enqueue(root);
+
+            while (queue.Count > 0)
+            {
+                Node currNode = queue.Dequeue();
+                Console.WriteLine(currNode.Data);
+
+                if (currNode.Left != null)
+                    queue.Enqueue(currNode.Left);
+                if (currNode.Right != null)
+                    queue.Enqueue(currNode.Right);
             }
         }
     }
