@@ -195,6 +195,43 @@ namespace Solution
 
             return rootNode;
         }
+
+        public Node? build_bst_imperative_with_struct(List<int> nodes)
+        {
+            int start = 0;
+            int end = nodes.Count - 1;
+            int midIndex = (start + end) / 2;
+            Node rootNode = new(nodes[midIndex]);
+
+            Stack<SortedNode> stack = new();
+            //RootNode for left sub-tree
+            stack.Push(new SortedNode { parent = rootNode, currStart = start, currEnd = midIndex - 1 });
+            //RootNode for right sub-tree
+            stack.Push(new SortedNode { parent = rootNode, currStart = midIndex + 1, currEnd = end });
+
+            while (stack.Count > 0)
+            {
+                SortedNode parentNode = stack.Pop();
+
+                if (parentNode.currStart > parentNode.currEnd) continue;
+
+                int currMidIndex = (parentNode.currStart + parentNode.currEnd) / 2;
+                Node childNode = new(nodes[currMidIndex]);
+
+                if (childNode.Data < parentNode.parent.Data)
+                    parentNode.parent.Left = childNode;
+                else
+                    parentNode.parent.Right = childNode;
+
+                //RootNode for left sub-tree
+                stack.Push(new SortedNode { parent = childNode, currStart = parentNode.currStart, currEnd = currMidIndex - 1 });
+                //RootNode for right sub-tree
+                stack.Push(new SortedNode { parent = childNode, currStart = currMidIndex + 1, currEnd = parentNode.currEnd });
+            }
+
+            return rootNode;
+        }
+
         //public Node? build_bst_imperative(List<int> nodes)
         //{
         //    int start, end;
@@ -259,7 +296,7 @@ namespace Solution
             in_order_traverse_imperative(root, nodes);
 
             nodes.Sort();
-            return build_bst_imperative_stack(nodes);
+            return build_bst_imperative_with_struct(nodes);
         }
         public void BFS(Node root)
         {
@@ -281,5 +318,12 @@ namespace Solution
                     queue.Enqueue(currNode.Right);
             }
         }
+    }
+
+    public struct SortedNode
+    {
+        public Node parent;
+        public int currStart;
+        public int currEnd;
     }
 }
