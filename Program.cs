@@ -4,129 +4,44 @@
     {
         public static void Main()
         {
-            Console.WriteLine(DblLinear(15));
-            //Unbalanced tree
-            //Node root = new(7)
-            //{
-            //    Left = new Node(23)
-            //    {
-            //        Left = new Node(11)
-            //        {
-            //            Left = new Node(5),
-            //            Right = new Node(4),
-            //        },
-            //    },
-            //    Right = new Node(3)
-            //    {
-            //        Left = new Node(18),
-            //        Right = new Node(21)
-            //    }
-            //};
+            int[] nums = { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 };
+            Console.WriteLine(RemoveDuplicates(nums));
 
-            //BinaryTree tree = new(7);
-            //tree.insert_AVL(new Node(14), tree.Root);
-            //tree.insert_AVL(new Node(5), tree.Root);
-            //tree.BFS(tree.Root);
-        }
-        public static int DblLinear(int n)
-        {
-            int[] resultSet = new int[n + 1];
-            resultSet[0] = 1;
-
-            int p1 = 0;
-            int p2 = 0;
-
-            for (int i = 1; i <= n; i++)
+            foreach (var item in nums)
             {
-                // Calculate the next two potential candidates based on our current pointers
-                int next2 = 2 * resultSet[p1] + 1;
-                int next3 = 3 * resultSet[p2] + 1;
+                Console.WriteLine(item);
+            }
+        }
 
-                if (next2 <= next3)
+        public static int RemoveDuplicates(int[] nums)
+        {
+            if (nums.Length == 0) return 0;
+            if (nums.Length == 1) return 1;
+
+            //nums is in ascending order
+            //So duplicate numbers must be side-by-side
+            //It looks like a two-pointer since we operate on a sorted array to compare 2 elements
+
+            //The first k element must be unique elements in ascending order
+            //So, what we need to do is compare two pointers at each step
+            //When elements at i and j are equal, increase j by one
+            //when you stumble on a different element, place the element at j to i + 1 e.g nums[i + 1] = nums[j]
+            //continue doing this until j < nums.length
+            //also the answer is index i
+
+            int i = 0;
+            int j = 1;
+            while (j < nums.Length)
+            {
+                if (nums[i] != nums[j])
                 {
-                    resultSet[i] = next2;
-                    p1++; // We used the 2x+1 candidate, so move that pointer forward
-
-                    // Handle duplicates
-                    if (next2 == next3) p2++;
+                    nums[i + 1] = nums[j];
+                    i++;
                 }
-                else
-                {
-                    resultSet[i] = next3;
-                    p2++; // We used the 3x+1 candidate
-                }
+                j++;
             }
 
-            return resultSet[n];
-        }
-    }
-}
-namespace Solution
-{
-    public class Node
-    {
-        public int Data;
-        public int Height;
-        public Node? Left;
-        public Node? Right;
-
-        public Node(int data)
-        {
-            Data = data;
-        }
-    }
-    public class BinaryTree
-    {
-        private readonly Node _root;
-        public Node Root;
-
-        public BinaryTree(int data)
-        {
-            _root = new(data);
-            Root = _root;
-        }
-        public void construct_AVL(Node root)
-        {
-
-        }
-
-        public void insert_AVL(Node new_node, Node root, int curr_height = 0)
-        {
-            if (root.Left == null || root.Right == null)
-            {
-                if (root.Data > new_node.Data)
-                    root.Left = new_node;
-                else
-                    root.Right = new_node;
-
-                return;
-            }
-
-            if (root.Data > new_node.Data)
-                insert_AVL(new_node, root.Left);
-            else
-                insert_AVL(new_node, root.Right);
-        }
-
-        public void BFS(Node root)
-        {
-            if (root == null)
-                return;
-
-            //FIFO
-            Queue<Node> queue = new();
-            queue.Enqueue(root);
-
-            while (queue.Count > 0)
-            {
-                Node currNode = queue.Dequeue();
-                Console.WriteLine(currNode.Data);
-
-                if (currNode.Left != null)
-                    queue.Enqueue(currNode.Left);
-                if (currNode.Right != null)
-                    queue.Enqueue(currNode.Right);
-            }
+            return i += 1;
         }
     }
 }
