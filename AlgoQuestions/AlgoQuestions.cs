@@ -2305,14 +2305,9 @@
         #region Easy
 
         #region hasDuplicate
+        //Runtime optimized
         public bool hasDuplicate(int[] nums)
         {
-            //Weel I thought the array is always sorted
-            //for (int i = 1; i < nums.Length; i++){
-            //    if(nums[i-1] == nums[i])
-            //        return true;
-            //}
-            //return false;
             HashSet<int> set = new();
             foreach (int i in nums)
             {
@@ -2321,6 +2316,26 @@
                 else
                     return true;
             }
+            return false;
+        }
+
+        //Space complexity optimized
+        public bool HasDuplicate(int[] nums)
+        {
+            Array.Sort(nums);
+            if (nums.Length <= 1) return false;
+
+            int i = 0;
+            int j = 1;
+            while (j < nums.Length)
+            {
+                if (nums[i] == nums[j])
+                    return true;
+
+                i++;
+                j++;
+            }
+
             return false;
         }
         #endregion

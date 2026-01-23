@@ -3576,8 +3576,8 @@
         //        //   / \ / \
         //        //  ---NULL---
         //        //In order to print in this order => 1,2,3, you need to first travel all to way to the left-most leaf
-        //        //and stack nodes and their left child along the way.
-        //        //then you should pop each sub-trees left node and root node subsequently and right after printin the root node
+        //        //while stacking nodes and their left child along the way.
+        //        //then you should pop each sub-trees left node then the root node
         //        //you should pay a quick visit to the right child and print it as well.
         //        //Then you can rise to the next subtree and repeat the process.
 
@@ -3631,9 +3631,9 @@
         //            //   / \ / \
         //            //  ---NULL---
         //            //In order to print in this order => 1,3,2, you need to first travel all to way to the left-most leaf
-        //            //and stack root nodes with their left child along the way.
+        //            //while stacking nodes and their left child along the way.
         //            //Then you should firs peek the node on top of the stack to check if its a root node by checking its right child,
-        //            //if it has a right child set the root to that node and push it on to the stack in the next iteration.
+        //            //if it has a right child set the root to that node and push it onto the stack in the next iteration.
         //            //After pushing it set the root to its left node to see if its also a root node by itself.
         //            //The need for lasVisitedNode variable is to avoid getting stuck on the right child of a root node, if you wouldn't have that
         //            //you'd keep checking the peekedNode's right child(which is available since its a root node) push it on to stack, print and pop it,
@@ -4098,6 +4098,40 @@
         //}
         #endregion
         #endregion
+
+        #endregion
+
+        #region Outtalent
+        public static int RemoveDuplicates(int[] nums)
+        {
+            if (nums.Length == 0) return 0;
+            if (nums.Length == 1) return 1;
+
+            //nums is in ascending order
+            //So duplicate numbers must be side-by-side
+            //It looks like a two-pointer since we operate on a sorted array to compare 2 elements
+
+            //The first k element must be unique elements in ascending order
+            //So, what we need to do is compare two pointers at each step
+            //When elements at i and j are equal, increase j by one
+            //when you stumble on a different element, place the element at j to i + 1 e.g nums[i + 1] = nums[j]
+            //continue doing this until j < nums.length
+            //also the answer is index i
+
+            int i = 0;
+            int j = 1;
+            while (j < nums.Length)
+            {
+                if (nums[i] != nums[j])
+                {
+                    nums[i + 1] = nums[j];
+                    i++;
+                }
+                j++;
+            }
+
+            return i += 1;
+        }
 
         #endregion
     }

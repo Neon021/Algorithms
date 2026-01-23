@@ -4,44 +4,33 @@
     {
         public static void Main()
         {
-            int[] nums = { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 };
-            Console.WriteLine(RemoveDuplicates(nums));
-
-            foreach (var item in nums)
-            {
-                Console.WriteLine(item);
-            }
         }
 
-        public static int RemoveDuplicates(int[] nums)
+        public static bool IsAnagram(string s, string t)
         {
-            if (nums.Length == 0) return 0;
-            if (nums.Length == 1) return 1;
+            if (s.Length != t.Length) return false;
 
-            //nums is in ascending order
-            //So duplicate numbers must be side-by-side
-            //It looks like a two-pointer since we operate on a sorted array to compare 2 elements
+            //First we need a way to count frequency of characters in both strings
+            //size is 256 assuming s and t contain only extended ASCII characters
+            int[] charFrequencyForS = new int[256];
+            int[] charFrequencyForT = new int[256];
 
-            //The first k element must be unique elements in ascending order
-            //So, what we need to do is compare two pointers at each step
-            //When elements at i and j are equal, increase j by one
-            //when you stumble on a different element, place the element at j to i + 1 e.g nums[i + 1] = nums[j]
-            //continue doing this until j < nums.length
-            //also the answer is index i
-
-            int i = 0;
-            int j = 1;
-            while (j < nums.Length)
+            for (int i = 0; i < s.Length; i++)
             {
-                if (nums[i] != nums[j])
-                {
-                    nums[i + 1] = nums[j];
-                    i++;
-                }
-                j++;
+                //This means "increase the value at index of the character's ASCII value by 1"
+                charFrequencyForS[s[i]]++;
+                charFrequencyForT[t[i]]++;
             }
 
-            return i += 1;
+            //Then we can iterate over extended ASCII domain and compare at each step
+            for (int i = 0; i < 256; i++)
+            {
+                //If the frequency of a character is different in both strings, they are not anagrams
+                if (charFrequencyForS[i] != charFrequencyForT[i])
+                    return false;
+            }
+
+            return true;
         }
     }
 }
