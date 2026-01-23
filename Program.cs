@@ -5,32 +5,48 @@
         public static void Main()
         {
         }
-
-        public static bool IsAnagram(string s, string t)
+        public static bool IsValid(string s)
         {
-            if (s.Length != t.Length) return false;
+            //Do we need to use Stack here?
+            //Because with the example 5 we can see that the closing bracket must be subsequent one in the list
+            //We just need a char to store the last opened bracket
+            //char lastOpened = '\0';
 
-            //First we need a way to count frequency of characters in both strings
-            //size is 256 assuming s and t contain only extended ASCII characters
-            int[] charFrequencyForS = new int[256];
-            int[] charFrequencyForT = new int[256];
+            //for (int i = 0; i < s.Length; i++)
+            //{
+            //    char c = s[i];
+            //    if (c == '(' || c == '[' || c == '{')
+            //        lastOpened = c;
+            //    else if (c == ')' && lastOpened != '(')
+            //        return false;
+            //    else if (c == ']' && lastOpened != '[')
+            //        return false;
+            //    else if (c == '}' && lastOpened != '{')
+            //        return false;
+            //    else if (i == s.Length - 1)
+            //        lastOpened = '\0';
+            //    else
+            //        return false;
+            //}
 
-            for (int i = 0; i < s.Length; i++)
+            //return lastOpened != '(' && lastOpened != '[' && lastOpened != '{';
+
+            Stack<char> stack = new Stack<char>();
+
+            for (int i =0; i < s.Length; i++)
             {
-                //This means "increase the value at index of the character's ASCII value by 1"
-                charFrequencyForS[s[i]]++;
-                charFrequencyForT[t[i]]++;
-            }
-
-            //Then we can iterate over extended ASCII domain and compare at each step
-            for (int i = 0; i < 256; i++)
-            {
-                //If the frequency of a character is different in both strings, they are not anagrams
-                if (charFrequencyForS[i] != charFrequencyForT[i])
+                char c = s[i];
+                if (c == '(' || c == '[' || c == '{')
+                    stack.Push(c);
+                else if (c == ')' && (stack.Count == 0 || stack.Pop() != '('))
+                    return false;
+                else if (c == ']' && (stack.Count == 0 || stack.Pop() != '['))
+                    return false;
+                else if (c == '}' && (stack.Count == 0 || stack.Pop() != '{'))
                     return false;
             }
 
-            return true;
+            return stack.Count == 0;
         }
     }
 }
