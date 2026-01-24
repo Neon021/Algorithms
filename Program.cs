@@ -4,49 +4,53 @@
     {
         public static void Main()
         {
+            int[] example = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
+            Console.WriteLine(MaxArea(example));
         }
-        public static bool IsValid(string s)
+        public static int MaxArea(int[] height)
         {
-            //Do we need to use Stack here?
-            //Because with the example 5 we can see that the closing bracket must be subsequent one in the list
-            //We just need a char to store the last opened bracket
-            //char lastOpened = '\0';
+            //height.Length n
+            //there are n vertical lines
+            //each of these vertical lines at ith index are (i, 0)[starting point] and (i, height[i])[length]
+            //For example
+            //int[] LineAtithStartingPoint = new int[] { i, 0 };
+            //int[] LineAtithEndpoint = new int[] { i, height[i] };
+            //
+            //int[] LineAtjthStartingPoint = new int[] { j, 0 };
+            //int[] LineAtjthEndpoint = new int[] { j, height[j] };
 
-            //for (int i = 0; i < s.Length; i++)
-            //{
-            //    char c = s[i];
-            //    if (c == '(' || c == '[' || c == '{')
-            //        lastOpened = c;
-            //    else if (c == ')' && lastOpened != '(')
-            //        return false;
-            //    else if (c == ']' && lastOpened != '[')
-            //        return false;
-            //    else if (c == '}' && lastOpened != '{')
-            //        return false;
-            //    else if (i == s.Length - 1)
-            //        lastOpened = '\0';
-            //    else
-            //        return false;
-            //}
+            int maxSurfaceArea = 0;
+            int i = 0, j = height.Length - 1;
 
-            //return lastOpened != '(' && lastOpened != '[' && lastOpened != '{';
-
-            Stack<char> stack = new Stack<char>();
-
-            for (int i =0; i < s.Length; i++)
+            while (i < j)
             {
-                char c = s[i];
-                if (c == '(' || c == '[' || c == '{')
-                    stack.Push(c);
-                else if (c == ')' && (stack.Count == 0 || stack.Pop() != '('))
-                    return false;
-                else if (c == ']' && (stack.Count == 0 || stack.Pop() != '['))
-                    return false;
-                else if (c == '}' && (stack.Count == 0 || stack.Pop() != '{'))
-                    return false;
+                int diff = j - i;//difference on X axis
+                int surface = diff * Math.Min(height[j], height[i]);
+                maxSurfaceArea = Math.Max(maxSurfaceArea, surface);
+
+                if (height[j] > height[i])
+                    i++;
+                else
+                    j--;
             }
 
-            return stack.Count == 0;
+            return maxSurfaceArea;
+
+            //This one does not work as expected because we increase i and decrease j at EACH STEP which unables us to retain on the biggest line we have
+            //The working version compares the height of th
+            //int maxSurfaceArea = 0;
+
+            //for (int i = 0, j = height.Length - 1; i < j && j > i; i++, j--)
+            //{
+            //    int diff = j - i;//difference on X axis
+            //    int surface = diff * Math.Min(height[j], height[i]);
+
+            //    Console.WriteLine($"i = {i}, j ={j}\r\ndiff={diff}, surface={surface}, maxSurface={maxSurfaceArea}");
+
+            //    maxSurfaceArea = Math.Max(maxSurfaceArea, surface);
+            //}
+
+            //return maxSurfaceArea;
         }
     }
 }
