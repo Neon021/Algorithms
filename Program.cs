@@ -4,49 +4,83 @@
     {
         public static void Main()
         {
+            //["MinStack","push","push","push","getMin","pop","top","getMin"]
+            //[[],[-2],[0],[-3],[],[],[],[]]
+            MinStack minStack = new MinStack();
+            minStack.Push(-2);
+            minStack.Push(0);
+            minStack.Push(-3);
+            int param_4 = minStack.GetMin();
+            minStack.Pop();
+            int param_3 = minStack.Top();
+            int param_5 = minStack.GetMin();
         }
-        public static bool IsValid(string s)
+        public class MinStack
         {
-            //Do we need to use Stack here?
-            //Because with the example 5 we can see that the closing bracket must be subsequent one in the list
-            //We just need a char to store the last opened bracket
-            //char lastOpened = '\0';
 
-            //for (int i = 0; i < s.Length; i++)
-            //{
-            //    char c = s[i];
-            //    if (c == '(' || c == '[' || c == '{')
-            //        lastOpened = c;
-            //    else if (c == ')' && lastOpened != '(')
-            //        return false;
-            //    else if (c == ']' && lastOpened != '[')
-            //        return false;
-            //    else if (c == '}' && lastOpened != '{')
-            //        return false;
-            //    else if (i == s.Length - 1)
-            //        lastOpened = '\0';
-            //    else
-            //        return false;
-            //}
+            private int[] _stack;
+            private int _capacity;
+            private int _length;
 
-            //return lastOpened != '(' && lastOpened != '[' && lastOpened != '{';
-
-            Stack<char> stack = new Stack<char>();
-
-            for (int i =0; i < s.Length; i++)
+            public MinStack()
             {
-                char c = s[i];
-                if (c == '(' || c == '[' || c == '{')
-                    stack.Push(c);
-                else if (c == ')' && (stack.Count == 0 || stack.Pop() != '('))
-                    return false;
-                else if (c == ']' && (stack.Count == 0 || stack.Pop() != '['))
-                    return false;
-                else if (c == '}' && (stack.Count == 0 || stack.Pop() != '{'))
-                    return false;
+                _length = 0;
+                _capacity = 10;
+                _stack = new int[_capacity];
             }
 
-            return stack.Count == 0;
+            public void Push(int val)
+            {
+                if (_length + 1 < _capacity)
+                {
+                    _stack[_length] = val;
+                    _length++;
+                }
+                else
+                {
+                    int[] tmp = _stack;
+                    _capacity *= 2;
+                    _stack = new int[_capacity];
+                    for (int i = 0; i < tmp.Length; i++)
+                    {
+                        _stack[i] = tmp[i];
+                    }
+                    _stack[_length] = val;
+                    _length++;
+                }
+            }
+
+            public void Pop()
+            {
+                if (_length > 0)
+                {
+                    _stack[_length - 1] = -1;
+                    _length--;
+                }
+            }
+
+            public int Top()
+            {
+                if (_length > 0)
+                {
+                    return _stack[_length - 1];
+                }
+
+                return -1;
+            }
+
+            public int GetMin()
+            {
+                if (_length > 0)
+                {
+                    IEnumerable<int> slice = _stack.Take(_length);
+                    return slice.Min();
+                }
+
+                return int.MaxValue;
+            }
         }
+
+
     }
 }
