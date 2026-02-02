@@ -7,21 +7,22 @@
         }
         public List<int> prevSmaller(List<int> A)
         {
-            List<int> result = new List<int>();
+            List<int> result = new();
 
-            for (int i = 0; i < A.Count; i++)
+            Stack<int> stack = new();
+            foreach (int a in A)
             {
-                for (int j = i - 1; j >= 0; j--)
-                {
-                    if (A[j] < A[i])
-                        result.Add(j);
-                }
+                while (stack.Count > 0 && stack.Peek() >= a)
+                    stack.Pop();
 
-                result.Add(-1);
+                if (stack.Peek() < a)
+                    result.Add(stack.Peek());
+                else
+                    result.Add(-1);
+
+                stack.Push(a);
             }
-
             return result;
-
         }
     }
 }
