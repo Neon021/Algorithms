@@ -4,153 +4,47 @@
     {
         public static void Main()
         {
-            //["MyCircularDeque", "insertLast", "insertLast", "insertLast", "insertLast", "deleteFront", "deleteFront", "deleteFront", "insertLast", "insertLast"]
-            //[[3], [1], [2], [3], [4], [], [], [], [4], [6]]
-            MyCircularDeque myCircularDeque = new MyCircularDeque(3);
-            myCircularDeque.InsertLast(1); // return true
-            myCircularDeque.InsertLast(2); // return true
-            myCircularDeque.InsertLast(3); // return true
-            myCircularDeque.InsertLast(4); // return false, the deque is full
-            myCircularDeque.DeleteFront();  // return true
-            myCircularDeque.DeleteFront();  // return true
-            myCircularDeque.DeleteFront();  // return true
-            myCircularDeque.InsertLast(4); // return true
-            myCircularDeque.InsertLast(6); // return true
         }
-        public class Node
+        public class MyQueue
         {
-            public int Value;
-            public Node Next;
-            public Node Previous;
-
-            public Node(int val)
+            //FIFO elements
+            private Stack<int> stack1;
+            private Stack<int> stack2;
+            public MyQueue()
             {
-                Value = val;
-            }
-        }
-
-        public class MyCircularDeque
-        {
-            private Node _first;
-            private Node _last;
-
-            private int _length;
-            private int _capacity;
-
-            public MyCircularDeque(int k)
-            {
-                _capacity = k;
-                _length = 0;
+                stack1 = new Stack<int>();
+                stack2 = new Stack<int>();
             }
 
-            public bool InsertFront(int value)
+            //Enqueue
+            public void Push(int x)
             {
-                if (_length == _capacity)
-                    return false;
+                //Imagine this, we have two stacks that operate with FIFO principle
+                //In order to simulate a queue with stacks that use FILO principle, we need to reverse the order of the elements
+                //So by turning stack1 upside down into stack2 we are able to put the new element at the bottom of the stack in the next push
+                while (stack2.Count > 0)
+                    stack1.Push(stack2.Pop());
 
-                Node newNode = new Node(value);
+                stack1.Push(x);
 
-                if (_first == null)
-                {
-                    _first = newNode;
-                    _last = _first;
-                }
-                else
-                {
-                    _first.Next = newNode;
-
-                    Node tmp = _first;
-                    _first = newNode;
-                    _first.Previous = tmp;
-                }
-
-                _length++;
-                return true;
+                while (stack1.Count > 0)
+                    stack2.Push(stack1.Pop());
             }
 
-            public bool InsertLast(int value)
+            //Dequeue
+            public int Pop()
             {
-                if (_length == _capacity)
-                    return false;
-
-                Node newNode = new Node(value);
-
-                if (_last == null)
-                {
-                    _first = newNode;
-                    _last = _first;
-                }
-                else
-                {
-                    _last.Previous = newNode;
-
-                    Node tmp = _last;
-                    _last = newNode;
-                    _last.Next = tmp;
-                }
-
-                _length++;
-                return true;
+                return stack2.Pop();
             }
 
-            public bool DeleteFront()
+            public int Peek()
             {
-                if (_length == 0 || _first == null)
-                    return false;
-
-                if (_length == 1)
-                {
-                    _last = null;
-                    _first = null;
-                }
-                else
-                    _first = _first.Previous;
-
-                _length--;
-                return true;
+                return stack2.Peek();
             }
 
-            public bool DeleteLast()
+            public bool Empty()
             {
-                if (_length == 0 || _last == null)
-                    return false;
-
-                if (_length == 1)
-                {
-                    _last = null;
-                    _first = null;
-                }
-                else
-                    _last = _last.Next;
-
-                _length--;
-                return true;
-            }
-
-            public int GetFront()
-            {
-                if (_length == 0 || _first == null)
-                    return -1;
-
-                return _first.Value;
-            }
-
-            public int GetRear()
-            {
-                if (_length == 0 || _last == null)
-                    return -1;
-
-                return _last.Value;
-            }
-
-            public bool IsEmpty()
-            {
-                return _length == 0;
-            }
-
-            public bool IsFull()
-            {
-                return _length == _capacity;
+                return stack2.Count == 0;
             }
         }
     }
