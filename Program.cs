@@ -1,4 +1,4 @@
-namespace Main
+﻿namespace Main
 {
     public class Program
     {
@@ -7,12 +7,14 @@ namespace Main
             MinHeap h = new MinHeap(11);
             h.Insert(3);
             h.Insert(2);
-            h.Delete(1);
+            h.DeleteRoot();
             h.Insert(15);
             h.Insert(5);
             h.Insert(4);
             h.Insert(45);
 
+            Console.Write(h.ExtractMin() + " ");
+            Console.Write(h.GetMin() + " ");
         }
     }
 
@@ -30,7 +32,7 @@ namespace Main
         }
 
 
-        public static int Parent(int index) => (int)Math.Floor((decimal)((index - 1) / 2));
+        public static int Parent(int index) => index - 1 / 2;
         public static int Left(int index) => index * 2 + 1;
         public static int Right(int index) => index * 2 + 2;
         public static void Swap<T>(ref T left, ref T right)
@@ -57,40 +59,62 @@ namespace Main
 
             return true;
         }
-            {
-                System.Console.WriteLine("No intersection.");
-            }
-        }
-    }
-
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
-        public ListNode(int val = 0, ListNode next = null)
+        public void DeleteRoot()
         {
-            this.val = val;
-            this.next = next;
-        }
-    }
-
-    public static class Solution
-    {
-        public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
-        {
-            if (headA == null || headB == null)
-                return null;
-
-            ListNode ptrOfFirstList = headA;
-            ListNode ptrOfSecondList = headB;
-
-            while (ptrOfFirstList != ptrOfSecondList)
+            if (_size == 0) return;
+            if (_size == 1)
             {
-                ptrOfFirstList = ptrOfFirstList == null ? headB : ptrOfFirstList.next;
-                ptrOfSecondList = ptrOfSecondList == null ? headA : ptrOfSecondList.next;
+                _heapArray[0] = 0;
+                _size--;
+                return;
             }
 
-            return ptrOfFirstList;
+            int min = _heapArray[0];
+            _heapArray[0] = _heapArray[_size - 1];
+            _size--;
+
+            //heap sort
+            //if (_size != _capacity)
+            //{
+            //    int diff = _capacity - _size;
+            //    _heapArray[^(diff - 1)] = min;
+            //}
+
+            MinHeapify(0);// heapify root
+        }
+        public void MinHeapify(int index)
+        {
+            int left = Left(index);
+            int right = Right(index);
+            int root = index;
+
+            if (left < _size && _heapArray[left] < _heapArray[root])
+                root = left;
+            if (right < _size && _heapArray[right] < _heapArray[root])
+                root = right;
+
+            if (root != index) // did we change the index?
+            {
+                Swap(ref _heapArray[index], ref _heapArray[root]);
+                MinHeapify(root);// redo heapify starting from new root
+            }
+        }
+        public int ExtractMin()
+        {
+            if (_size <= 0) return int.MaxValue;
+
+            if (_size == 1)
+            {
+                _size--;
+                return _heapArray[_size];
+            }
+
+            int min = _heapArray[0];
+            _heapArray[0] = _heapArray[_size - 1];
+            _size--;
+
+            MinHeapify(0);
+            return min;
         }
     }
 }
