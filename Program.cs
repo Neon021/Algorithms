@@ -1,23 +1,62 @@
-﻿
 namespace Main
 {
     public class Program
     {
         public static void Main()
         {
-            //headA = [2][6][4]
-            //headB = [1][5]
-            ListNode headA = new ListNode(2);
-            headA.next = new ListNode(6);
-            headA.next.next = new ListNode(4);
-            ListNode headB = new ListNode(1);
-            headB.next = new ListNode(5);
-            ListNode intersectionNode = Solution.GetIntersectionNode(headA, headB);
-            if (intersectionNode != null)
+            MinHeap h = new MinHeap(11);
+            h.Insert(3);
+            h.Insert(2);
+            h.Delete(1);
+            h.Insert(15);
+            h.Insert(5);
+            h.Insert(4);
+            h.Insert(45);
+
+        }
+    }
+
+    public class MinHeap
+    {
+        private int[] _heapArray;
+        private int _capacity;
+        private int _size;
+
+        public MinHeap(int capacity)
+        {
+            _capacity = capacity;
+            _heapArray = new int[_capacity];
+            _size = 0;
+        }
+
+
+        public static int Parent(int index) => (int)Math.Floor((decimal)((index - 1) / 2));
+        public static int Left(int index) => index * 2 + 1;
+        public static int Right(int index) => index * 2 + 2;
+        public static void Swap<T>(ref T left, ref T right)
+        {
+            T temp = left;
+            left = right;
+            right = temp;
+        }
+        public int GetMin() => _size > 0 ? _heapArray[0] : int.MaxValue;
+
+        public bool Insert(int key)
+        {
+            if (_size == _capacity)
+                return false;
+
+            int index = _size;
+            _heapArray[index] = key;
+            _size++;
+            while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
             {
-                System.Console.WriteLine("Intersection at node with value: " + intersectionNode.val);
+                Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
+                index = Parent(index);
             }
-            else
+
+            return true;
+        }
             {
                 System.Console.WriteLine("No intersection.");
             }

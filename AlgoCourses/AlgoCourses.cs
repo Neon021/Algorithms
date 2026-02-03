@@ -4668,6 +4668,23 @@
         //        return head;
         //    }
         //}
+
+        //public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        //{
+        //    if (headA == null || headB == null)
+        //        return null;
+
+        //    ListNode ptrOfFirstList = headA;
+        //    ListNode ptrOfSecondList = headB;
+
+        //    while (ptrOfFirstList != ptrOfSecondList)
+        //    {
+        //        ptrOfFirstList = ptrOfFirstList == null ? headB : ptrOfFirstList.next;
+        //        ptrOfSecondList = ptrOfSecondList == null ? headA : ptrOfSecondList.next;
+        //    }
+
+        //    return ptrOfFirstList;
+        //}
         #endregion
 
         #endregion
