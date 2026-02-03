@@ -31,8 +31,7 @@
             _size = 0;
         }
 
-
-        public static int Parent(int index) => index - 1 / 2;
+        public static int Parent(int index) => (index - 1) / 2;
         public static int Left(int index) => index * 2 + 1;
         public static int Right(int index) => index * 2 + 2;
         public static void Swap<T>(ref T left, ref T right)
