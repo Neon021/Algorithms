@@ -1,10 +1,52 @@
 ﻿namespace Main
 {
-    public class Program
+    public static void Main()
     {
-        public static void Main()
+        Console.WriteLine(CountStudents(new int[] { 1, 1, 0, 0 }, new int[] { 0, 1, 0, 1 }));
+    }
+    public static int CountStudents(int[] students, int[] sandwiches)
+    {
+        Queue<int> studentQueue = new Queue<int>(students);
+        Stack<int> sandwichStack = new Stack<int>(sandwiches);
+
+        while (sandwichStack.Count != 0)
         {
+            int currStudent = studentQueue.Peek();
+            int currSandwich = sandwichStack.Peek();
+
+            if (currStudent == currSandwich)
+            {
+                studentQueue.Dequeue();
+                sandwichStack.Pop();
+            }
+            else
+            {
+                int student = studentQueue.Dequeue();
+                studentQueue.Enqueue(student);
+            }
         }
+
+        return studentQueue.Count;
+        //students in queue
+        //sandwiches in stack
+        //sandwiches either type of 1 or 0
+        //students either type of 1 or 0. 1 doesn't take the sandwich of type 0. 
+        //0 doesn't take take the sandwich of tyope 0 
+        //if(stuudent[i] == 1)
+        //goes to the end of the queue
+        //students.Length == sandwiches.Length
+
+        //while(sandwiches.Length != 0)
+
+
+
+        //students = [1,1,1,0,0,1], sandwiches = [1,0,0,0,1,1]
+        //students = [1,1,0,0,1], sandwiches = [0,0,0,1,1]
+        //students = [1,0,0,1,1], sandwiches = [0,0,0,1,1]
+        //students = [0,0,1,1,1], sandwiches = [0,0,0,1,1]
+        //students = [0,1,1,1], sandwiches = [0,0,1,1]
+        //students = [1,1,1], sandwiches = [0,1,1]
+        //students = [1,1,1], sandwiches = [0,1,1]
     }
 }
 public static class Solution
