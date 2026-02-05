@@ -6,11 +6,12 @@
         {
             int[] nums1 = new int[] { -15, 20, 45, 117, 223 };
             int[] nums2 = new int[] { -15, 20, 45, 117, 223, 546, 663, 714, 749, 801 };
-            IList<IList<int>> res = Solution.KSmallestPairs(nums1, nums2, 2);
-            foreach(var list in res)
+
+            var res = Solution.KSmallestPairs(nums1, nums2, 10);
+
+            foreach (var list in res)
             {
-                foreach(var item in list)
-                    Console.WriteLine(item);
+                Console.WriteLine($"[{list[0]}, {list[1]}] (Sum: {list[0] + list[1]})");
             }
         }
     }
@@ -28,31 +29,56 @@
             //we put the results in the minHeap
             //Then we can extractMin from the heap and use it to access our dictionary to get the related pair.
 
-            MinHeap heap = new MinHeap(nums1.Length);
+            var result = new List<IList<int>>();
+            if (nums1.Length == 0 || nums2.Length == 0 || k == 0) return result;
 
-            for (int i = 0; i < nums1.Length; i++)
+            MinHeap heap = new(nums1.Length);
+
+            // 1. Initialize Heap with the first column (i, 0)
+            // This treats every item in nums1 as the "head" of a potential sorted list
+            for (int i = 0; i < nums1.Length && i < k; i++)
             {
-                for (int j = 0; j < nums2.Length; j++)
-                {
-                    int sum = nums1[i] + nums2[j];
-                    List<int> currPair = new() { nums1[i], nums2[j] };
-                    heap.Insert(sum, currPair);
-                }
+                // We store the Sum, plus the indices i and j
+                heap.Insert(nums1[i] + nums2[0], i, 0);
             }
 
-            IList<IList<int>> result = heap.GetPairs(k);
+            // 2. Extract min and push the neighbor
+            while (k > 0 && !heap.IsEmpty())
+            {
+                MinHeap.HeapNode minNode = heap.ExtractMin();
+
+                int i = minNode.Index1;
+                int j = minNode.Index2;
+
+                // Add to result
+                result.Add(new List<int> { nums1[i], nums2[j] });
+
+                // 3. Push the NEXT element from the same "row" (i, j+1)
+                // If there is a next number in nums2...
+                if (j + 1 < nums2.Length)
+                {
+                    int nextSum = nums1[i] + nums2[j + 1];
+                    heap.Insert(nextSum, i, j + 1);
+                }
+
+                k--;
+            }
 
             return result;
         }
 
-
-
         public class MinHeap
         {
-            private int[] _heap;
+            public struct HeapNode
+            {
+                public int Sum;
+                public int Index1; // Index in nums1
+                public int Index2; // Index in nums2
+            }
+
+            private HeapNode[] _heap;
             private int _size;
             private int _capacity;
-            private Dictionary<int, List<IList<int>>> _pairResults = new();
 
             public MinHeap(int capacity)
             {
@@ -60,72 +86,47 @@
                 _heap = new int[_capacity];
             }
 
+            public bool IsEmpty() => _size == 0;
+
             private int Parent(int index) => (index - 1) / 2;
             private int Left(int index) => (index * 2) + 1;
             private int Right(int index) => (index * 2) + 2;
-            private void Swap(ref int left, ref int right)
+
+            private void Swap(int i, int j)
             {
-                int tmp = left;
-                left = right;
-                right = tmp;
+                HeapNode temp = _heap[i];
+                _heap[i] = _heap[j];
+                _heap[j] = temp;
             }
 
-            public void Insert(int value, List<int> pair)
+            public void Insert(int sum, int index1, int index2)
             {
                 if (_size == _capacity) return;
 
                 int index = _size;
-                int parentIndex = Parent(index);
-                _heap[index] = value;
+                _heap[index] = new HeapNode { Sum = sum, Index1 = index1, Index2 = index2 };
                 _size++;
-                _pairResults.TryGetValue(value, out List<IList<int>>? list);
-                if (list != null)
-                    list.Add(pair);
-                else
-                    _pairResults.TryAdd(value, new List<IList<int>>() { pair });
-                //bubble up
-                while (index != 0 && _heap[index] < _heap[parentIndex])
+
+                // Bubble Up
+                while (index != 0 && _heap[index].Sum < _heap[Parent(index)].Sum)
                 {
-                    Swap(ref _heap[index], ref _heap[parentIndex]);
-                    index = parentIndex;
-                    parentIndex = Parent(index);
+                    Swap(index, Parent(index));
+                    index = Parent(index);
                 }
             }
 
-            public IList<IList<int>> GetPairs(int k)
+            public HeapNode ExtractMin()
             {
-                IList<IList<int>> result = new List<IList<int>>();
-                while (_size >= 0 && k > 0)
-                {
-                    int smallest = ExtractMin();
-                    _pairResults.TryGetValue(smallest, out List<IList<int>>? pair);
-                    if (pair != null)
-                    {
-                        result.Add(pair[0]);
-                        pair.RemoveAt(0);
-                    }
-                    k--;
-                }
+                // Assuming caller checks IsEmpty()
+                HeapNode min = _heap[0];
 
-                return result;
-            }
-
-            private int ExtractMin()
-            {
-                if (_size <= 0)
-                    return int.MaxValue;
-
-                if (_size == 1)
-                {
-                    _size--;
-                    return _heap[_size];
-                }
-
-                int min = _heap[0];
                 _heap[0] = _heap[_size - 1];
                 _size--;
 
-                MinHeapify(0);
+                if (_size > 0)
+                {
+                    MinHeapify(0);
+                }
 
                 return min;
             }
@@ -134,18 +135,18 @@
             {
                 int left = Left(index);
                 int right = Right(index);
-                int root = index;
+                int smallest = index;
 
-                if (left < _size && _heap[left] < _heap[root])
-                    root = left;
-                if (right < _size && _heap[right] < _heap[root])
-                    root = right;
+                if (left < _size && _heap[left].Sum < _heap[smallest].Sum)
+                    smallest = left;
 
-                if (root != index)//if we actually changed our root
+                if (right < _size && _heap[right].Sum < _heap[smallest].Sum)
+                    smallest = right;
+
+                if (smallest != index)
                 {
-                    Swap(ref _heap[index], ref _heap[root]);
-                    index = root;
-                    MinHeapify(index);
+                    Swap(index, smallest);
+                    MinHeapify(smallest);
                 }
             }
         }
