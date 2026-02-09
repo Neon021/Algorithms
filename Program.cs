@@ -4,69 +4,65 @@
     {
         public static void Main()
         {
-            Console.WriteLine(Solution.NthUglyNumber(10));
+            Console.WriteLine(Solution.FindKthLargest(new int[] { 2, 1 }, 2));
         }
     }
 
     public static class Solution
     {
-        public static int NthUglyNumber(int n)
+        public static int FindKthLargest(int[] nums, int k)
         {
-            //we start the heap with the number 1. Because we are certain its an ugly number
-            MinHeap heap = new(n);
-            heap.Insert(1);
+            //insert all elements into the maxHeap
+            MaxHeap maxHeap = new(nums.Length);
 
-            int uglyCount = 0;
-            long lastUgly = 0;
-
-            while (true)
+            //int lastAdded = int.MinValue;
+            for (int i = 0; i < nums.Length; i++)
             {
-                //Next we extract the minimum from the heap
-                long currUgly = heap.ExtractMin();
-
-                //Check if its equal to the last ugly number
-                if (currUgly == lastUgly)
-                    continue;
-
-                lastUgly = currUgly;
-                uglyCount++;
-
-                if (uglyCount == n)
-                    return (int)currUgly;
-
-                //how to accomodate for previously calculated ugly number?
-                //use List instead of int[] in the heap and use Any?
-                //Something smarter
-                heap.Insert(currUgly * 2);
-                heap.Insert(currUgly * 3);
-                heap.Insert(currUgly * 5);
+                //if (nums[i] < lastAdded && !(nums.Length == k))
+                //{
+                //    lastAdded = int.MinValue;
+                //    continue;
+                //}
+                //else
+                //{
+                maxHeap.Insert(nums[i]);
+                //lastAdded = nums[i];
+                //}
             }
+
+            int res = -1;
+            while (k != 0)
+            {
+                res = maxHeap.ExtractMax();
+                k--;
+            }
+
+            return res;
         }
 
-        public class MinHeap
+        public class MaxHeap
         {
-            private long[] _heap;
+            private int[] _heap;
             private int _size;
             private int _capacity;
 
-            public MinHeap(int capacity)
+            public MaxHeap(int capacity)
             {
                 _capacity = capacity;
-                _heap = new long[_capacity];
+                _heap = new int[_capacity];
             }
 
-            public bool IsEmpty() => _size == 0;
-            private int Parent(int index) => (index - 1) / 2;
-            private int Left(int index) => (index * 2) + 1;
-            private int Right(int index) => (index * 2) + 2;
-            private void Swap(int i, int j)
+            private static int Left(int index) => (index * 2) + 1;
+            private static int Right(int index) => (index * 2) + 2;
+            private static int Parent(int index) => (index - 1) / 2;
+            private static void Swap(ref int l, ref int r)
             {
-                long temp = _heap[i];
-                _heap[i] = _heap[j];
-                _heap[j] = temp;
+                int tmp = l;
+                l = r;
+                r = tmp;
             }
 
-            public void Insert(long value)
+            public void Insert(int value)
             {
                 if (_size == _capacity) return;
 
@@ -74,14 +70,14 @@
                 _heap[index] = value;
                 _size++;
 
-                while (index != 0 && _heap[index] < _heap[Parent(index)])
+                while (index != 0 && _heap[index] > _heap[Parent(index)])
                 {
-                    Swap(index, Parent(index));
+                    Swap(ref _heap[index], ref _heap[Parent(index)]);
                     index = Parent(index);
                 }
             }
 
-            public long ExtractMin()
+            public int ExtractMax()
             {
                 if (_size == 1)
                 {
@@ -89,31 +85,32 @@
                     return _heap[_size];
                 }
 
-                long min = _heap[0];
+                int min = _heap[0];
                 _heap[0] = _heap[_size - 1];
                 _size--;
 
-                MinHeapify(0);
+                MaxHeapify(0);
                 return min;
             }
 
-            private void MinHeapify(int index)
+            private void MaxHeapify(int index)
             {
                 int left = Left(index);
                 int right = Right(index);
-                int smallest = index;
+                int largest = index;
 
-                if (left < _size && _heap[left] < _heap[smallest])
-                    smallest = left;
-                if (right < _size && _heap[right] < _heap[smallest])
-                    smallest = right;
+                if (left < _size && _heap[left] > _heap[largest])
+                    largest = left;
+                if (right < _size && _heap[right] > _heap[largest])
+                    largest = right;
 
-                if (smallest != index)//we found a new smallest!
+                if (largest != index)//we found a new largest!
                 {
-                    Swap(smallest, index);
-                    MinHeapify(smallest);
+                    Swap(ref _heap[largest], ref _heap[index]);
+                    MaxHeapify(largest);
                 }
             }
+
         }
     }
 }
