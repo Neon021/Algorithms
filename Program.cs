@@ -4,35 +4,23 @@
     {
         public static void Main()
         {
+            Solution.BubbleSort(new int[] { 5, 1, 4, 2, 8 }).ToList().ForEach(x => Console.Write(x + " "));
         }
     }
-
     public static class Solution
     {
-        public class StockSpanner
+        public static int[] BubbleSort(int[] nums)
         {
-            private Stack<(int price, int count)> _stack;
-
-            public StockSpanner()
+            for (int i = 0; i < nums.Length; i++)
             {
-                _stack = new();
-            }
-
-            public int Next(int price)
-            {
-                int count = 1;
-
-                while (_stack.Count > 0 && _stack.Peek().price <= price)
+                for (int j = 0; j < nums.Length - 1 - i; j++)
                 {
-                    (int price, int count) prevDay = _stack.Pop();
-                    count += prevDay.count;
+                    if (nums[j] > nums[j + 1])
+                        (nums[j], nums[j + 1]) = (nums[j + 1], nums[j]);
                 }
-
-                _stack.Push((price, count));
-
-                return count;
             }
-        }
 
+            return nums;
+        }
     }
 }
