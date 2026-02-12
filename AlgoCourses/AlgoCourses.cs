@@ -5283,6 +5283,36 @@
         //        return nums;
         //    }
         //}
+
+        ///<summary
+        ///Selection sort
+        ///</summary>
+        //public static class Solution
+        //{
+        //    public static int[] SelectionSort(int[] nums)
+        //    {
+        //        for (int i = 0; i < nums.Length - 1; i++)
+        //        {
+        //            int minIdx = i;
+        //            for (int j = i + 1; j < nums.Length; j++)
+        //            {
+        //                if (nums[j] < nums[minIdx])
+        //                    minIdx = j;
+        //            }
+
+        //            if (minIdx != i)
+        //            {
+        //                int tmp = nums[i];
+        //                nums[i] = nums[minIdx];
+        //                nums[minIdx] = tmp;
+        //            }
+        //        }
+
+        //        return nums;
+        //    }
+        //}
+
+
         /// <summary>
         /// SortArray using heap sort
         /// </summary>
