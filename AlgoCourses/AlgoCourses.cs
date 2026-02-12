@@ -5313,110 +5313,6 @@
         //}
 
 
-        /// <summary>
-        /// SortArray using heap sort
-        /// </summary>
-        //public static class Solution
-        //{
-        //    public static int[] SortArray(int[] nums)
-        //    {
-        //        MinHeap heap = new(nums.Length);
-        //        foreach (int num in nums)
-        //        {
-        //            heap.Insert(num);
-        //        }
-
-        //        int index = 0;
-        //        while (!heap.IsEmpty() && index < nums.Length)
-        //        {
-        //            int minVal = heap.ExtractMin();
-        //            nums[index] = minVal;
-        //            index++;
-        //        }
-
-        //        return nums;
-        //    }
-
-        //    public class MinHeap
-        //    {
-        //        private int _size;
-        //        private int[] _heap;
-        //        private int _capacity;
-
-        //        public MinHeap(int capacity)
-        //        {
-        //            _capacity = capacity;
-        //            _heap = new int[_capacity];
-        //        }
-
-        //        public bool IsEmpty() => _size == 0;
-        //        private static int Left(int index) => (index * 2) + 1;
-        //        private static int Right(int index) => (index * 2) + 2;
-        //        private static int Parent(int index) => (index - 1) / 2;
-        //        private static void Swap(ref int l, ref int r)
-        //        {
-        //            int tmp = l;
-        //            l = r;
-        //            r = tmp;
-        //        }
-
-        //        public void Insert(int value)
-        //        {
-        //            if (_size == _capacity)
-        //            {
-        //                _capacity *= 2;
-        //                Array.Resize(ref _heap, _capacity);
-        //            }
-
-        //            int index = _size;
-        //            _heap[index] = value;
-        //            _size++;
-
-        //            while (index != 0 && _heap[index] < _heap[Parent(index)])
-        //            {
-        //                Swap(ref _heap[index], ref _heap[Parent(index)]);
-        //                index = Parent(index);
-        //            }
-        //        }
-
-        //        public int ExtractMin()
-        //        {
-        //            if (_size <= 0) return int.MaxValue;
-
-        //            if (_size == 1)
-        //            {
-        //                _size--;
-        //                return _heap[_size];
-        //            }
-
-        //            int minVal = _heap[0];
-        //            _heap[0] = _heap[_size - 1];
-        //            _size--;
-
-        //            MinHeapify(0);
-
-        //            return minVal;
-        //        }
-
-        //        public void MinHeapify(int index)
-        //        {
-        //            int left = Left(index);
-        //            int right = Right(index);
-        //            int root = index;
-
-        //            if (left < _size && _heap[left] < _heap[root])
-        //                root = left;
-        //            if (right < _size && _heap[right] < _heap[root])
-        //                root = right;
-
-        //            if (root != index)
-        //            {
-        //                Swap(ref _heap[root], ref _heap[index]);
-        //                MinHeapify(root);
-        //            }
-        //        }
-        //    }
-        //}
 
         ///<summary
         ///InsertionSort
@@ -5522,6 +5418,168 @@
         //            head = next;
         //        }
         //        return dummy.next;
+        //    }
+        //}
+
+        ///<summary>
+        ///MergeSort
+        ///</summary>
+        //public static class Solution
+        //{
+        //    public static int[] MergeSort(int[] nums)
+        //    {
+        //        if (nums.Length == 1)
+        //            return nums;
+
+        //        int mid = nums.Length / 2;
+        //        int[] left = nums[0..mid];
+        //        int[] right = nums[mid..nums.Length];
+
+        //        left = MergeSort(left);
+        //        right = MergeSort(right);
+
+        //        return Merge(left, right);
+        //    }
+
+        //    private static int[] Merge(int[] a, int[] b)
+        //    {
+        //        int[] c = new int[a.Length + b.Length];
+        //        int firstIdx = 0;
+        //        while (a.Length != 0 && b.Length != 0)
+        //        {
+        //            if (a[0] > b[0])
+        //            {
+        //                c[firstIdx] = b[0];
+        //                b = b[1..];
+        //            }
+        //            else
+        //            {
+        //                c[firstIdx] = a[0];
+        //                a = a[1..];
+        //            }
+        //            firstIdx++;
+        //        }
+
+        //        while (a.Length != 0)
+        //        {
+        //            c[firstIdx] = a[0];
+        //            a = a[1..];
+        //            firstIdx++;
+        //        }
+        //        while (b.Length != 0)
+        //        {
+        //            c[firstIdx] = b[0];
+        //            b = b[1..];
+        //            firstIdx++;
+        //        }
+
+        //        return c;
+        //    }
+        //}
+
+
+        /// <summary>
+        /// SortArray using heap sort
+        /// </summary>
+        //public static class Solution
+        //{
+        //    public static int[] SortArray(int[] nums)
+        //    {
+        //        MinHeap heap = new(nums.Length);
+        //        foreach (int num in nums)
+        //        {
+        //            heap.Insert(num);
+        //        }
+
+        //        int index = 0;
+        //        while (!heap.IsEmpty() && index < nums.Length)
+        //        {
+        //            int minVal = heap.ExtractMin();
+        //            nums[index] = minVal;
+        //            index++;
+        //        }
+
+        //        return nums;
+        //    }
+
+        //    public class MinHeap
+        //    {
+        //        private int _size;
+        //        private int[] _heap;
+        //        private int _capacity;
+
+        //        public MinHeap(int capacity)
+        //        {
+        //            _capacity = capacity;
+        //            _heap = new int[_capacity];
+        //        }
+
+        //        public bool IsEmpty() => _size == 0;
+        //        private static int Left(int index) => (index * 2) + 1;
+        //        private static int Right(int index) => (index * 2) + 2;
+        //        private static int Parent(int index) => (index - 1) / 2;
+        //        private static void Swap(ref int l, ref int r)
+        //        {
+        //            int tmp = l;
+        //            l = r;
+        //            r = tmp;
+        //        }
+
+        //        public void Insert(int value)
+        //        {
+        //            if (_size == _capacity)
+        //            {
+        //                _capacity *= 2;
+        //                Array.Resize(ref _heap, _capacity);
+        //            }
+
+        //            int index = _size;
+        //            _heap[index] = value;
+        //            _size++;
+
+        //            while (index != 0 && _heap[index] < _heap[Parent(index)])
+        //            {
+        //                Swap(ref _heap[index], ref _heap[Parent(index)]);
+        //                index = Parent(index);
+        //            }
+        //        }
+
+        //        public int ExtractMin()
+        //        {
+        //            if (_size <= 0) return int.MaxValue;
+
+        //            if (_size == 1)
+        //            {
+        //                _size--;
+        //                return _heap[_size];
+        //            }
+
+        //            int minVal = _heap[0];
+        //            _heap[0] = _heap[_size - 1];
+        //            _size--;
+
+        //            MinHeapify(0);
+
+        //            return minVal;
+        //        }
+
+        //        public void MinHeapify(int index)
+        //        {
+        //            int left = Left(index);
+        //            int right = Right(index);
+        //            int root = index;
+
+        //            if (left < _size && _heap[left] < _heap[root])
+        //                root = left;
+        //            if (right < _size && _heap[right] < _heap[root])
+        //                root = right;
+
+        //            if (root != index)
+        //            {
+        //                Swap(ref _heap[root], ref _heap[index]);
+        //                MinHeapify(root);
+        //            }
+        //        }
         //    }
         //}
         #endregion

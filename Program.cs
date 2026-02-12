@@ -4,7 +4,7 @@
     {
         public static void Main()
         {
-            foreach (var item in Solution.MergeSort(new int[] { 5, 2, 9, 1, 5, 6 }))
+            foreach (var item in Solution.QuickSort(new int[] { 5, 2, 9, 1, 5, 6 }, 0, 6))
             {
                 Console.WriteLine(item);
             }
@@ -13,54 +13,37 @@
 
     public static class Solution
     {
-        public static int[] MergeSort(int[] nums)
+        public static int[] QuickSort(int[] nums, int low, int high)
         {
-            if (nums.Length == 1)
-                return nums;
+            if (low < high)
+            {
+                int pivot = Partition(nums, low, high);
+                QuickSort(nums, low, pivot);
+                QuickSort(nums, pivot + 1, high);
+            }
 
-            int mid = nums.Length / 2;
-            int[] left = nums[0..mid];
-            int[] right = nums[mid..nums.Length];
-
-            left = MergeSort(left);
-            right = MergeSort(right);
-
-            return Merge(left, right);
+            return nums;
         }
 
-        private static int[] Merge(int[] a, int[] b)
+        private static int Partition(int[] nums, int low, int high)
         {
-            int[] c = new int[a.Length + b.Length];
-            int firstIdx = 0;
-            while (a.Length != 0 && b.Length != 0)
+            int pivot = nums[low];
+            int leftWall = low;
+
+            for (int i = low + 1; i < high; i++)
             {
-                if (a[0] > b[0])
+                if (nums[i] < pivot)
                 {
-                    c[firstIdx] = b[0];
-                    b = b[1..];
+                    (nums[i], nums[leftWall]) = (nums[leftWall], nums[i]);
+                    leftWall++;
                 }
-                else
-                {
-                    c[firstIdx] = a[0];
-                    a = a[1..];
-                }
-                firstIdx++;
             }
 
-            while (a.Length != 0)
-            {
-                c[firstIdx] = a[0];
-                a = a[1..];
-                firstIdx++;
-            }
-            while (b.Length != 0)
-            {
-                c[firstIdx] = b[0];
-                b = b[1..];
-                firstIdx++;
-            }
+            int newPivotIdx = Array.IndexOf(nums, pivot);
+            (nums[newPivotIdx], nums[leftWall]) = (nums[leftWall], nums[newPivotIdx]);
 
-            return c;
+            return leftWall;
         }
+
     }
 }
