@@ -6,7 +6,7 @@ namespace Main
     {
         public static void Main()
         {
-            Solution.ListNode listNode = new(1, new(1));
+            Solution.ListNode listNode = new(-1, new(5, new(3, new(4, new(0)))));
             Solution.ListNode result = Solution.InsertionSortList(listNode);
             while (result != null)
             {
@@ -30,17 +30,24 @@ namespace Main
         }
         public static ListNode InsertionSortList(ListNode head)
         {
-            for (ListNode i = head; i != null; i = i.next)
+            ListNode dummy = new(0);
+            ListNode prev = dummy;
+            while (head != null)
             {
-                for (ListNode j = head; j != i; j = j.next)
+                ListNode next = head.next;
+                if (prev.val >= head.val)
                 {
-                    if (i.val < j.val)
-                    {
-                        (i.val, j.val) = (j.val, i.val);
-                    }
+                    prev = dummy;
                 }
+                while (prev.next != null && prev.next.val < head.val)
+                {
+                    prev = prev.next;
+                }
+                head.next = prev.next;
+                prev.next = head;
+                head = next;
             }
-            return head;
+            return dummy.next;
         }
     }
 }
