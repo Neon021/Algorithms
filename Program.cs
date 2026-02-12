@@ -1,19 +1,66 @@
-﻿namespace Main
+﻿using System.Collections.Generic;
+
+namespace Main
 {
     public class Program
     {
         public static void Main()
         {
-            foreach (var item in Solution.InsertionSort(new int[] { 2, 8, 5, 3, 9, 4, 1 }))
+            Solution.ListNode listNode = new(1, new(1));
+            Solution.ListNode result = Solution.InsertionSortList(listNode);
+            while (result != null)
             {
-                Console.WriteLine(item);
+                System.Console.WriteLine(result.val);
+                result = result.next;
             }
-            ;
         }
     }
 
     public static class Solution
     {
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int val = 0, ListNode next = null)
+            {
+                this.val = val;
+                this.next = next;
+            }
+        }
+        public static ListNode InsertionSortList(ListNode head)
+        {
+            List<int> list = new();
+            while (head != null)
+            {
+                list.Add(head.val);
+                head = head.next;
+            }
+
+            for (int i = 1; i < list.Count; i++)
+            {
+                int j = i;
+                while (0 < j && list[j] < list[j - 1])
+                {
+                    (list[j], list[j - 1]) = (list[j - 1], list[j]);
+                    j--;
+                }
+            }
+
+            ListNode head2 = new();
+            ListNode dummy = new();
+            dummy.next = head2;
+            for (int i = 0; i < list.Count; i++)
+            {
+                head2 ??= new();
+                head2.val = list[i];
+                if (i != list.Count - 1)
+                    head2.next = new();
+                head2 = head2.next;
+            }
+
+            return dummy.next;
+        }
         public static int[] InsertionSort(int[] nums)
         {
             for (int i = 1; i < nums.Length; i++)
