@@ -30,54 +30,17 @@ namespace Main
         }
         public static ListNode InsertionSortList(ListNode head)
         {
-            List<int> list = new();
-            while (head != null)
+            for (ListNode i = head; i != null; i = i.next)
             {
-                list.Add(head.val);
-                head = head.next;
-            }
-
-            for (int i = 1; i < list.Count; i++)
-            {
-                int j = i;
-                while (0 < j && list[j] < list[j - 1])
+                for (ListNode j = head; j != i; j = j.next)
                 {
-                    (list[j], list[j - 1]) = (list[j - 1], list[j]);
-                    j--;
+                    if (i.val < j.val)
+                    {
+                        (i.val, j.val) = (j.val, i.val);
+                    }
                 }
             }
-
-            ListNode head2 = new();
-            ListNode dummy = new();
-            dummy.next = head2;
-            for (int i = 0; i < list.Count; i++)
-            {
-                head2 ??= new();
-                head2.val = list[i];
-                if (i != list.Count - 1)
-                    head2.next = new();
-                head2 = head2.next;
-            }
-
-            return dummy.next;
-        }
-        public static int[] InsertionSort(int[] nums)
-        {
-            for (int i = 1; i < nums.Length; i++)
-            {
-                int j = i;
-                while (j > 0 && nums[j] < nums[j - 1])
-                {
-                    int tmp = nums[j];
-                    nums[j] = nums[j - 1];
-                    nums[j - 1] = tmp;
-
-                    j -= 1;
-                }
-            }
-            return nums;
+            return head;
         }
     }
-
-
 }
