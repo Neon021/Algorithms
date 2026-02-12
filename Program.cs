@@ -1,53 +1,66 @@
-﻿using System.Collections.Generic;
-
-namespace Main
+﻿namespace Main
 {
     public class Program
     {
         public static void Main()
         {
-            Solution.ListNode listNode = new(-1, new(5, new(3, new(4, new(0)))));
-            Solution.ListNode result = Solution.InsertionSortList(listNode);
-            while (result != null)
+            foreach (var item in Solution.MergeSort(new int[] { 5, 2, 9, 1, 5, 6 }))
             {
-                System.Console.WriteLine(result.val);
-                result = result.next;
+                Console.WriteLine(item);
             }
         }
     }
 
     public static class Solution
     {
-        public class ListNode
+        public static int[] MergeSort(int[] nums)
         {
-            public int val;
-            public ListNode next;
-            public ListNode(int val = 0, ListNode next = null)
-            {
-                this.val = val;
-                this.next = next;
-            }
+            if (nums.Length == 1)
+                return nums;
+
+            int mid = nums.Length / 2;
+            int[] left = nums[0..mid];
+            int[] right = nums[mid..nums.Length];
+
+            left = MergeSort(left);
+            right = MergeSort(right);
+
+            return Merge(left, right);
         }
-        public static ListNode InsertionSortList(ListNode head)
+
+        private static int[] Merge(int[] a, int[] b)
         {
-            ListNode dummy = new(0);
-            ListNode prev = dummy;
-            while (head != null)
+            int[] c = new int[a.Length + b.Length];
+            int firstIdx = 0;
+            while (a.Length != 0 && b.Length != 0)
             {
-                ListNode next = head.next;
-                if (prev.val >= head.val)
+                if (a[0] > b[0])
                 {
-                    prev = dummy;
+                    c[firstIdx] = b[0];
+                    b = b[1..];
                 }
-                while (prev.next != null && prev.next.val < head.val)
+                else
                 {
-                    prev = prev.next;
+                    c[firstIdx] = a[0];
+                    a = a[1..];
                 }
-                head.next = prev.next;
-                prev.next = head;
-                head = next;
+                firstIdx++;
             }
-            return dummy.next;
+
+            while (a.Length != 0)
+            {
+                c[firstIdx] = a[0];
+                a = a[1..];
+                firstIdx++;
+            }
+            while (b.Length != 0)
+            {
+                c[firstIdx] = b[0];
+                b = b[1..];
+                firstIdx++;
+            }
+
+            return c;
         }
     }
 }
