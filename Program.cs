@@ -17,7 +17,7 @@
         {
             if (low < high)
             {
-                int pivot = Partition(nums, low, high);
+                int pivot = HoarePartition(nums, low, high);
                 QuickSort(nums, low, pivot - 1); //Exclude pivot as its already in the correct position
                 QuickSort(nums, pivot + 1, high);
             }
@@ -25,7 +25,10 @@
             return nums;
         }
 
-        private static int Partition(int[] nums, int low, int high)
+        /// <summary>
+        /// Hoare Partition Scheme
+        /// </summary>
+        private static int HoarePartition(int[] nums, int low, int high)
         {
             int pivot = nums[low];
             int i = low, j = high;
@@ -49,24 +52,33 @@
             //return the partition position
             return j;
         }
-        //private static int Partition(int[] nums, int low, int high)
-        //{
-        //    int pivot = nums[low];
-        //    int leftWall = low;
 
-        //    for (int i = low + 1; i < high; i++)
-        //    {
-        //        if (nums[i] < pivot)
-        //        {
-        //            (nums[i], nums[leftWall]) = (nums[leftWall], nums[i]);
-        //            leftWall++;
-        //        }
-        //    }
+        /// <summary>
+        /// Lomuto Partition Scheme
+        /// </summary>
+        private static int LomutoPartition(int[] nums, int low, int high)
+        {
+            int pivot = nums[low];
+            int leftWall = low;
 
-        //    int newPivotIdx = Array.IndexOf(nums, pivot);
-        //    (nums[newPivotIdx], nums[leftWall]) = (nums[leftWall], nums[newPivotIdx]);
+            [1, 5, 2, 7, 10/*pivot*/, 11, 9, 13]
+            [1, 5, 2, 7, 9 , 11/*left_wall*/, 10/*pivot*/, 13]
 
-        //    return leftWall;
-        //}
+            for (int i = low + 1; i < high; i++)
+            {
+                if (nums[i] < pivot)
+                {
+                    (nums[i], nums[leftWall]) = (nums[leftWall], nums[i]);
+                    leftWall++;
+                }
+            }
+
+            int newPivotIdx = Array.IndexOf(nums, pivot);
+            (nums[newPivotIdx], nums[leftWall]) = (nums[leftWall], nums[newPivotIdx]);
+            [1, 5, 2, 7, 9, 10/*pivot*/, 11/*left_wall*/, 13]
+
+
+            return leftWall;
+        }
     }
 }
