@@ -1,185 +1,96 @@
-﻿using System.Numerics;
-
-namespace Main
+﻿namespace Main
 {
     public class Program
     {
         public static void Main()
         {
-            foreach (var item in Solution.QuickSort(new int[] { 5, 2, 9, 1, 5, 6 }, 0, 5))
-            {
-                Console.WriteLine(item);
-            }
+            Console.WriteLine(Solution.FurthestBuilding(new int[] { 4, 2, 7, 6, 9, 14, 12 }, 5, 1));
         }
     }
 
     public static class Solution
     {
-        public int MinStoneSum(int[] piles, int k)
+        public static int FurthestBuilding(int[] heights, int bricks, int ladders)
         {
-            MaxHeap maxHeap = new MaxHeap(piles.Length);
-            int minStones = 0;
+            PriorityQueue<int, int> minHeap = new();
 
-            foreach (var item in piles)
+            for (int i = 0; i < heights.Length - 1; i++)
             {
-                minStones += item;
-                maxHeap.Insert(item);
-            }
+                int jmp = heights[i + 1] - heights[i];
 
-            while (k != 0)
-            {
-                int maxPile = maxHeap.ExtractMax();
-                double newPile = Math.Ceiling((double)maxPile / 2);
-                minStones -= maxPile - (int)newPile;
-                maxHeap.Insert((int)newPile);
-                k--;
-            }
+                if (jmp <= 0)
+                    continue;
+                
+                minHeap.Enqueue(jmp, jmp); //we jumped using ladders and insert it into the heap
 
-            return minStones;
-        }
-        public class MaxHeap
-        {
-            private int[] _heapArray;
-            private int _capacity;
-            private int _size;
-
-            public MaxHeap(int capacity)
-            {
-                _capacity = capacity;
-                _heapArray = new int[_capacity];
-                _size = 0;
-            }
-
-            public static int Parent(int index) => (index - 1) / 2;
-            public static int Left(int index) => index * 2 + 1;
-            public static int Right(int index) => index * 2 + 2;
-            public static void Swap<T>(ref T left, ref T right)
-            {
-                T temp = left;
-                left = right;
-                right = temp;
-            }
-
-            public bool Insert(int key)
-            {
-                if (_size == _capacity)
+                if (minHeap.Count > ladders) //if we suprassed the ladders we change the smallest amount of ladder jump with brick jump
                 {
-                    _capacity *= 2;
-                    Array.Resize(ref _heapArray, _capacity);
-                }
-                int index = _size;
-                _heapArray[index] = key;
-                _size++;
-                while (index != 0 && _heapArray[index] > _heapArray[Parent(index)])
-                {
-                    Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
-                    index = Parent(index);
+                    int smallestJmp = minHeap.Dequeue();
+                    bricks -= smallestJmp;
                 }
 
-                return true;
+                if (bricks < 0) return i; //If bricks is negative we can't jump ahead, return current index
             }
-            public int ExtractMax()
+
+            return heights.Length - 1; //We jumped till the end!!
+
+
+            ///<summary>
+            ///This whole solution is wrong at its heart because it doesn't allow us to later swap ladders and bricks if a smaller jump appears
+            ///</summary>
+            for (int i = 0; i < heights.Length; i++)
             {
-                if (_size <= 0) return int.MinValue;
+                if (i == heights.Length - 1)
+                    return i;
 
-                if (_size == 1)
-                {
-                    _size--;
-                    return _heapArray[_size];
-                }
+                if (heights[i] >= heights[i + 1])
+                    continue;
 
-                int min = _heapArray[0];
-                _heapArray[0] = _heapArray[_size - 1];
-                _size--;
-
-                MaxHeapify(0);
-                return min;
-            }
-            public void MaxHeapify(int index)
-            {
-                int left = Left(index);
-                int right = Right(index);
-                int root = index;
-
-                if (left < _size && _heapArray[left] > _heapArray[root])
-                    root = left;
-                if (right < _size && _heapArray[right] > _heapArray[root])
-                    root = right;
-
-                if (root != index) // did we change the index?
-                {
-                    Swap(ref _heapArray[index], ref _heapArray[root]);
-                    MaxHeapify(root);// redo heapify starting from new root
-                }
-            }
-        }
-
-        public static int[] QuickSort(int[] nums, int low, int high)
-        {
-            if (low < high)
-            {
-                int pivot = HoarePartition(nums, low, high);
-                QuickSort(nums, low, pivot - 1); //Exclude pivot as its already in the correct position
-                QuickSort(nums, pivot + 1, high);
+                if (bricks != 0 && heights[i + 1] - heights[i] <= Math.Ceiling((decimal)bricks / 2))
+                    bricks -= heights[i + 1] - heights[i];
+                else if (ladders != 0)
+                    ladders--;
+                else if (ladders == 0 && heights[i + 1] - heights[i] <= bricks)
+                    bricks -= heights[i + 1] - heights[i];
+                else
+                    return i;
             }
 
-            return nums;
-        }
+            return -1;
 
-        /// <summary>
-        /// Hoare Partition Scheme
-        /// </summary>
-        private static int HoarePartition(int[] nums, int low, int high)
-        {
-            int pivot = nums[low];
-            int i = low, j = high;
-
-            while (i < j)
-            {
-                while (nums[j] > pivot && j > low)
-                    j--;
-
-                while (nums[i] <= pivot && i < high)
-                    i++;
+            // //          Input: heights = [4, 2, 7, 6, 9, 14, 12], bricks = 5, ladders = 1
+            // //          Output: 4
+            // //          Explanation: Starting at building 0, you can follow these steps:
+            // //            -Go to building 1 without using ladders nor bricks since 4 >= 2.
+            // //            - Go to building 2 using 5 bricks.You must use either bricks or ladders because 2 < 7.
+            // //            - Go to building 3 without using ladders nor bricks since 7 >= 6.
+            // //            - Go to building 4 using your only ladder.You must use either bricks or ladders because 6 < 9.
+            // //            It is impossible to go beyond building 4 because you do not have any more bricks or ladders.
 
 
-                if (i < j)
-                    (nums[i], nums[j]) = (nums[j], nums[i]);
-            }
-
-            //swap pivot with the element at j which will put pivot in the center of the nums
-            (nums[low], nums[j]) = (nums[j], nums[low]);
-
-            //return the partition position
-            return j;
-        }
-
-        /// <summary>
-        /// Lomuto Partition Scheme
-        /// </summary>
-        private static int LomutoPartition(int[] nums, int low, int high)
-        {
-            int pivot = nums[low];
-            int leftWall = low;
-
-            [1, 5, 2, 7, 10/*pivot*/, 11, 9, 13]
-            [1, 5, 2, 7, 9 , 11/*left_wall*/, 10/*pivot*/, 13]
-
-            for (int i = low + 1; i < high; i++)
-            {
-                if (nums[i] < pivot)
-                {
-                    (nums[i], nums[leftWall]) = (nums[leftWall], nums[i]);
-                    leftWall++;
-                }
-            }
-
-            int newPivotIdx = Array.IndexOf(nums, pivot);
-            (nums[newPivotIdx], nums[leftWall]) = (nums[leftWall], nums[newPivotIdx]);
-            [1, 5, 2, 7, 9, 10/*pivot*/, 11/*left_wall*/, 13]
+            // [4, 2, 7, 6, 9, 14, 12]
+            // [2, 7, 6, 9, 14, 12]
+            // [7, 6, 9, 14, 12] //bricks = 5, ladder = 0
+            // [6, 9, 14, 12] //bricks = 5, ladder = 0
+            // [9, 14, 12] //bricks = 2, ladder = 0
 
 
-            return leftWall;
+            // //heights = [4, 12, 2, 7, 3, 18, 20, 3, 19], bricks = 10, ladders = 2
+            // [4, 12, 2, 7, 3, 18, 20, 3, 19] //12 - 4 = 8 and 10 / 2 < 8 use ladder
+            // [12, 2, 7, 3, 18, 20, 3, 19] //bricks = 10, ladders = 1
+            // [2, 7, 3, 18, 20, 3, 19] //7 - 2 = 5 and 5 <= 10 / 2 use bricks
+            // [7, 3, 18, 20, 3, 19] //bricks = 5, ladders = 1
+            // [3, 18, 20, 3, 19] //18 - 3 = 15 and 15 / 2 < 15 use ladder
+            // [18, 20, 3, 19] //bricks = 5, ladders = 0
+            // [20, 3, 19] //bricks = 3, ladders = 0
+            // [3, 19] //bricks = 3, ladders = 0
+
+
+            ////heights = [14,3,19,3], bricks = 17, ladders = 0
+            //[14,3,19,3] // bricks = 17 ladders = 0
+            //[3,19,3] // İF (ladders == 0 || 19 - 3 = 16 <= 17 / 2)
+            //[19,3] // bricks = 1
+            //[3] // bricks = 1
         }
     }
 }
