@@ -4,49 +4,64 @@
     {
         public static void Main()
         {
-            Console.WriteLine(Solution.FindKthLargest(new int[] { 3, 2, 3, 1, 2, 4, 5, 5, 6 }, 4));
+            int[][] points = Solution.KClosest(new int[][] { new int[] { 3, 3 }, new int[] { 5, -1 }, new int[] { -2, 4 } }, 2);
+            foreach (var item in points)
+            {
+                foreach (var item2 in item)
+                {
+                    Console.Write(item2 + " ");
+                }
+            }
         }
     }
 
-    public static class Solution
+    public class Solution
     {
-        public static int FindKthLargest(int[] nums, int k)
+        private static int[] _origin = new int[2] { 0, 0 };
+        public static int[][] KClosest(int[][] points, int k)
         {
-            int[] sorted = QuickSort(nums, 0, nums.Length - 1);
-            return sorted[^k];
+            int[][] sortedPoints = QuickSelect(points, 0, points.Length - 1, k);
+            return sortedPoints.Take(k).ToArray();
         }
 
-        public static int[] QuickSort(int[] nums, int left, int right)
+        private static int[][] QuickSelect(int[][] points, int left, int right, int k)
         {
-            if (left < right)
-            {
-                int pivot = Partition(nums, left, right);
-                QuickSort(nums, left, pivot - 1);
-                QuickSort(nums, pivot + 1, right);
-            }
+            if (left >= right)
+                return points;
 
-            return nums;
+            int pivot = Partition(points, left, right);
+
+            if (k == pivot)
+                return points;
+            else if (k < pivot)
+                return QuickSelect(points, left, pivot - 1, k);
+            else
+                return QuickSelect(points, pivot + 1, right, k);
         }
 
-        public static int Partition(int[] nums, int left, int right)
+        private static int Partition(int[][] points, int left, int right)
         {
-            int pivot = nums[left];
+            int[] pivot = points[left];
             int low = left, high = right;
 
             while (low < high)
             {
-                while (high > left && nums[high] > pivot)
+                double pivotDistance = DistanceToOrigin(pivot);
+
+                while (high > left && DistanceToOrigin(points[high]) > pivotDistance)
                     high--;
-                while (low < right && nums[low] <= pivot)
+                while (low < right && DistanceToOrigin(points[low]) <= pivotDistance)
                     low++;
 
                 if (low < high)
-                    (nums[low], nums[high]) = (nums[high], nums[low]);
+                    (points[low], points[high]) = (points[high], points[low]);
             }
 
-            (nums[left], nums[high]) = (nums[high], nums[left]);
+            (points[left], points[high]) = (points[high], points[left]);
 
             return high;
         }
+
+        private static double DistanceToOrigin(int[] p1) => Math.Sqrt(Math.Pow((p1[0] - _origin[0]), 2) + Math.Pow((p1[1] - _origin[1]), 2));
     }
 }
