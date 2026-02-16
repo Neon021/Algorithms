@@ -4,60 +4,49 @@
     {
         public static void Main()
         {
-            foreach (var item in Solution.SortColors(new int[] { 2, 0, 2, 1, 1, 0 }))
-            {
-                Console.WriteLine(item);
-            }
+            Console.WriteLine(Solution.FindKthLargest(new int[] { 3, 2, 3, 1, 2, 4, 5, 5, 6 }, 4));
         }
     }
 
     public static class Solution
     {
-        public static int[] SortColors(int[] nums)
+        public static int FindKthLargest(int[] nums, int k)
         {
-            //Simple counting sort
-            int red = 0, white = 0, blue = 0;
+            int[] sorted = QuickSort(nums, 0, nums.Length - 1);
+            return sorted[^k];
+        }
 
-            foreach (int i in nums)
+        public static int[] QuickSort(int[] nums, int left, int right)
+        {
+            if (left < right)
             {
-                switch (i)
-                {
-                    case 0:
-                        red++;
-                        break;
-                    case 1:
-                        white++;
-                        break;
-                    case 2:
-                        blue++;
-                        break;
-                }
-            }
-
-            white += red;
-            blue += white;
-
-            int redCount = red;
-            while (red != 0)
-            {
-                nums[red - 1] = 0;
-                red--;
-            }
-
-            int whiteCount = white;
-            while (white != redCount)
-            {
-                nums[white - 1] = 1;
-                white--;
-            }
-
-            while (blue != whiteCount)
-            {
-                nums[blue - 1] = 2;
-                blue--;
+                int pivot = Partition(nums, left, right);
+                QuickSort(nums, left, pivot - 1);
+                QuickSort(nums, pivot + 1, right);
             }
 
             return nums;
+        }
+
+        public static int Partition(int[] nums, int left, int right)
+        {
+            int pivot = nums[left];
+            int low = left, high = right;
+
+            while (low < high)
+            {
+                while (high > left && nums[high] > pivot)
+                    high--;
+                while (low < right && nums[low] <= pivot)
+                    low++;
+
+                if (low < high)
+                    (nums[low], nums[high]) = (nums[high], nums[low]);
+            }
+
+            (nums[left], nums[high]) = (nums[high], nums[left]);
+
+            return high;
         }
     }
 }
