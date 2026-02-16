@@ -4758,22 +4758,29 @@
             }
         }
 
-        public static ListNode MergeKLists(ListNode[] lists)
-        {
-            MinHeap minHeap = new(lists.Length * 10);
+        ///<summary>
+        ///Merge K Lists
+        ///</summary>
+        //public static ListNode MergeKLists(ListNode[] lists)
+        //{
+        //    MinHeap minHeap = new(lists.Length * 10);
 
-            for (int i = 0; i < lists.Length; i++)
-            {
-                ListNode? currNode = lists[i];
-                while (currNode != null)
-                {
-                    minHeap.Insert(currNode.val);
-                    currNode = currNode.next;
-                }
-            }
+        //    for (int i = 0; i < lists.Length; i++)
+        //    {
+        //        ListNode? currNode = lists[i];
+        //        while (currNode != null)
+        //        {
+        //            minHeap.Insert(currNode.val);
+        //            currNode = currNode.next;
+        //        }
+        //    }
 
-            return minHeap.GetMergedList();
-        }
+        //    return minHeap.GetMergedList();
+        //}
+
+        ///<summary>
+        ///Find Kth Largest
+        /// </summary>
         //public class Solution
         //{
         //    public int FindKthLargest(int[] nums, int k)
@@ -4886,98 +4893,101 @@
         //    }
 
         //}
-        public class MinHeap
-        {
-            private int[] _heapArray;
-            private int _capacity;
-            private int _size;
+        //public class MinHeap
+        //{
+        //    private int[] _heapArray;
+        //    private int _capacity;
+        //    private int _size;
 
-            public MinHeap(int capacity)
-            {
-                _capacity = capacity;
-                _heapArray = new int[_capacity];
-                _size = 0;
-            }
+        //    public MinHeap(int capacity)
+        //    {
+        //        _capacity = capacity;
+        //        _heapArray = new int[_capacity];
+        //        _size = 0;
+        //    }
 
-            public static int Parent(int index) => (index - 1) / 2;
-            public static int Left(int index) => index * 2 + 1;
-            public static int Right(int index) => index * 2 + 2;
-            public static void Swap<T>(ref T left, ref T right)
-            {
-                T temp = left;
-                left = right;
-                right = temp;
-            }
+        //    public static int Parent(int index) => (index - 1) / 2;
+        //    public static int Left(int index) => index * 2 + 1;
+        //    public static int Right(int index) => index * 2 + 2;
+        //    public static void Swap<T>(ref T left, ref T right)
+        //    {
+        //        T temp = left;
+        //        left = right;
+        //        right = temp;
+        //    }
 
-            public bool Insert(int key)
-            {
-                if (_size == _capacity)
-                {
-                    _capacity *= 2;
-                    Array.Resize(ref _heapArray, _capacity);
-                }
-                int index = _size;
-                _heapArray[index] = key;
-                _size++;
-                while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
-                {
-                    Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
-                    index = Parent(index);
-                }
+        //    public bool Insert(int key)
+        //    {
+        //        if (_size == _capacity)
+        //        {
+        //            _capacity *= 2;
+        //            Array.Resize(ref _heapArray, _capacity);
+        //        }
+        //        int index = _size;
+        //        _heapArray[index] = key;
+        //        _size++;
+        //        while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
+        //        {
+        //            Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
+        //            index = Parent(index);
+        //        }
 
-                return true;
-            }
-            public int ExtractMin()
-            {
-                if (_size <= 0) return int.MaxValue;
+        //        return true;
+        //    }
+        //    public int ExtractMin()
+        //    {
+        //        if (_size <= 0) return int.MaxValue;
 
-                if (_size == 1)
-                {
-                    _size--;
-                    return _heapArray[_size];
-                }
+        //        if (_size == 1)
+        //        {
+        //            _size--;
+        //            return _heapArray[_size];
+        //        }
 
-                int min = _heapArray[0];
-                _heapArray[0] = _heapArray[_size - 1];
-                _size--;
+        //        int min = _heapArray[0];
+        //        _heapArray[0] = _heapArray[_size - 1];
+        //        _size--;
 
-                MinHeapify(0);
-                return min;
-            }
-            public void MinHeapify(int index)
-            {
-                int left = Left(index);
-                int right = Right(index);
-                int root = index;
+        //        MinHeapify(0);
+        //        return min;
+        //    }
+        //    public void MinHeapify(int index)
+        //    {
+        //        int left = Left(index);
+        //        int right = Right(index);
+        //        int root = index;
 
-                if (left < _size && _heapArray[left] < _heapArray[root])
-                    root = left;
-                if (right < _size && _heapArray[right] < _heapArray[root])
-                    root = right;
+        //        if (left < _size && _heapArray[left] < _heapArray[root])
+        //            root = left;
+        //        if (right < _size && _heapArray[right] < _heapArray[root])
+        //            root = right;
 
-                if (root != index) // did we change the index?
-                {
-                    Swap(ref _heapArray[index], ref _heapArray[root]);
-                    MinHeapify(root);// redo heapify starting from new root
-                }
-            }
-            public ListNode GetMergedList()
-            {
-                ListNode dummy = new(0);
-                ListNode current = dummy;
+        //        if (root != index) // did we change the index?
+        //        {
+        //            Swap(ref _heapArray[index], ref _heapArray[root]);
+        //            MinHeapify(root);// redo heapify starting from new root
+        //        }
+        //    }
+        //    public ListNode GetMergedList()
+        //    {
+        //        ListNode dummy = new(0);
+        //        ListNode current = dummy;
 
-                while (_size > 0)
-                {
-                    int minVal = ExtractMin();
+        //        while (_size > 0)
+        //        {
+        //            int minVal = ExtractMin();
 
-                    current.next = new ListNode(minVal);
-                    current = current.next;
-                }
+        //            current.next = new ListNode(minVal);
+        //            current = current.next;
+        //        }
 
-                return dummy.next;
-            }
-        }
+        //        return dummy.next;
+        //    }
+        //}
 
+        ///<summary>
+        ///K Smallest Pairs
+        /// </summary>
         //public class Program
         //{
         //    public static void Main()
@@ -5335,6 +5345,95 @@
         //            Swap(ref _heapArray[index], ref _heapArray[root]);
         //            MaxHeapify(root);// redo heapify starting from new root
         //        }
+        //    }
+        //}
+
+        ///<summary>
+        ///Furthest Building
+        /// </summary>
+        //public static class Solution
+        //{
+        //    public static int FurthestBuilding(int[] heights, int bricks, int ladders)
+        //    {
+        //        PriorityQueue<int, int> minHeap = new();
+
+        //        for (int i = 0; i < heights.Length - 1; i++)
+        //        {
+        //            int jmp = heights[i + 1] - heights[i];
+
+        //            if (jmp <= 0)
+        //                continue;
+
+        //            minHeap.Enqueue(jmp, jmp); //we jumped using ladders and insert it into the heap
+
+        //            if (minHeap.Count > ladders) //if we suprassed the ladders we change the smallest amount of ladder jump with brick jump
+        //            {
+        //                int smallestJmp = minHeap.Dequeue();
+        //                bricks -= smallestJmp;
+        //            }
+
+        //            if (bricks < 0) return i; //If bricks is negative we can't jump ahead, return current index
+        //        }
+
+        //        return heights.Length - 1; //We jumped till the end!!
+
+
+        //        ///<summary>
+        //        ///This whole solution is wrong at its heart because it doesn't allow us to later swap ladders and bricks if a smaller jump appears
+        //        ///</summary>
+        //        for (int i = 0; i < heights.Length; i++)
+        //        {
+        //            if (i == heights.Length - 1)
+        //                return i;
+
+        //            if (heights[i] >= heights[i + 1])
+        //                continue;
+
+        //            if (bricks != 0 && heights[i + 1] - heights[i] <= Math.Ceiling((decimal)bricks / 2))
+        //                bricks -= heights[i + 1] - heights[i];
+        //            else if (ladders != 0)
+        //                ladders--;
+        //            else if (ladders == 0 && heights[i + 1] - heights[i] <= bricks)
+        //                bricks -= heights[i + 1] - heights[i];
+        //            else
+        //                return i;
+        //        }
+
+        //        return -1;
+
+        //        // //          Input: heights = [4, 2, 7, 6, 9, 14, 12], bricks = 5, ladders = 1
+        //        // //          Output: 4
+        //        // //          Explanation: Starting at building 0, you can follow these steps:
+        //        // //            -Go to building 1 without using ladders nor bricks since 4 >= 2.
+        //        // //            - Go to building 2 using 5 bricks.You must use either bricks or ladders because 2 < 7.
+        //        // //            - Go to building 3 without using ladders nor bricks since 7 >= 6.
+        //        // //            - Go to building 4 using your only ladder.You must use either bricks or ladders because 6 < 9.
+        //        // //            It is impossible to go beyond building 4 because you do not have any more bricks or ladders.
+
+
+        //        // [4, 2, 7, 6, 9, 14, 12]
+        //        // [2, 7, 6, 9, 14, 12]
+        //        // [7, 6, 9, 14, 12] //bricks = 5, ladder = 0
+        //        // [6, 9, 14, 12] //bricks = 5, ladder = 0
+        //        // [9, 14, 12] //bricks = 2, ladder = 0
+
+
+        //        // //heights = [4, 12, 2, 7, 3, 18, 20, 3, 19], bricks = 10, ladders = 2
+        //        // [4, 12, 2, 7, 3, 18, 20, 3, 19] //12 - 4 = 8 and 10 / 2 < 8 use ladder
+        //        // [12, 2, 7, 3, 18, 20, 3, 19] //bricks = 10, ladders = 1
+        //        // [2, 7, 3, 18, 20, 3, 19] //7 - 2 = 5 and 5 <= 10 / 2 use bricks
+        //        // [7, 3, 18, 20, 3, 19] //bricks = 5, ladders = 1
+        //        // [3, 18, 20, 3, 19] //18 - 3 = 15 and 15 / 2 < 15 use ladder
+        //        // [18, 20, 3, 19] //bricks = 5, ladders = 0
+        //        // [20, 3, 19] //bricks = 3, ladders = 0
+        //        // [3, 19] //bricks = 3, ladders = 0
+
+
+        //        ////heights = [14,3,19,3], bricks = 17, ladders = 0
+        //        //[14,3,19,3] // bricks = 17 ladders = 0
+        //        //[3,19,3] // İF (ladders == 0 || 19 - 3 = 16 <= 17 / 2)
+        //        //[19,3] // bricks = 1
+        //        //[3] // bricks = 1
         //    }
         //}
         #endregion
