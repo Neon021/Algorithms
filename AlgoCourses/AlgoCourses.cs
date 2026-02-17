@@ -4103,63 +4103,73 @@
 
         #region Outtalent
         #region Arrays
-        public static int RemoveDuplicates(int[] nums)
-        {
-            if (nums.Length == 0) return 0;
-            if (nums.Length == 1) return 1;
+        /// <summary>
+        /// RemoveDuplicates
+        /// </summary>
+        //public static int RemoveDuplicates(int[] nums)
+        //{
+        //    if (nums.Length == 0) return 0;
+        //    if (nums.Length == 1) return 1;
 
-            //nums is in ascending order
-            //So duplicate numbers must be side-by-side
-            //It looks like a two-pointer since we operate on a sorted array to compare 2 elements
+        //    //nums is in ascending order
+        //    //So duplicate numbers must be side-by-side
+        //    //It looks like a two-pointer since we operate on a sorted array to compare 2 elements
 
-            //The first k element must be unique elements in ascending order
-            //So, what we need to do is compare two pointers at each step
-            //When elements at i and j are equal, increase j by one
-            //when you stumble on a different element, place the element at j to i + 1 e.g nums[i + 1] = nums[j]
-            //continue doing this until j < nums.length
-            //also the answer is index i
+        //    //The first k element must be unique elements in ascending order
+        //    //So, what we need to do is compare two pointers at each step
+        //    //When elements at i and j are equal, increase j by one
+        //    //when you stumble on a different element, place the element at j to i + 1 e.g nums[i + 1] = nums[j]
+        //    //continue doing this until j < nums.length
+        //    //also the answer is index i
 
-            int i = 0;
-            int j = 1;
-            while (j < nums.Length)
-            {
-                if (nums[i] != nums[j])
-                {
-                    nums[i + 1] = nums[j];
-                    i++;
-                }
-                j++;
-            }
+        //    int i = 0;
+        //    int j = 1;
+        //    while (j < nums.Length)
+        //    {
+        //        if (nums[i] != nums[j])
+        //        {
+        //            nums[i + 1] = nums[j];
+        //            i++;
+        //        }
+        //        j++;
+        //    }
 
-            return i += 1;
-        }
-        public static bool IsAnagram(string s, string t)
-        {
-            if (s.Length != t.Length) return false;
+        //    return i += 1;
+        //}
 
-            //First we need a way to count frequency of characters in both strings
-            //size is 256 assuming s and t contain only extended ASCII characters
-            int[] charFrequencyForS = new int[256];
-            int[] charFrequencyForT = new int[256];
+        ///<summary>
+        ///IsAnagram
+        ///</summary>
+        //public static bool IsAnagram(string s, string t)
+        //{
+        //    if (s.Length != t.Length) return false;
 
-            for (int i = 0; i < s.Length; i++)
-            {
-                //This means "increase the value at index of the character's ASCII value by 1"
-                charFrequencyForS[s[i]]++;
-                charFrequencyForT[t[i]]++;
-            }
+        //    //First we need a way to count frequency of characters in both strings
+        //    //size is 256 assuming s and t contain only extended ASCII characters
+        //    int[] charFrequencyForS = new int[256];
+        //    int[] charFrequencyForT = new int[256];
 
-            //Then we can iterate over extended ASCII domain and compare at each step
-            for (int i = 0; i < 256; i++)
-            {
-                //If the frequency of a character is different in both strings, they are not anagrams
-                if (charFrequencyForS[i] != charFrequencyForT[i])
-                    return false;
-            }
+        //    for (int i = 0; i < s.Length; i++)
+        //    {
+        //        //This means "increase the value at index of the character's ASCII value by 1"
+        //        charFrequencyForS[s[i]]++;
+        //        charFrequencyForT[t[i]]++;
+        //    }
 
-            return true;
-        }
+        //    //Then we can iterate over extended ASCII domain and compare at each step
+        //    for (int i = 0; i < 256; i++)
+        //    {
+        //        //If the frequency of a character is different in both strings, they are not anagrams
+        //        if (charFrequencyForS[i] != charFrequencyForT[i])
+        //            return false;
+        //    }
 
+        //    return true;
+        //}
+
+        /// <summary>
+        /// IsValid Parantheses
+        /// </summary>
         //public static bool IsValid(string s)
         //{
         //    //Do we need to use Stack here?
@@ -4204,276 +4214,289 @@
         //    return stack.Count == 0;
         //}
         #endregion
+        #region Linked List
+        /// <summary>
+        /// MyCircularDeque
+        /// </summary>
+        //public class MyCircularDeque
+        //{
+        //    private Node _first;
+        //    private Node _last;
+
+        //    private int _length;
+        //    private int _capacity;
+
+        //    public MyCircularDeque(int k)
+        //    {
+        //        _capacity = k;
+        //        _length = 0;
+        //    }
+
+        //    public bool InsertFront(int value)
+        //    {
+        //        if (_length == _capacity)
+        //            return false;
+
+        //        Node newNode = new Node(value);
+
+        //        if (_first == null)
+        //        {
+        //            _first = newNode;
+        //            _last = _first;
+        //        }
+        //        else
+        //        {
+        //            _first.Next = newNode;
+
+        //            Node tmp = _first;
+        //            _first = newNode;
+        //            _first.Previous = tmp;
+        //        }
+
+        //        _length++;
+        //        return true;
+        //    }
+
+        //    public bool InsertLast(int value)
+        //    {
+        //        if (_length == _capacity)
+        //            return false;
+
+        //        Node newNode = new Node(value);
+
+        //        if (_last == null)
+        //        {
+        //            _first = newNode;
+        //            _last = _first;
+        //        }
+        //        else
+        //        {
+        //            _last.Previous = newNode;
+
+        //            Node tmp = _last;
+        //            _last = newNode;
+        //            _last.Next = tmp;
+        //        }
+
+        //        _length++;
+        //        return true;
+        //    }
+
+        //    public bool DeleteFront()
+        //    {
+        //        if (_length == 0 || _first == null)
+        //            return false;
+
+        //        if (_length == 1)
+        //        {
+        //            _last = null;
+        //            _first = null;
+        //        }
+        //        else
+        //            _first = _first.Previous;
+
+        //        _length--;
+        //        return true;
+        //    }
+
+        //    public bool DeleteLast()
+        //    {
+        //        if (_length == 0 || _last == null)
+        //            return false;
+
+        //        if (_length == 1)
+        //        {
+        //            _last = null;
+        //            _first = null;
+        //        }
+        //        else
+        //            _last = _last.Next;
+
+        //        _length--;
+        //        return true;
+        //    }
+
+        //    public int GetFront()
+        //    {
+        //        if (_length == 0 || _first == null)
+        //            return -1;
+
+        //        return _first.Value;
+        //    }
+
+        //    public int GetRear()
+        //    {
+        //        if (_length == 0 || _last == null)
+        //            return -1;
+
+        //        return _last.Value;
+        //    }
+
+        //    public bool IsEmpty()
+        //    {
+        //        return _length == 0;
+        //    }
+
+        //    public bool IsFull()
+        //    {
+        //        return _length == _capacity;
+        //    }
+        //}
+        //public class Node
+        //{
+        //    public int Value;
+        //    public Node Next;
+        //    public Node Previous;
+
+        //    public Node(int val)
+        //    {
+        //        Value = val;
+        //    }
+        //}
+        #endregion
         #region Stack & Queue
-        public class MinStack
-        {
-            // Main Stack storage
-            private int[] _stack;
-            private int _capacity;
-            private int _length;
+        ///<summary>
+        ///MinStack
+        /// </summary>
+        //public class MinStack
+        //{
+        //    // Main Stack storage
+        //    private int[] _stack;
+        //    private int _capacity;
+        //    private int _length;
 
-            // Min value storage
-            private int[] _minStack;
-            private int _minStackCapacity;
-            private int _minStackLength;
+        //    // Min value storage
+        //    private int[] _minStack;
+        //    private int _minStackCapacity;
+        //    private int _minStackLength;
 
-            public MinStack()
-            {
-                _length = 0;
-                _capacity = 10;
-                _stack = new int[_capacity];
+        //    public MinStack()
+        //    {
+        //        _length = 0;
+        //        _capacity = 10;
+        //        _stack = new int[_capacity];
 
-                _minStackLength = 0;
-                _minStackCapacity = 10;
-                _minStack = new int[_minStackCapacity];
-            }
+        //        _minStackLength = 0;
+        //        _minStackCapacity = 10;
+        //        _minStack = new int[_minStackCapacity];
+        //    }
 
-            public void Push(int val)
-            {
-                if (_length == _capacity)
-                {
-                    _capacity *= 2;
-                    int[] newStack = new int[_capacity];
-                    for (int i = 0; i < _stack.Length; i++)
-                    {
-                        newStack[i] = _stack[i];
-                    }
-                    _stack = newStack;
-                }
-                _stack[_length] = val;
-                _length++;
+        //    public void Push(int val)
+        //    {
+        //        if (_length == _capacity)
+        //        {
+        //            _capacity *= 2;
+        //            int[] newStack = new int[_capacity];
+        //            for (int i = 0; i < _stack.Length; i++)
+        //            {
+        //                newStack[i] = _stack[i];
+        //            }
+        //            _stack = newStack;
+        //        }
+        //        _stack[_length] = val;
+        //        _length++;
 
 
-                //Only push to minStack if new value is <= current min
-                if (!(_minStackLength == 0 || val <= _minStack[_minStackLength - 1])) return;
+        //        //Only push to minStack if new value is <= current min
+        //        if (!(_minStackLength == 0 || val <= _minStack[_minStackLength - 1])) return;
 
-                if (_minStackLength == _minStackCapacity)
-                {
-                    _minStackCapacity *= 2;
-                    int[] newMinStack = new int[_minStackCapacity];
-                    for (int i = 0; i < _minStack.Length; i++)
-                    {
-                        newMinStack[i] = _minStack[i];
-                    }
-                    _minStack = newMinStack;
-                }
-                _minStack[_minStackLength] = val;
-                _minStackLength++;
-            }
+        //        if (_minStackLength == _minStackCapacity)
+        //        {
+        //            _minStackCapacity *= 2;
+        //            int[] newMinStack = new int[_minStackCapacity];
+        //            for (int i = 0; i < _minStack.Length; i++)
+        //            {
+        //                newMinStack[i] = _minStack[i];
+        //            }
+        //            _minStack = newMinStack;
+        //        }
+        //        _minStack[_minStackLength] = val;
+        //        _minStackLength++;
+        //    }
 
-            public void Pop()
-            {
-                if (_length <= 0) return;
+        //    public void Pop()
+        //    {
+        //        if (_length <= 0) return;
 
-                int valBeingPopped = _stack[_length - 1];
+        //        int valBeingPopped = _stack[_length - 1];
 
-                // Only pop from minStack if the values match
-                if (_minStackLength > 0 && valBeingPopped == _minStack[_minStackLength - 1])
-                    _minStackLength--;
+        //        // Only pop from minStack if the values match
+        //        if (_minStackLength > 0 && valBeingPopped == _minStack[_minStackLength - 1])
+        //            _minStackLength--;
 
-                //Always pop from mainStack
-                _length--;
+        //        //Always pop from mainStack
+        //        _length--;
 
-                //By only decreasing the _length we actually don't replace actual values in the array.
-                //However, they are now considered "out of bounds" and will be overwritten on the next Push.
-            }
+        //        //By only decreasing the _length we actually don't replace actual values in the array.
+        //        //However, they are now considered "out of bounds" and will be overwritten on the next Push.
+        //    }
 
-            public int Top()
-            {
-                if (_length > 0)
-                    return _stack[_length - 1];
+        //    public int Top()
+        //    {
+        //        if (_length > 0)
+        //            return _stack[_length - 1];
 
-                return -1;
-            }
+        //        return -1;
+        //    }
 
-            public int GetMin()
-            {
-                if (_minStackLength > 0)
-                    return _minStack[_minStackLength - 1];
+        //    public int GetMin()
+        //    {
+        //        if (_minStackLength > 0)
+        //            return _minStack[_minStackLength - 1];
 
-                return -1;
-            }
-        }
+        //        return -1;
+        //    }
+        //}
 
-        public class CustomStack
-        {
-            private int _length;
-            private readonly int[] _stack;
-            private readonly int _capacity;
+        /// <summary>
+        /// CustomStack
+        /// </summary>
+        //public class CustomStack
+        //{
+        //    private int _length;
+        //    private readonly int[] _stack;
+        //    private readonly int _capacity;
 
-            public CustomStack(int maxSize)
-            {
-                _length = 0;
-                _capacity = maxSize;
-                _stack = new int[_capacity];
+        //    public CustomStack(int maxSize)
+        //    {
+        //        _length = 0;
+        //        _capacity = maxSize;
+        //        _stack = new int[_capacity];
 
-            }
+        //    }
 
-            public void Push(int x)
-            {
-                if (_length == _capacity) return;
+        //    public void Push(int x)
+        //    {
+        //        if (_length == _capacity) return;
 
-                _stack[_length] = x;
-                _length++;
-            }
+        //        _stack[_length] = x;
+        //        _length++;
+        //    }
 
-            public int Pop()
-            {
-                if (_length == 0) return -1;
+        //    public int Pop()
+        //    {
+        //        if (_length == 0) return -1;
 
-                int poppedVal = _stack[_length - 1];
-                _length--;
-                return poppedVal;
-            }
+        //        int poppedVal = _stack[_length - 1];
+        //        _length--;
+        //        return poppedVal;
+        //    }
 
-            public void Increment(int k, int val)
-            {
-                int incVal = k;
-                if (_length < k) incVal = _length;
+        //    public void Increment(int k, int val)
+        //    {
+        //        int incVal = k;
+        //        if (_length < k) incVal = _length;
 
-                for (int i = 0; i < incVal; i++)
-                {
-                    _stack[i] += val;
-                }
-            }
-        }
+        //        for (int i = 0; i < incVal; i++)
+        //        {
+        //            _stack[i] += val;
+        //        }
+        //    }
+        //}
 
-        public class Node
-        {
-            public int Value;
-            public Node Next;
-            public Node Previous;
-
-            public Node(int val)
-            {
-                Value = val;
-            }
-        }
-        public class MyCircularDeque
-        {
-            private Node _first;
-            private Node _last;
-
-            private int _length;
-            private int _capacity;
-
-            public MyCircularDeque(int k)
-            {
-                _capacity = k;
-                _length = 0;
-            }
-
-            public bool InsertFront(int value)
-            {
-                if (_length == _capacity)
-                    return false;
-
-                Node newNode = new Node(value);
-
-                if (_first == null)
-                {
-                    _first = newNode;
-                    _last = _first;
-                }
-                else
-                {
-                    _first.Next = newNode;
-
-                    Node tmp = _first;
-                    _first = newNode;
-                    _first.Previous = tmp;
-                }
-
-                _length++;
-                return true;
-            }
-
-            public bool InsertLast(int value)
-            {
-                if (_length == _capacity)
-                    return false;
-
-                Node newNode = new Node(value);
-
-                if (_last == null)
-                {
-                    _first = newNode;
-                    _last = _first;
-                }
-                else
-                {
-                    _last.Previous = newNode;
-
-                    Node tmp = _last;
-                    _last = newNode;
-                    _last.Next = tmp;
-                }
-
-                _length++;
-                return true;
-            }
-
-            public bool DeleteFront()
-            {
-                if (_length == 0 || _first == null)
-                    return false;
-
-                if (_length == 1)
-                {
-                    _last = null;
-                    _first = null;
-                }
-                else
-                    _first = _first.Previous;
-
-                _length--;
-                return true;
-            }
-
-            public bool DeleteLast()
-            {
-                if (_length == 0 || _last == null)
-                    return false;
-
-                if (_length == 1)
-                {
-                    _last = null;
-                    _first = null;
-                }
-                else
-                    _last = _last.Next;
-
-                _length--;
-                return true;
-            }
-
-            public int GetFront()
-            {
-                if (_length == 0 || _first == null)
-                    return -1;
-
-                return _first.Value;
-            }
-
-            public int GetRear()
-            {
-                if (_length == 0 || _last == null)
-                    return -1;
-
-                return _last.Value;
-            }
-
-            public bool IsEmpty()
-            {
-                return _length == 0;
-            }
-
-            public bool IsFull()
-            {
-                return _length == _capacity;
-            }
-        }
-
+        /// <summary>
+        /// PrevSmaller
+        /// </summary>
         //public List<int> prevSmaller(List<int> A)
         //{
         //    List<int> result = new();
@@ -4494,8 +4517,9 @@
         //    return result;
         //}
 
-        public class dummy { }
-
+        ///<summary>
+        ///DeleteDuplicates
+        /// </summary>
         //public static ListNode? DeleteDuplicates(ListNode head)
         //{
         //    if (head == null || head.next == null)
@@ -4686,36 +4710,42 @@
         //    return ptrOfFirstList;
         //}
 
-        public static ListNode InsertGreatestCommonDivisors(ListNode head)
-        {
-            ListNode dummy = new(-1)
-            {
-                next = head
-            };
+        ///<summary>
+        ///InsertGreatestCommonDivisors
+        /// </summary>
+        //public static ListNode InsertGreatestCommonDivisors(ListNode head)
+        //{
+        //    ListNode dummy = new(-1)
+        //    {
+        //        next = head
+        //    };
 
-            while (head != null && head.next != null)
-            {
-                int gdc = GCD(head.val, head.next.val);
-                ListNode newHead = head.next;
-                ListNode newNode = new ListNode(gdc);
-                head.next = newNode;
-                newNode.next = newHead;
-                head = newHead;
-            }
+        //    while (head != null && head.next != null)
+        //    {
+        //        int gdc = GCD(head.val, head.next.val);
+        //        ListNode newHead = head.next;
+        //        ListNode newNode = new ListNode(gdc);
+        //        head.next = newNode;
+        //        newNode.next = newHead;
+        //        head = newHead;
+        //    }
 
-            return dummy.next;
-        }
+        //    return dummy.next;
+        //}
+        //public static int GCD(int a, int b)
+        //{
+        //    while (b != 0)
+        //    {
+        //        int tmp = b;
+        //        b = a % b;
+        //        a = tmp;
+        //    }
+        //    return a;
+        //}
 
-        public static int GCD(int a, int b)
-        {
-            while (b != 0)
-            {
-                int tmp = b;
-                b = a % b;
-                a = tmp;
-            }
-            return a;
-        }
+        /// <summary>
+        /// StockSpanner
+        /// </summary>
         //public static class Solution
         //{
         //    public class StockSpanner
@@ -6050,6 +6080,158 @@
         //    (nums[left], nums[high]) = (nums[high], nums[left]);
 
         //    return high;
+        //}
+
+        ///<summary>
+        ///KClosest
+        /// </summary>
+        //public class Solution
+        //{
+        //    private static int[] _origin = new int[2] { 0, 0 };
+        //    public static int[][] KClosest(int[][] points, int k)
+        //    {
+        //        MinHeap pq = new(points.Length);
+        //        foreach (int[] point in points)
+        //        {
+        //            pq.Insert(point);
+        //        }
+        //        int[][] res = new int[k][];
+
+        //        while (k != 0)
+        //        {
+        //            var closest = pq.ExtractMin();
+        //            res[k - 1] = closest.Point;
+        //            k--;
+        //        }
+
+        //        return res;
+        //        //int[][] sortedPoints = QuickSelect(points, 0, points.Length - 1, k);
+        //        //return sortedPoints.Take(k).ToArray();
+        //    }
+
+        //    public class MinHeapNode
+        //    {
+        //        public double Distance { get; set; }
+        //        public int[] Point { get; set; }
+        //    }
+
+        //    public class MinHeap
+        //    {
+        //        private MinHeapNode[] _heap;
+        //        private int _size;
+        //        private int _capacity;
+
+        //        public MinHeap(int capacity)
+        //        {
+        //            _capacity = capacity;
+        //            _heap = new MinHeapNode[_capacity];
+        //        }
+
+        //        public bool IsEmpty() => _size == 0;
+        //        private int Parent(int index) => (index - 1) / 2;
+        //        private int Left(int index) => (index * 2) + 1;
+        //        private int Right(int index) => (index * 2) + 2;
+        //        private void Swap(int i, int j)
+        //        {
+        //            MinHeapNode temp = _heap[i];
+        //            _heap[i] = _heap[j];
+        //            _heap[j] = temp;
+        //        }
+
+        //        public void Insert(int[] value)
+        //        {
+        //            if (_size == _capacity) return;
+
+        //            int index = _size;
+        //            _heap[index] = new MinHeapNode
+        //            {
+        //                Point = value,
+        //                Distance = DistanceToOrigin(value)
+        //            };
+        //            _size++;
+
+        //            while (index != 0 && _heap[index].Distance < _heap[Parent(index)].Distance)
+        //            {
+        //                Swap(index, Parent(index));
+        //                index = Parent(index);
+        //            }
+        //        }
+
+        //        public MinHeapNode ExtractMin()
+        //        {
+        //            if (_size == 1)
+        //            {
+        //                _size--;
+        //                return _heap[_size];
+        //            }
+
+        //            MinHeapNode min = _heap[0];
+        //            _heap[0] = _heap[_size - 1];
+        //            _size--;
+
+        //            MinHeapify(0);
+        //            return min;
+        //        }
+
+        //        private void MinHeapify(int index)
+        //        {
+        //            int left = Left(index);
+        //            int right = Right(index);
+        //            int smallest = index;
+
+        //            if (left < _size && _heap[left].Distance < _heap[smallest].Distance)
+        //                smallest = left;
+        //            if (right < _size && _heap[right].Distance < _heap[smallest].Distance)
+        //                smallest = right;
+
+        //            if (smallest != index)//we found a new smallest!
+        //            {
+        //                Swap(smallest, index);
+        //                MinHeapify(smallest);
+        //            }
+        //        }
+        //    }
+
+
+        //    //private static int[][] QuickSelect(int[][] points, int left, int right, int k)
+        //    //{
+        //    //    if (left >= right)
+        //    //        return points;
+
+        //    //    int pivot = Partition(points, left, right);
+
+        //    //    if (k == pivot)
+        //    //        return points;
+        //    //    else if (k < pivot)
+        //    //        return QuickSelect(points, left, pivot - 1, k);
+        //    //    else
+        //    //        return QuickSelect(points, pivot + 1, right, k);
+        //    //}
+
+        //    //private static int Partition(int[][] points, int left, int right)
+        //    //{
+        //    //    int[] pivot = points[left];
+        //    //    int low = left, high = right;
+
+        //    //    while (low < high)
+        //    //    {
+        //    //        double pivotDistance = DistanceToOrigin(pivot);
+
+        //    //        while (high > left && DistanceToOrigin(points[high]) > pivotDistance)
+        //    //            high--;
+        //    //        while (low < right && DistanceToOrigin(points[low]) <= pivotDistance)
+        //    //            low++;
+
+        //    //        if (low < high)
+        //    //            (points[low], points[high]) = (points[high], points[low]);
+        //    //    }
+
+        //    //    (points[left], points[high]) = (points[high], points[left]);
+
+        //    //    return high;
+        //    //}
+
+        //    private static double DistanceToOrigin(int[] p1) => Math.Sqrt(Math.Pow((p1[0] - _origin[0]), 2) + Math.Pow((p1[1] - _origin[1]), 2));
         //}
         #endregion
         #endregion
