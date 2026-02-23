@@ -4353,6 +4353,236 @@
         //        Value = val;
         //    }
         //}
+        ///<summary>
+        ///InsertGreatestCommonDivisors
+        /// </summary>
+        //public static ListNode InsertGreatestCommonDivisors(ListNode head)
+        //{
+        //    ListNode dummy = new(-1)
+        //    {
+        //        next = head
+        //    };
+
+        //    while (head != null && head.next != null)
+        //    {
+        //        int gdc = GCD(head.val, head.next.val);
+        //        ListNode newHead = head.next;
+        //        ListNode newNode = new ListNode(gdc);
+        //        head.next = newNode;
+        //        newNode.next = newHead;
+        //        head = newHead;
+        //    }
+
+        //    return dummy.next;
+        //}
+        //public static int GCD(int a, int b)
+        //{
+        //    while (b != 0)
+        //    {
+        //        int tmp = b;
+        //        b = a % b;
+        //        a = tmp;
+        //    }
+        //    return a;
+        //}
+
+        ///<summary>
+        ///DeleteDuplicates I
+        /// </summary>
+        //public static ListNode? DeleteDuplicates(ListNode head)
+        //{
+        //    if (head == null || head.next == null)
+        //        return head;
+
+        //    ListNode tmp = head;
+        //    while (tmp != null && tmp.next != null)
+        //    {
+        //        if (tmp.val == tmp.next.val)
+        //            tmp.next = tmp.next.next;
+        //        else
+        //            tmp = tmp.next;
+        //    }
+
+        //    return head;
+        //}
+        ///<summary>
+        ///DeleteDuplicates II
+        /// </summary>
+        //public class Program
+        //{
+        //    public static void Main()
+        //    {
+        //        Console.WriteLine("--- Running Tests ---\n");
+
+        //        // Case 0: Empty List
+        //        RunTest("Empty List",
+        //            input: new int[] { },
+        //            expected: new int[] { });
+
+        //        // Case 1: Mixed duplicates
+        //        RunTest("Mixed Duplicates",
+        //            input: new int[] { -3, -1, 0, 0, 0, 3, 3 },
+        //            expected: new int[] { -3, -1 });
+
+        //        // Case 2: All duplicates (Should return empty)
+        //        RunTest("All Duplicates",
+        //            input: new int[] { 1, 1 },
+        //            expected: new int[] { });
+
+        //        // Case 3: Duplicates at start
+        //        RunTest("Start Duplicates",
+        //            input: new int[] { 1, 1, 2 },
+        //            expected: new int[] { 2 });
+
+        //        // Case 4: Duplicates at end
+        //        RunTest("End Duplicates",
+        //            input: new int[] { 1, 2, 2 },
+        //            expected: new int[] { 1 });
+
+        //        // Case 5: Complex
+        //        RunTest("Complex 1",
+        //            input: new int[] { 1, 2, 3, 3, 4, 4, 5 },
+        //            expected: new int[] { 1, 2, 5 });
+
+        //        // Case 6: Consecutive duplicates
+        //        RunTest("Complex 2",
+        //            input: new int[] { 1, 1, 1, 2, 3 },
+        //            expected: new int[] { 2, 3 });
+        //    }
+
+        //    // --- Test Helper Method ---
+        //    public static void RunTest(string testName, int[] input, int[] expected)
+        //    {
+        //        // 1. Arrange: Build the linked list from array
+        //        ListNode head = Solution.BuildList(input);
+
+        //        // 2. Act: Run your algorithm
+        //        // Note: We wrap in try-catch to catch the NullReferenceException if the bug exists
+        //        try
+        //        {
+        //            ListNode resultNode = Solution.DeleteDuplicates(head);
+        //            int[] actual = Solution.ListToArray(resultNode);
+
+        //            // 3. Assert: Compare arrays
+        //            bool pass = Enumerable.SequenceEqual(actual, expected);
+
+        //            // 4. Output Result
+        //            Console.ForegroundColor = pass ? ConsoleColor.Green : ConsoleColor.Red;
+        //            Console.Write(pass ? "[PASS] " : "[FAIL] ");
+        //            Console.ResetColor();
+        //            Console.WriteLine($"{testName}");
+
+        //            if (!pass)
+        //            {
+        //                Console.WriteLine($"   Expected: [{string.Join(", ", expected)}]");
+        //                Console.WriteLine($"   Actual:   [{string.Join(", ", actual)}]");
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.ForegroundColor = ConsoleColor.Red;
+        //            Console.Write("[FAIL] ");
+        //            Console.ResetColor();
+        //            Console.WriteLine($"{testName} - Threw Exception: {ex.Message}");
+        //        }
+        //    }
+        //}
+
+        //public class ListNode
+        //{
+        //    public int val;
+        //    public ListNode next;
+        //    public ListNode(int val = 0, ListNode next = null)
+        //    {
+        //        this.val = val;
+        //        this.next = next;
+        //    }
+        //}
+
+        //public static class Solution
+        //{
+        //    // --- Helper: Build List from Array ---
+        //    public static ListNode BuildList(int[] values)
+        //    {
+        //        if (values == null || values.Length == 0) return null;
+        //        ListNode dummy = new ListNode(0);
+        //        ListNode current = dummy;
+        //        foreach (int val in values)
+        //        {
+        //            current.next = new ListNode(val);
+        //            current = current.next;
+        //        }
+        //        return dummy.next;
+        //    }
+
+        //    // --- Helper: Convert List to Array (for printing/asserting) ---
+        //    public static int[] ListToArray(ListNode head)
+        //    {
+        //        List<int> result = new List<int>();
+        //        while (head != null)
+        //        {
+        //            result.Add(head.val);
+        //            head = head.next;
+        //        }
+        //        return result.ToArray();
+        //    }
+        //    public static ListNode DeleteDuplicates(ListNode head)
+        //    {
+        //        if (head == null || head.next == null)
+        //            return head;
+
+        //        ListNode nodeBeforeSlow = head;
+        //        ListNode slow = head;
+        //        ListNode fast = head.next;
+        //        while (slow != null && fast != null)
+        //        {
+        //            if (slow.val == fast.val)
+        //            {
+        //                while (fast != null && fast.val == slow.val)
+        //                {
+        //                    fast = fast.next;
+        //                }
+        //                if (nodeBeforeSlow.val == head.val && slow.val == head.val)
+        //                {
+        //                    head = fast;
+        //                    nodeBeforeSlow = fast;
+        //                }
+        //                else
+        //                    nodeBeforeSlow.next = fast;
+        //                slow = fast;
+        //                if (fast != null) fast = fast.next;
+        //            }
+        //            else
+        //            {
+        //                nodeBeforeSlow = slow;
+        //                slow = slow.next;
+        //                fast = fast.next;
+        //            }
+        //        }
+
+        //        return head;
+        //    }
+        //}
+
+        ///<summary>
+        ///Intersection of Two Linked Lists
+        /// </summary>
+        //public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        //{
+        //    if (headA == null || headB == null)
+        //        return null;
+
+        //    ListNode ptrOfFirstList = headA;
+        //    ListNode ptrOfSecondList = headB;
+
+        //    while (ptrOfFirstList != ptrOfSecondList)
+        //    {
+        //        ptrOfFirstList = ptrOfFirstList == null ? headB : ptrOfFirstList.next;
+        //        ptrOfSecondList = ptrOfSecondList == null ? headA : ptrOfSecondList.next;
+        //    }
+
+        //    return ptrOfFirstList;
+        //}
         #endregion
         #region Stack & Queue
         ///<summary>
@@ -4517,232 +4747,6 @@
         //    return result;
         //}
 
-        ///<summary>
-        ///DeleteDuplicates
-        /// </summary>
-        //public static ListNode? DeleteDuplicates(ListNode head)
-        //{
-        //    if (head == null || head.next == null)
-        //        return head;
-
-        //    ListNode tmp = head;
-        //    while (tmp != null && tmp.next != null)
-        //    {
-        //        if (tmp.val == tmp.next.val)
-        //            tmp.next = tmp.next.next;
-        //        else
-        //            tmp = tmp.next;
-        //    }
-
-        //    return head;
-        //}
-
-        //public class Program
-        //{
-        //    public static void Main()
-        //    {
-        //        Console.WriteLine("--- Running Tests ---\n");
-
-        //        // Case 0: Empty List
-        //        RunTest("Empty List",
-        //            input: new int[] { },
-        //            expected: new int[] { });
-
-        //        // Case 1: Mixed duplicates
-        //        RunTest("Mixed Duplicates",
-        //            input: new int[] { -3, -1, 0, 0, 0, 3, 3 },
-        //            expected: new int[] { -3, -1 });
-
-        //        // Case 2: All duplicates (Should return empty)
-        //        RunTest("All Duplicates",
-        //            input: new int[] { 1, 1 },
-        //            expected: new int[] { });
-
-        //        // Case 3: Duplicates at start
-        //        RunTest("Start Duplicates",
-        //            input: new int[] { 1, 1, 2 },
-        //            expected: new int[] { 2 });
-
-        //        // Case 4: Duplicates at end
-        //        RunTest("End Duplicates",
-        //            input: new int[] { 1, 2, 2 },
-        //            expected: new int[] { 1 });
-
-        //        // Case 5: Complex
-        //        RunTest("Complex 1",
-        //            input: new int[] { 1, 2, 3, 3, 4, 4, 5 },
-        //            expected: new int[] { 1, 2, 5 });
-
-        //        // Case 6: Consecutive duplicates
-        //        RunTest("Complex 2",
-        //            input: new int[] { 1, 1, 1, 2, 3 },
-        //            expected: new int[] { 2, 3 });
-        //    }
-
-        //    // --- Test Helper Method ---
-        //    public static void RunTest(string testName, int[] input, int[] expected)
-        //    {
-        //        // 1. Arrange: Build the linked list from array
-        //        ListNode head = Solution.BuildList(input);
-
-        //        // 2. Act: Run your algorithm
-        //        // Note: We wrap in try-catch to catch the NullReferenceException if the bug exists
-        //        try
-        //        {
-        //            ListNode resultNode = Solution.DeleteDuplicates(head);
-        //            int[] actual = Solution.ListToArray(resultNode);
-
-        //            // 3. Assert: Compare arrays
-        //            bool pass = Enumerable.SequenceEqual(actual, expected);
-
-        //            // 4. Output Result
-        //            Console.ForegroundColor = pass ? ConsoleColor.Green : ConsoleColor.Red;
-        //            Console.Write(pass ? "[PASS] " : "[FAIL] ");
-        //            Console.ResetColor();
-        //            Console.WriteLine($"{testName}");
-
-        //            if (!pass)
-        //            {
-        //                Console.WriteLine($"   Expected: [{string.Join(", ", expected)}]");
-        //                Console.WriteLine($"   Actual:   [{string.Join(", ", actual)}]");
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.ForegroundColor = ConsoleColor.Red;
-        //            Console.Write("[FAIL] ");
-        //            Console.ResetColor();
-        //            Console.WriteLine($"{testName} - Threw Exception: {ex.Message}");
-        //        }
-        //    }
-        //}
-
-        //public class ListNode
-        //{
-        //    public int val;
-        //    public ListNode next;
-        //    public ListNode(int val = 0, ListNode next = null)
-        //    {
-        //        this.val = val;
-        //        this.next = next;
-        //    }
-        //}
-
-        //public static class Solution
-        //{
-        //    // --- Helper: Build List from Array ---
-        //    public static ListNode BuildList(int[] values)
-        //    {
-        //        if (values == null || values.Length == 0) return null;
-        //        ListNode dummy = new ListNode(0);
-        //        ListNode current = dummy;
-        //        foreach (int val in values)
-        //        {
-        //            current.next = new ListNode(val);
-        //            current = current.next;
-        //        }
-        //        return dummy.next;
-        //    }
-
-        //    // --- Helper: Convert List to Array (for printing/asserting) ---
-        //    public static int[] ListToArray(ListNode head)
-        //    {
-        //        List<int> result = new List<int>();
-        //        while (head != null)
-        //        {
-        //            result.Add(head.val);
-        //            head = head.next;
-        //        }
-        //        return result.ToArray();
-        //    }
-        //    public static ListNode DeleteDuplicates(ListNode head)
-        //    {
-        //        if (head == null || head.next == null)
-        //            return head;
-
-        //        ListNode nodeBeforeSlow = head;
-        //        ListNode slow = head;
-        //        ListNode fast = head.next;
-        //        while (slow != null && fast != null)
-        //        {
-        //            if (slow.val == fast.val)
-        //            {
-        //                while (fast != null && fast.val == slow.val)
-        //                {
-        //                    fast = fast.next;
-        //                }
-        //                if (nodeBeforeSlow.val == head.val && slow.val == head.val)
-        //                {
-        //                    head = fast;
-        //                    nodeBeforeSlow = fast;
-        //                }
-        //                else
-        //                    nodeBeforeSlow.next = fast;
-        //                slow = fast;
-        //                if (fast != null) fast = fast.next;
-        //            }
-        //            else
-        //            {
-        //                nodeBeforeSlow = slow;
-        //                slow = slow.next;
-        //                fast = fast.next;
-        //            }
-        //        }
-
-        //        return head;
-        //    }
-        //}
-
-        //public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
-        //{
-        //    if (headA == null || headB == null)
-        //        return null;
-
-        //    ListNode ptrOfFirstList = headA;
-        //    ListNode ptrOfSecondList = headB;
-
-        //    while (ptrOfFirstList != ptrOfSecondList)
-        //    {
-        //        ptrOfFirstList = ptrOfFirstList == null ? headB : ptrOfFirstList.next;
-        //        ptrOfSecondList = ptrOfSecondList == null ? headA : ptrOfSecondList.next;
-        //    }
-
-        //    return ptrOfFirstList;
-        //}
-
-        ///<summary>
-        ///InsertGreatestCommonDivisors
-        /// </summary>
-        //public static ListNode InsertGreatestCommonDivisors(ListNode head)
-        //{
-        //    ListNode dummy = new(-1)
-        //    {
-        //        next = head
-        //    };
-
-        //    while (head != null && head.next != null)
-        //    {
-        //        int gdc = GCD(head.val, head.next.val);
-        //        ListNode newHead = head.next;
-        //        ListNode newNode = new ListNode(gdc);
-        //        head.next = newNode;
-        //        newNode.next = newHead;
-        //        head = newHead;
-        //    }
-
-        //    return dummy.next;
-        //}
-        //public static int GCD(int a, int b)
-        //{
-        //    while (b != 0)
-        //    {
-        //        int tmp = b;
-        //        b = a % b;
-        //        a = tmp;
-        //    }
-        //    return a;
-        //}
-
         /// <summary>
         /// StockSpanner
         /// </summary>
@@ -4777,17 +4781,6 @@
 
         #endregion
         #region Heap
-        public class ListNode
-        {
-            public int val;
-            public ListNode? next;
-            public ListNode(int val = 0, ListNode? next = null)
-            {
-                this.val = val;
-                this.next = next;
-            }
-        }
-
         ///<summary>
         ///Merge K Lists
         ///</summary>
@@ -4806,213 +4799,6 @@
         //    }
 
         //    return minHeap.GetMergedList();
-        //}
-
-        ///<summary>
-        ///Find Kth Largest
-        /// </summary>
-        //public class Solution
-        //{
-        //    public int FindKthLargest(int[] nums, int k)
-        //    {
-        //        MinHeap heap = new(nums.Length);
-
-
-        //        for (int i = 0; i < nums.Length; i++)
-        //        {
-        //            heap.Insert(nums[i]);
-        //            if (heap.Count > k)
-        //                heap.ExtractMin();
-        //        }
-
-
-        //        return heap.ExtractMin();
-        //    }
-
-        //    public class MinHeap
-        //    {
-        //        private int[] _heapArray;
-        //        private int _capacity;
-        //        private int _size;
-
-        //        public MinHeap(int capacity)
-        //        {
-        //            _capacity = capacity;
-        //            _heapArray = new int[_capacity];
-        //            _size = 0;
-        //        }
-
-        //        public int Count { get => _size; }
-        //        public static int Parent(int index) => (index - 1) / 2;
-        //        public static int Left(int index) => index * 2 + 1;
-        //        public static int Right(int index) => index * 2 + 2;
-        //        public static void Swap<T>(ref T left, ref T right)
-        //        {
-        //            T temp = left;
-        //            left = right;
-        //            right = temp;
-        //        }
-
-        //        public bool Insert(int key)
-        //        {
-        //            if (_size == _capacity)
-        //            {
-        //                _capacity *= 2;
-        //                Array.Resize(ref _heapArray, _capacity);
-        //            }
-        //            int index = _size;
-        //            _heapArray[index] = key;
-        //            _size++;
-        //            while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
-        //            {
-        //                Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
-        //                index = Parent(index);
-        //            }
-
-        //            return true;
-        //        }
-        //        public int ExtractMin()
-        //        {
-        //            if (_size <= 0) return int.MaxValue;
-
-        //            if (_size == 1)
-        //            {
-        //                _size--;
-        //                return _heapArray[_size];
-        //            }
-
-        //            int min = _heapArray[0];
-        //            _heapArray[0] = _heapArray[_size - 1];
-        //            _size--;
-
-        //            MinHeapify(0);
-        //            return min;
-        //        }
-        //        public void MinHeapify(int index)
-        //        {
-        //            int left = Left(index);
-        //            int right = Right(index);
-        //            int root = index;
-
-        //            if (left < _size && _heapArray[left] < _heapArray[root])
-        //                root = left;
-        //            if (right < _size && _heapArray[right] < _heapArray[root])
-        //                root = right;
-
-        //            if (root != index) // did we change the index?
-        //            {
-        //                Swap(ref _heapArray[index], ref _heapArray[root]);
-        //                MinHeapify(root);// redo heapify starting from new root
-        //            }
-        //        }
-        //        public ListNode GetMergedList()
-        //        {
-        //            ListNode dummy = new(0);
-        //            ListNode current = dummy;
-
-        //            while (_size > 0)
-        //            {
-        //                int minVal = ExtractMin();
-
-        //                current.next = new ListNode(minVal);
-        //                current = current.next;
-        //            }
-
-        //            return dummy.next;
-        //        }
-        //    }
-
-        //}
-        //public class MinHeap
-        //{
-        //    private int[] _heapArray;
-        //    private int _capacity;
-        //    private int _size;
-
-        //    public MinHeap(int capacity)
-        //    {
-        //        _capacity = capacity;
-        //        _heapArray = new int[_capacity];
-        //        _size = 0;
-        //    }
-
-        //    public static int Parent(int index) => (index - 1) / 2;
-        //    public static int Left(int index) => index * 2 + 1;
-        //    public static int Right(int index) => index * 2 + 2;
-        //    public static void Swap<T>(ref T left, ref T right)
-        //    {
-        //        T temp = left;
-        //        left = right;
-        //        right = temp;
-        //    }
-
-        //    public bool Insert(int key)
-        //    {
-        //        if (_size == _capacity)
-        //        {
-        //            _capacity *= 2;
-        //            Array.Resize(ref _heapArray, _capacity);
-        //        }
-        //        int index = _size;
-        //        _heapArray[index] = key;
-        //        _size++;
-        //        while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
-        //        {
-        //            Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
-        //            index = Parent(index);
-        //        }
-
-        //        return true;
-        //    }
-        //    public int ExtractMin()
-        //    {
-        //        if (_size <= 0) return int.MaxValue;
-
-        //        if (_size == 1)
-        //        {
-        //            _size--;
-        //            return _heapArray[_size];
-        //        }
-
-        //        int min = _heapArray[0];
-        //        _heapArray[0] = _heapArray[_size - 1];
-        //        _size--;
-
-        //        MinHeapify(0);
-        //        return min;
-        //    }
-        //    public void MinHeapify(int index)
-        //    {
-        //        int left = Left(index);
-        //        int right = Right(index);
-        //        int root = index;
-
-        //        if (left < _size && _heapArray[left] < _heapArray[root])
-        //            root = left;
-        //        if (right < _size && _heapArray[right] < _heapArray[root])
-        //            root = right;
-
-        //        if (root != index) // did we change the index?
-        //        {
-        //            Swap(ref _heapArray[index], ref _heapArray[root]);
-        //            MinHeapify(root);// redo heapify starting from new root
-        //        }
-        //    }
-        //    public ListNode GetMergedList()
-        //    {
-        //        ListNode dummy = new(0);
-        //        ListNode current = dummy;
-
-        //        while (_size > 0)
-        //        {
-        //            int minVal = ExtractMin();
-
-        //            current.next = new ListNode(minVal);
-        //            current = current.next;
-        //        }
-
-        //        return dummy.next;
-        //    }
         //}
 
         ///<summary>
@@ -5275,6 +5061,441 @@
         //    }
         //}
 
+        ///<summary>
+        ///Ugly Number II
+        /// </summary>
+        //    public class Solution
+    //{
+    //    public int NthUglyNumber(int n)
+    //    {
+    //        //we start the heap with the number 1. Because we are certain its an ugly number
+    //        MinHeap heap = new(n);
+    //        List<long> prevUglyNumbers = new() { 1 };
+    //        heap.Insert(1);
+    //        int uglyCount = 1;
+
+    //        while (!heap.IsEmpty())
+    //        {
+    //            //Next we extract the minimum from the heap
+    //            long minUgly = heap.ExtractMin();
+    //            if (uglyCount == n)
+    //                return (int)minUgly;
+
+    //            //how to accomodate for previously calculated ugly number?
+    //            //use List instead of int[] in the heap and use Any?
+    //            //Something smarter
+    //            long ugly1 = minUgly * 2;
+    //            long ugly2 = minUgly * 3;
+    //            long ugly3 = minUgly * 5;
+    //            if (!prevUglyNumbers.Contains(ugly1))
+    //            {
+    //                heap.Insert(ugly1);
+    //                prevUglyNumbers.Add(ugly1);
+    //            }
+    //            if (!prevUglyNumbers.Contains(ugly2))
+    //            {
+    //                heap.Insert(ugly2);
+    //                prevUglyNumbers.Add(ugly2);
+    //            }
+    //            if (!prevUglyNumbers.Contains(ugly3))
+    //            {
+    //                heap.Insert(ugly3);
+    //                prevUglyNumbers.Add(ugly3);
+    //            }
+    //            uglyCount++;
+    //        }
+
+    //        return 1;
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        private long[] _heap;
+    //        private int _size;
+    //        private int _capacity;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heap = new long[_capacity];
+    //        }
+
+    //        public bool IsEmpty() => _size == 0;
+    //        private int Parent(int index) => (index - 1) / 2;
+    //        private int Left(int index) => (index * 2) + 1;
+    //        private int Right(int index) => (index * 2) + 2;
+    //        private void Swap(int i, int j)
+    //        {
+    //            long temp = _heap[i];
+    //            _heap[i] = _heap[j];
+    //            _heap[j] = temp;
+    //        }
+
+    //        public void Insert(long value)
+    //        {
+    //            if (_size == _capacity) return;
+
+    //            int index = _size;
+    //            _heap[index] = value;
+    //            _size++;
+
+    //            while (index != 0 && _heap[index] < _heap[Parent(index)])
+    //            {
+    //                Swap(index, Parent(index));
+    //                index = Parent(index);
+    //            }
+    //        }
+
+    //        public long ExtractMin()
+    //        {
+    //            if (_size == 1)
+    //            {
+    //                _size--;
+    //                return _heap[_size];
+    //            }
+
+    //            long min = _heap[0];
+    //            _heap[0] = _heap[_size - 1];
+    //            _size--;
+
+    //            MinHeapify(0);
+    //            return min;
+    //        }
+
+    //        private void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int smallest = index;
+
+    //            if (left < _size && _heap[left] < _heap[smallest])
+    //                smallest = left;
+    //            if (right < _size && _heap[right] < _heap[smallest])
+    //                smallest = right;
+
+    //            if (smallest != index)//we found a new smallest!
+    //            {
+    //                Swap(smallest, index);
+    //                MinHeapify(smallest);
+    //            }
+    //        }
+    //    }
+    //}
+    //    public class Solution
+    //{
+    //    public int NthUglyNumber(int n)
+    //    {
+    //        //we start the heap with the number 1. Because we are certain its an ugly number
+    //        MinHeap heap = new(n);
+    //        heap.Insert(1);
+
+    //        int uglyCount = 0;
+    //        long lastUgly = 0;
+
+    //        while (true)
+    //        {
+    //            //Next we extract the minimum from the heap
+    //            long currUgly = heap.ExtractMin();
+
+    //            //Check if its equal to the last ugly number
+    //            if (currUgly == lastUgly)
+    //                continue;
+
+    //            lastUgly = currUgly;
+    //            uglyCount++;
+
+    //            if (uglyCount == n)
+    //                return (int)currUgly;
+
+    //            //how to accomodate for previously calculated ugly number?
+    //            //use List instead of int[] in the heap and use Any?
+    //            //Something smarter
+    //            heap.Insert(currUgly * 2);
+    //            heap.Insert(currUgly * 3);
+    //            heap.Insert(currUgly * 5);
+    //        }
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        private long[] _heap;
+    //        private int _size;
+    //        private int _capacity;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heap = new long[_capacity];
+    //        }
+
+    //        public bool IsEmpty() => _size == 0;
+    //        private int Parent(int index) => (index - 1) / 2;
+    //        private int Left(int index) => (index * 2) + 1;
+    //        private int Right(int index) => (index * 2) + 2;
+    //        private void Swap(int i, int j)
+    //        {
+    //            long temp = _heap[i];
+    //            _heap[i] = _heap[j];
+    //            _heap[j] = temp;
+    //        }
+
+    //        public void Insert(long value)
+    //        {
+    //            if (_size == _capacity) return;
+
+    //            int index = _size;
+    //            _heap[index] = value;
+    //            _size++;
+
+    //            while (index != 0 && _heap[index] < _heap[Parent(index)])
+    //            {
+    //                Swap(index, Parent(index));
+    //                index = Parent(index);
+    //            }
+    //        }
+
+    //        public long ExtractMin()
+    //        {
+    //            if (_size == 1)
+    //            {
+    //                _size--;
+    //                return _heap[_size];
+    //            }
+
+    //            long min = _heap[0];
+    //            _heap[0] = _heap[_size - 1];
+    //            _size--;
+
+    //            MinHeapify(0);
+    //            return min;
+    //        }
+
+    //        private void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int smallest = index;
+
+    //            if (left < _size && _heap[left] < _heap[smallest])
+    //                smallest = left;
+    //            if (right < _size && _heap[right] < _heap[smallest])
+    //                smallest = right;
+
+    //            if (smallest != index)//we found a new smallest!
+    //            {
+    //                Swap(smallest, index);
+    //                MinHeapify(smallest);
+    //            }
+    //        }
+    //    }
+    //}
+
+        ///<summary>
+        ///Find Kth Largest
+        /// </summary>
+        //public class Solution
+        //{
+        //    public int FindKthLargest(int[] nums, int k)
+        //    {
+        //        MinHeap heap = new(nums.Length);
+
+
+        //        for (int i = 0; i < nums.Length; i++)
+        //        {
+        //            heap.Insert(nums[i]);
+        //            if (heap.Count > k)
+        //                heap.ExtractMin();
+        //        }
+
+
+        //        return heap.ExtractMin();
+        //    }
+
+        //    public class MinHeap
+        //    {
+        //        private int[] _heapArray;
+        //        private int _capacity;
+        //        private int _size;
+
+        //        public MinHeap(int capacity)
+        //        {
+        //            _capacity = capacity;
+        //            _heapArray = new int[_capacity];
+        //            _size = 0;
+        //        }
+
+        //        public int Count { get => _size; }
+        //        public static int Parent(int index) => (index - 1) / 2;
+        //        public static int Left(int index) => index * 2 + 1;
+        //        public static int Right(int index) => index * 2 + 2;
+        //        public static void Swap<T>(ref T left, ref T right)
+        //        {
+        //            T temp = left;
+        //            left = right;
+        //            right = temp;
+        //        }
+
+        //        public bool Insert(int key)
+        //        {
+        //            if (_size == _capacity)
+        //            {
+        //                _capacity *= 2;
+        //                Array.Resize(ref _heapArray, _capacity);
+        //            }
+        //            int index = _size;
+        //            _heapArray[index] = key;
+        //            _size++;
+        //            while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
+        //            {
+        //                Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
+        //                index = Parent(index);
+        //            }
+
+        //            return true;
+        //        }
+        //        public int ExtractMin()
+        //        {
+        //            if (_size <= 0) return int.MaxValue;
+
+        //            if (_size == 1)
+        //            {
+        //                _size--;
+        //                return _heapArray[_size];
+        //            }
+
+        //            int min = _heapArray[0];
+        //            _heapArray[0] = _heapArray[_size - 1];
+        //            _size--;
+
+        //            MinHeapify(0);
+        //            return min;
+        //        }
+        //        public void MinHeapify(int index)
+        //        {
+        //            int left = Left(index);
+        //            int right = Right(index);
+        //            int root = index;
+
+        //            if (left < _size && _heapArray[left] < _heapArray[root])
+        //                root = left;
+        //            if (right < _size && _heapArray[right] < _heapArray[root])
+        //                root = right;
+
+        //            if (root != index) // did we change the index?
+        //            {
+        //                Swap(ref _heapArray[index], ref _heapArray[root]);
+        //                MinHeapify(root);// redo heapify starting from new root
+        //            }
+        //        }
+        //        public ListNode GetMergedList()
+        //        {
+        //            ListNode dummy = new(0);
+        //            ListNode current = dummy;
+
+        //            while (_size > 0)
+        //            {
+        //                int minVal = ExtractMin();
+
+        //                current.next = new ListNode(minVal);
+        //                current = current.next;
+        //            }
+
+        //            return dummy.next;
+        //        }
+        //    }
+
+        //}
+        //public class MinHeap
+        //{
+        //    private int[] _heapArray;
+        //    private int _capacity;
+        //    private int _size;
+
+        //    public MinHeap(int capacity)
+        //    {
+        //        _capacity = capacity;
+        //        _heapArray = new int[_capacity];
+        //        _size = 0;
+        //    }
+
+        //    public static int Parent(int index) => (index - 1) / 2;
+        //    public static int Left(int index) => index * 2 + 1;
+        //    public static int Right(int index) => index * 2 + 2;
+        //    public static void Swap<T>(ref T left, ref T right)
+        //    {
+        //        T temp = left;
+        //        left = right;
+        //        right = temp;
+        //    }
+
+        //    public bool Insert(int key)
+        //    {
+        //        if (_size == _capacity)
+        //        {
+        //            _capacity *= 2;
+        //            Array.Resize(ref _heapArray, _capacity);
+        //        }
+        //        int index = _size;
+        //        _heapArray[index] = key;
+        //        _size++;
+        //        while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
+        //        {
+        //            Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
+        //            index = Parent(index);
+        //        }
+
+        //        return true;
+        //    }
+        //    public int ExtractMin()
+        //    {
+        //        if (_size <= 0) return int.MaxValue;
+
+        //        if (_size == 1)
+        //        {
+        //            _size--;
+        //            return _heapArray[_size];
+        //        }
+
+        //        int min = _heapArray[0];
+        //        _heapArray[0] = _heapArray[_size - 1];
+        //        _size--;
+
+        //        MinHeapify(0);
+        //        return min;
+        //    }
+        //    public void MinHeapify(int index)
+        //    {
+        //        int left = Left(index);
+        //        int right = Right(index);
+        //        int root = index;
+
+        //        if (left < _size && _heapArray[left] < _heapArray[root])
+        //            root = left;
+        //        if (right < _size && _heapArray[right] < _heapArray[root])
+        //            root = right;
+
+        //        if (root != index) // did we change the index?
+        //        {
+        //            Swap(ref _heapArray[index], ref _heapArray[root]);
+        //            MinHeapify(root);// redo heapify starting from new root
+        //        }
+        //    }
+        //    public ListNode GetMergedList()
+        //    {
+        //        ListNode dummy = new(0);
+        //        ListNode current = dummy;
+
+        //        while (_size > 0)
+        //        {
+        //            int minVal = ExtractMin();
+
+        //            current.next = new ListNode(minVal);
+        //            current = current.next;
+        //        }
+
+        //        return dummy.next;
+        //    }
+        //}
 
         ///<summary>
         ///MinStone
@@ -5293,9 +5514,9 @@
         //            while (k != 0)
         //            {
         //                int maxPile = maxHeap.ExtractMax();
-        //    double newPile = Math.Ceiling((double)maxPile / 2);
-        //    minStones -= maxPile - (int) newPile;
-        //    maxHeap.Insert((int) newPile);
+        //                double newPile = Math.Ceiling((double)maxPile / 2);
+        //                minStones -= maxPile - (int) newPile;
+        //                maxHeap.Insert((int) newPile);
         //                k--;
         //            }
 
