@@ -4,26 +4,42 @@
     {
         public static void Main(string[] args)
         {
-            int[] evenlyDuplicateNumbers = new int[] { 2, 3, 5, 3, 4, 5, 2, 5, 3, 2 };
-
-            int result = 0;
-            foreach(int number in evenlyDuplicateNumbers)
-            {
-                result ^= number;
-            }
-            foreach (int number in evenlyDuplicateNumbers)
-            {
-                result ^= number;
-            }
-
-            Console.WriteLine(result);
         }
 
-        public bool IsPowerOfTwo(int n)
+        public List<List<int>> BuildAdjList(int[] nodes, Tuple<int, int>[] edges)
         {
-            int k = n - 1;
-            int res = n & k;
-            return res == 0;
+            List<List<int>> graph = new();
+
+            foreach (int node in nodes)
+                graph[node] = new();
+
+            foreach (Tuple<int, int> edge in edges)
+            {
+                graph[edge.Item1].Add(edge.Item2);
+                graph[edge.Item2].Add(edge.Item1);
+            }
+
+            return graph;
+        }
+
+        public int[,] BuildAdjMatrix(int[] nodes, Tuple<int, int>[] edges)
+        {
+            Dictionary<int, int> nodeToIndex = new();
+            for (int i = 0; i < nodes.Length; i++)
+                nodeToIndex[nodes[i]] = i;
+
+            int[,] graph = new int[nodes.Length, nodes.Length];
+
+            foreach (Tuple<int, int> edge in edges)
+            {
+                int i = nodeToIndex[edge.Item1];
+                int j = nodeToIndex[edge.Item2];
+
+                graph[i, j] = 1;
+                graph[j, i] = 1; //undirected graph
+            }
+
+            return graph;
         }
     }
 }

@@ -7168,6 +7168,282 @@
     //    private static double DistanceToOrigin(int[] p1) => Math.Sqrt(Math.Pow((p1[0] - _origin[0]), 2) + Math.Pow((p1[1] - _origin[1]), 2));
     //}
     #endregion
-    #endregion
-}
+        #region Graph
+        ///<summary>
+        ///DFS
+        /// </summary>
+        //public static void DfsRecursive(List<List<int>> graph, bool[] visited, int node, List<int> result)
+        //{
+        //    visited[node] = true;
+        //    result.Add(node);
+
+        //    foreach (int adj in graph[node])
+        //    {
+        //        if (!visited[adj])
+        //            DfsRecursive(graph, visited, adj, result);
+        //    }
+        //}
+
+        //public static List<int> DfsRecursive(List<List<int>> graph)
+        //{
+        //    bool[] visited = new bool[graph.Count];
+        //    List<int> result = new();
+        //    DfsRecursive(graph, visited, 0, result);
+        //    return result;
+        //}
+
+        //public static List<int> DfsIterative(List<List<int>> graph, int start)
+        //{
+        //    bool[] visited = new bool[graph.Count];
+        //    List<int> result = new();
+
+        //    Stack<int> stack = new();
+        //    stack.Push(start);
+
+        //    while (stack.Count > 0)
+        //    {
+        //        int root = stack.Pop();
+        //        if (visited[root]) continue;
+
+        //        result.Add(root);
+        //        visited[root] = true;
+
+        //        for (int i = graph[root].Count - 1; i >= 0; i--)
+        //        {
+        //            int child = graph[root][i];
+        //            if (!visited[child])
+        //                stack.Push(child);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        ///<summary>
+        ///BFS
+        ///</summary>
+        //public static List<int> BFS(List<List<int>> graph)
+        //{
+        //    int n = graph.Count;
+        //    bool[] visited = new bool[n];
+        //    List<int> result = new();
+
+        //    int start = 0;
+        //    Queue<int> queue = new();
+        //    visited[start] = true;
+        //    queue.Enqueue(start);
+
+        //    while (queue.Count > 0)
+        //    {
+        //        int currNode = queue.Dequeue();
+        //        result.Add(currNode);
+
+        //        foreach (int adj in graph[currNode])
+        //        {
+        //            if (!visited[adj])
+        //            {
+        //                visited[adj] = true;
+        //                queue.Enqueue(adj);
+        //            }
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        ///<summary>
+        ///Topological Sort w DFS
+        /// </summary>
+        //public static void FindTopoSort(int i, List<List<int>> graph, bool[] visited, Stack<int> stack)
+        //{
+        //    visited[i] = true;
+
+        //    foreach (int adj in graph[i])
+        //    {
+        //        if (!visited[adj])
+        //            FindTopoSort(adj, graph, visited, stack);
+        //    }
+
+        //    stack.Push(i);
+        //}
+
+        //public static List<int> TopologicalSort(List<List<int>> graph)
+        //{
+        //    int n = graph.Count;
+        //    bool[] visited = new bool[n];
+        //    Stack<int> stack = new();
+
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        if (!visited[i])
+        //            FindTopoSort(i, graph, visited, stack);
+        //    }
+
+        //    List<int> result = new();
+
+        //    while (stack.Count > 0)
+        //    {
+        //        result.Add(stack.Pop());
+        //    }
+
+        //    return result;
+        //}
+
+        ///<summary>
+        ///Topological Sort w BFS
+        ///</summary>
+        //public static List<int> TopologicalSort(List<List<int>> graph)
+        //{
+        //    int n = graph.Count;
+        //    int[] inDegree = new int[n];
+        //    List<int> result = new();
+        //    Queue<int> queue = new();
+
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        foreach (int adj in graph[i])
+        //            inDegree[adj]++;
+        //    }
+
+        //    for (int i = 0; i < n; i++)
+        //        if (inDegree[i] == 0)
+        //            queue.Enqueue(i);
+
+        //    while (queue.Count > 0)
+        //    {
+        //        int zeroDegreeNode = queue.Dequeue();
+        //        result.Add(zeroDegreeNode);
+        //        foreach (int adj in graph[zeroDegreeNode])
+        //        {
+        //            inDegree[adj]--;
+        //            if (inDegree[adj] == 0)
+        //                queue.Enqueue(adj);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        ///<summary>
+        ///Shortest Distance w BFS
+        /// </summary>
+        //public static void Main(string[] args)
+        //{
+        //    // no. of vertices
+        //    int V = 8;
+        //    // Source and Destination vertex
+        //    int S = 2, D = 6;
+        //    // Edge list
+        //    List<List<int>> edges = new List<List<int>>{
+        //        new List<int>{ 0, 1 }, new List<int>{ 1, 2 },
+        //        new List<int>{ 0, 3 }, new List<int>{ 3, 4 },
+        //        new List<int>{ 4, 7 }, new List<int>{ 3, 7 },
+        //        new List<int>{ 6, 7 }, new List<int>{ 4, 5 },
+        //        new List<int>{ 4, 6 }, new List<int>{ 5, 6 }
+        //    };
+
+        //    // List to store the graph as an adjacency list
+        //    List<List<int>> graph = Enumerable.Range(0, V)
+        //              .Select(_ => new List<int>())
+        //              .ToList();
+
+        //    foreach (List<int> edge in edges)
+        //    {
+        //        graph[edge[0]].Add(edge[1]);
+        //        graph[edge[1]].Add(edge[0]);
+        //    }
+
+        //    PrintShortestDistance(graph, S, D, V);
+        //}
+        //public static void PrintShortestDistance(List<List<int>> graph, int S, int D, int V)
+        //{
+        //    List<int> parent = Enumerable.Repeat(-1, V).ToList();
+        //    List<int> distance = Enumerable.Repeat(int.MaxValue, V).ToList();
+
+        //    BFS(graph, S, parent, distance);
+
+        //    if (distance[D] == int.MaxValue)
+        //    {
+        //        Console.WriteLine("No path exists");
+        //        return;
+        //    }
+
+        //    List<int> path = new();
+        //    int currNode = D;
+        //    path.Add(currNode);
+        //    while (parent[currNode] != -1)
+        //    {
+        //        currNode = parent[currNode];
+        //        path.Add(currNode);
+        //    }
+
+        //    for (int i = path.Count - 1; i >= 0; i--)
+        //        Console.Write(path[i] + " ");
+        //}
+
+        //public static void BFS(List<List<int>> graph, int S, List<int> parent, List<int> distance)
+        //{
+        //    Queue<int> queue = new Queue<int>();
+        //    queue.Enqueue(S);
+        //    distance[S] = 0;
+
+        //    while (queue.Count > 0)
+        //    {
+        //        int node = queue.Dequeue();
+        //        foreach (int adj in graph[node])
+        //        {
+        //            if (distance[adj] == int.MaxValue)
+        //            {
+        //                distance[adj] = distance[node] + 1;
+        //                parent[adj] = node;
+        //                queue.Enqueue(adj);
+        //            }
+        //        }
+        //    }
+        //}
+
+        ///<summary>
+        ///Build Adjacency List
+        /// </summary>
+        //public List<List<int>> BuildAdjList(int[] nodes, Tuple<int, int>[] edges)
+        //{
+        //    List<List<int>> graph = new();
+
+        //    foreach (int node in nodes)
+        //        graph[node] = new();
+
+        //    foreach (Tuple<int, int> edge in edges)
+        //    {
+        //        graph[edge.Item1].Add(edge.Item2);
+        //        graph[edge.Item2].Add(edge.Item1);
+        //    }
+
+        //    return graph;
+        //}
+
+        ///<summary>
+        ///Build Adjacency Matrix
+        /// </summary>
+        //public int[,] BuildAdjMatrix(int[] nodes, Tuple<int, int>[] edges)
+        //{
+        //    Dictionary<int, int> nodeToIndex = new();
+        //    for (int i = 0; i < nodes.Length; i++)
+        //        nodeToIndex[nodes[i]] = i;
+
+        //    int[,] graph = new int[nodes.Length, nodes.Length];
+
+        //    foreach (Tuple<int, int> edge in edges)
+        //    {
+        //        int i = nodeToIndex[edge.Item1];
+        //        int j = nodeToIndex[edge.Item2];
+
+        //        graph[i, j] = 1;
+        //        graph[j, i] = 1; //undirected graph
+        //    }
+
+        //    return graph;
+        //}
+        #endregion
+        #endregion
+    }
 }
