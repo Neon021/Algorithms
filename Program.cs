@@ -6,40 +6,42 @@
         {
         }
 
-        public List<List<int>> BuildAdjList(int[] nodes, Tuple<int, int>[] edges)
+        public class Solution
         {
-            List<List<int>> graph = new();
-
-            foreach (int node in nodes)
-                graph[node] = new();
-
-            foreach (Tuple<int, int> edge in edges)
+            public int CountComponents(int n, int[][] edges)
             {
-                graph[edge.Item1].Add(edge.Item2);
-                graph[edge.Item2].Add(edge.Item1);
+                int reult = 0;
+                int[] dsu = new int[n];
+                for (int i = 0; i < n; i++)
+                    dsu[i] = i;//Nodes are 0-indexed no need to add 1.
+
+                foreach (int[] edge in edges)
+                    Union(edge[0], edge[1]);
+
+                for (int i = 0; i < n; i++)
+                {
+                    int unionRoot = FindUnionRoot(i);
+                    //This means that thi node is the root of a component.
+                    //In other word, it didn't get unioned with any other node.
+                    if (i == unionRoot)
+                        reult++;
+                }
+
+                return reult;
+                int FindUnionRoot(int v)
+                {
+                    if (dsu[v] == v)
+                        return v;
+                    return dsu[v] = FindUnionRoot(dsu[v]);
+                }
+                void Union(int i, int j)
+                {
+                    int root1 = FindUnionRoot(i);
+                    int root2 = FindUnionRoot(j);
+                    if (root1 != root2)
+                        dsu[root1] = root2;
+                }
             }
-
-            return graph;
-        }
-
-        public int[,] BuildAdjMatrix(int[] nodes, Tuple<int, int>[] edges)
-        {
-            Dictionary<int, int> nodeToIndex = new();
-            for (int i = 0; i < nodes.Length; i++)
-                nodeToIndex[nodes[i]] = i;
-
-            int[,] graph = new int[nodes.Length, nodes.Length];
-
-            foreach (Tuple<int, int> edge in edges)
-            {
-                int i = nodeToIndex[edge.Item1];
-                int j = nodeToIndex[edge.Item2];
-
-                graph[i, j] = 1;
-                graph[j, i] = 1; //undirected graph
-            }
-
-            return graph;
         }
     }
 }
