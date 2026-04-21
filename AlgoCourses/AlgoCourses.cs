@@ -4353,172 +4353,42 @@
         //        Value = val;
         //    }
         //}
-        #endregion
-        #region Stack & Queue
+
         ///<summary>
-        ///MinStack
+        ///InsertGreatestCommonDivisors
         /// </summary>
-        //public class MinStack
+        //public static ListNode InsertGreatestCommonDivisors(ListNode head)
         //{
-        //    // Main Stack storage
-        //    private int[] _stack;
-        //    private int _capacity;
-        //    private int _length;
-
-        //    // Min value storage
-        //    private int[] _minStack;
-        //    private int _minStackCapacity;
-        //    private int _minStackLength;
-
-        //    public MinStack()
+        //    ListNode dummy = new(-1)
         //    {
-        //        _length = 0;
-        //        _capacity = 10;
-        //        _stack = new int[_capacity];
+        //        next = head
+        //    };
 
-        //        _minStackLength = 0;
-        //        _minStackCapacity = 10;
-        //        _minStack = new int[_minStackCapacity];
+        //    while (head != null && head.next != null)
+        //    {
+        //        int gdc = GCD(head.val, head.next.val);
+        //        ListNode newHead = head.next;
+        //        ListNode newNode = new ListNode(gdc);
+        //        head.next = newNode;
+        //        newNode.next = newHead;
+        //        head = newHead;
         //    }
 
-        //    public void Push(int val)
-        //    {
-        //        if (_length == _capacity)
-        //        {
-        //            _capacity *= 2;
-        //            int[] newStack = new int[_capacity];
-        //            for (int i = 0; i < _stack.Length; i++)
-        //            {
-        //                newStack[i] = _stack[i];
-        //            }
-        //            _stack = newStack;
-        //        }
-        //        _stack[_length] = val;
-        //        _length++;
-
-
-        //        //Only push to minStack if new value is <= current min
-        //        if (!(_minStackLength == 0 || val <= _minStack[_minStackLength - 1])) return;
-
-        //        if (_minStackLength == _minStackCapacity)
-        //        {
-        //            _minStackCapacity *= 2;
-        //            int[] newMinStack = new int[_minStackCapacity];
-        //            for (int i = 0; i < _minStack.Length; i++)
-        //            {
-        //                newMinStack[i] = _minStack[i];
-        //            }
-        //            _minStack = newMinStack;
-        //        }
-        //        _minStack[_minStackLength] = val;
-        //        _minStackLength++;
-        //    }
-
-        //    public void Pop()
-        //    {
-        //        if (_length <= 0) return;
-
-        //        int valBeingPopped = _stack[_length - 1];
-
-        //        // Only pop from minStack if the values match
-        //        if (_minStackLength > 0 && valBeingPopped == _minStack[_minStackLength - 1])
-        //            _minStackLength--;
-
-        //        //Always pop from mainStack
-        //        _length--;
-
-        //        //By only decreasing the _length we actually don't replace actual values in the array.
-        //        //However, they are now considered "out of bounds" and will be overwritten on the next Push.
-        //    }
-
-        //    public int Top()
-        //    {
-        //        if (_length > 0)
-        //            return _stack[_length - 1];
-
-        //        return -1;
-        //    }
-
-        //    public int GetMin()
-        //    {
-        //        if (_minStackLength > 0)
-        //            return _minStack[_minStackLength - 1];
-
-        //        return -1;
-        //    }
+        //    return dummy.next;
         //}
-
-        /// <summary>
-        /// CustomStack
-        /// </summary>
-        //public class CustomStack
+        //public static int GCD(int a, int b)
         //{
-        //    private int _length;
-        //    private readonly int[] _stack;
-        //    private readonly int _capacity;
-
-        //    public CustomStack(int maxSize)
+        //    while (b != 0)
         //    {
-        //        _length = 0;
-        //        _capacity = maxSize;
-        //        _stack = new int[_capacity];
-
+        //        int tmp = b;
+        //        b = a % b;
+        //        a = tmp;
         //    }
-
-        //    public void Push(int x)
-        //    {
-        //        if (_length == _capacity) return;
-
-        //        _stack[_length] = x;
-        //        _length++;
-        //    }
-
-        //    public int Pop()
-        //    {
-        //        if (_length == 0) return -1;
-
-        //        int poppedVal = _stack[_length - 1];
-        //        _length--;
-        //        return poppedVal;
-        //    }
-
-        //    public void Increment(int k, int val)
-        //    {
-        //        int incVal = k;
-        //        if (_length < k) incVal = _length;
-
-        //        for (int i = 0; i < incVal; i++)
-        //        {
-        //            _stack[i] += val;
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// PrevSmaller
-        /// </summary>
-        //public List<int> prevSmaller(List<int> A)
-        //{
-        //    List<int> result = new();
-
-        //    Stack<int> stack = new();
-        //    foreach (int a in A)
-        //    {
-        //        while (stack.Count > 0 && stack.Peek() >= a)
-        //            stack.Pop();
-
-        //        if (stack.Peek() < a)
-        //            result.Add(stack.Peek());
-        //        else
-        //            result.Add(-1);
-
-        //        stack.Push(a);
-        //    }
-        //    return result;
+        //    return a;
         //}
 
         ///<summary>
-        ///DeleteDuplicates
+        ///DeleteDuplicates I
         /// </summary>
         //public static ListNode? DeleteDuplicates(ListNode head)
         //{
@@ -4537,6 +4407,9 @@
         //    return head;
         //}
 
+        ///<summary>
+        ///DeleteDuplicates II
+        /// </summary>
         //public class Program
         //{
         //    public static void Main()
@@ -4693,6 +4566,9 @@
         //    }
         //}
 
+        ///<summary>
+        ///Intersection of Two Linked Lists
+        /// </summary>
         //public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
         //{
         //    if (headA == null || headB == null)
@@ -4711,1527 +4587,2861 @@
         //}
 
         ///<summary>
-        ///InsertGreatestCommonDivisors
+        ///LRU Cache
         /// </summary>
-        //public static ListNode InsertGreatestCommonDivisors(ListNode head)
+        //public class LRUCache
         //{
-        //    ListNode dummy = new(-1)
-        //    {
-        //        next = head
-        //    };
+        //    private readonly int _capacity;
+        //    private int _length;
 
-        //    while (head != null && head.next != null)
-        //    {
-        //        int gdc = GCD(head.val, head.next.val);
-        //        ListNode newHead = head.next;
-        //        ListNode newNode = new ListNode(gdc);
-        //        head.next = newNode;
-        //        newNode.next = newHead;
-        //        head = newHead;
-        //    }
+        //    private Dictionary<int, Node> _lookupTable;
+        //    private LinkedList _linkedList;
 
-        //    return dummy.next;
-        //}
-        //public static int GCD(int a, int b)
-        //{
-        //    while (b != 0)
-        //    {
-        //        int tmp = b;
-        //        b = a % b;
-        //        a = tmp;
-        //    }
-        //    return a;
-        //}
-
-        /// <summary>
-        /// StockSpanner
-        /// </summary>
-        //public static class Solution
-        //{
-        //    public class StockSpanner
-        //    {
-        //        private Stack<(int price, int count)> _stack;
-
-        //        public StockSpanner()
-        //        {
-        //            _stack = new();
-        //        }
-
-        //        public int Next(int price)
-        //        {
-        //            int count = 1;
-
-        //            while (_stack.Count > 0 && _stack.Peek().price <= price)
-        //            {
-        //                (int price, int count) prevDay = _stack.Pop();
-        //                count += prevDay.count;
-        //            }
-
-        //            _stack.Push((price, count));
-
-        //            return count;
-        //        }
-        //    }
-
-        //}
-
-        #endregion
-        #region Heap
-        public class ListNode
-        {
-            public int val;
-            public ListNode? next;
-            public ListNode(int val = 0, ListNode? next = null)
-            {
-                this.val = val;
-                this.next = next;
-            }
-        }
-
-        ///<summary>
-        ///Merge K Lists
-        ///</summary>
-        //public static ListNode MergeKLists(ListNode[] lists)
-        //{
-        //    MinHeap minHeap = new(lists.Length * 10);
-
-        //    for (int i = 0; i < lists.Length; i++)
-        //    {
-        //        ListNode? currNode = lists[i];
-        //        while (currNode != null)
-        //        {
-        //            minHeap.Insert(currNode.val);
-        //            currNode = currNode.next;
-        //        }
-        //    }
-
-        //    return minHeap.GetMergedList();
-        //}
-
-        ///<summary>
-        ///Find Kth Largest
-        /// </summary>
-        //public class Solution
-        //{
-        //    public int FindKthLargest(int[] nums, int k)
-        //    {
-        //        MinHeap heap = new(nums.Length);
-
-
-        //        for (int i = 0; i < nums.Length; i++)
-        //        {
-        //            heap.Insert(nums[i]);
-        //            if (heap.Count > k)
-        //                heap.ExtractMin();
-        //        }
-
-
-        //        return heap.ExtractMin();
-        //    }
-
-        //    public class MinHeap
-        //    {
-        //        private int[] _heapArray;
-        //        private int _capacity;
-        //        private int _size;
-
-        //        public MinHeap(int capacity)
-        //        {
-        //            _capacity = capacity;
-        //            _heapArray = new int[_capacity];
-        //            _size = 0;
-        //        }
-
-        //        public int Count { get => _size; }
-        //        public static int Parent(int index) => (index - 1) / 2;
-        //        public static int Left(int index) => index * 2 + 1;
-        //        public static int Right(int index) => index * 2 + 2;
-        //        public static void Swap<T>(ref T left, ref T right)
-        //        {
-        //            T temp = left;
-        //            left = right;
-        //            right = temp;
-        //        }
-
-        //        public bool Insert(int key)
-        //        {
-        //            if (_size == _capacity)
-        //            {
-        //                _capacity *= 2;
-        //                Array.Resize(ref _heapArray, _capacity);
-        //            }
-        //            int index = _size;
-        //            _heapArray[index] = key;
-        //            _size++;
-        //            while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
-        //            {
-        //                Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
-        //                index = Parent(index);
-        //            }
-
-        //            return true;
-        //        }
-        //        public int ExtractMin()
-        //        {
-        //            if (_size <= 0) return int.MaxValue;
-
-        //            if (_size == 1)
-        //            {
-        //                _size--;
-        //                return _heapArray[_size];
-        //            }
-
-        //            int min = _heapArray[0];
-        //            _heapArray[0] = _heapArray[_size - 1];
-        //            _size--;
-
-        //            MinHeapify(0);
-        //            return min;
-        //        }
-        //        public void MinHeapify(int index)
-        //        {
-        //            int left = Left(index);
-        //            int right = Right(index);
-        //            int root = index;
-
-        //            if (left < _size && _heapArray[left] < _heapArray[root])
-        //                root = left;
-        //            if (right < _size && _heapArray[right] < _heapArray[root])
-        //                root = right;
-
-        //            if (root != index) // did we change the index?
-        //            {
-        //                Swap(ref _heapArray[index], ref _heapArray[root]);
-        //                MinHeapify(root);// redo heapify starting from new root
-        //            }
-        //        }
-        //        public ListNode GetMergedList()
-        //        {
-        //            ListNode dummy = new(0);
-        //            ListNode current = dummy;
-
-        //            while (_size > 0)
-        //            {
-        //                int minVal = ExtractMin();
-
-        //                current.next = new ListNode(minVal);
-        //                current = current.next;
-        //            }
-
-        //            return dummy.next;
-        //        }
-        //    }
-
-        //}
-        //public class MinHeap
-        //{
-        //    private int[] _heapArray;
-        //    private int _capacity;
-        //    private int _size;
-
-        //    public MinHeap(int capacity)
+        //    public LRUCache(int capacity)
         //    {
         //        _capacity = capacity;
-        //        _heapArray = new int[_capacity];
-        //        _size = 0;
+        //        _lookupTable = new();
+        //        _linkedList = new(capacity);
         //    }
 
-        //    public static int Parent(int index) => (index - 1) / 2;
-        //    public static int Left(int index) => index * 2 + 1;
-        //    public static int Right(int index) => index * 2 + 2;
-        //    public static void Swap<T>(ref T left, ref T right)
+        //    public int Get(int key)
         //    {
-        //        T temp = left;
-        //        left = right;
-        //        right = temp;
-        //    }
-
-        //    public bool Insert(int key)
-        //    {
-        //        if (_size == _capacity)
+        //        if (_lookupTable.TryGetValue(key, out Node node))
         //        {
-        //            _capacity *= 2;
-        //            Array.Resize(ref _heapArray, _capacity);
+        //            _linkedList.GetToFront(node);
+        //            return node.value;
         //        }
-        //        int index = _size;
-        //        _heapArray[index] = key;
-        //        _size++;
-        //        while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
-        //        {
-        //            Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
-        //            index = Parent(index);
-        //        }
-
-        //        return true;
-        //    }
-        //    public int ExtractMin()
-        //    {
-        //        if (_size <= 0) return int.MaxValue;
-
-        //        if (_size == 1)
-        //        {
-        //            _size--;
-        //            return _heapArray[_size];
-        //        }
-
-        //        int min = _heapArray[0];
-        //        _heapArray[0] = _heapArray[_size - 1];
-        //        _size--;
-
-        //        MinHeapify(0);
-        //        return min;
-        //    }
-        //    public void MinHeapify(int index)
-        //    {
-        //        int left = Left(index);
-        //        int right = Right(index);
-        //        int root = index;
-
-        //        if (left < _size && _heapArray[left] < _heapArray[root])
-        //            root = left;
-        //        if (right < _size && _heapArray[right] < _heapArray[root])
-        //            root = right;
-
-        //        if (root != index) // did we change the index?
-        //        {
-        //            Swap(ref _heapArray[index], ref _heapArray[root]);
-        //            MinHeapify(root);// redo heapify starting from new root
-        //        }
-        //    }
-        //    public ListNode GetMergedList()
-        //    {
-        //        ListNode dummy = new(0);
-        //        ListNode current = dummy;
-
-        //        while (_size > 0)
-        //        {
-        //            int minVal = ExtractMin();
-
-        //            current.next = new ListNode(minVal);
-        //            current = current.next;
-        //        }
-
-        //        return dummy.next;
-        //    }
-        //}
-
-        ///<summary>
-        ///K Smallest Pairs
-        /// </summary>
-        //public class Program
-        //{
-        //    public static void Main()
-        //    {
-        //        int[] nums1 = new int[] { -15, 20, 45, 117, 223 };
-        //        int[] nums2 = new int[] { -15, 20, 45, 117, 223, 546, 663, 714, 749, 801 };
-
-        //        var res = Solution.KSmallestPairs(nums1, nums2, 10);
-
-        //        foreach (var list in res)
-        //        {
-        //            Console.WriteLine($"[{list[0]}, {list[1]}] (Sum: {list[0] + list[1]})");
-        //        }
-        //    }
-        //}
-
-        //public static class Solution
-        //{
-        //    public static IList<IList<int>> KSmallestPairs(int[] nums1, int[] nums2, int k)
-        //    {
-        //        //nums1 and nums2 are sorted in ascending order
-        //        //we need pair of (nums1i, nums2i) with the smallest sums
-        //        //For that, we need to store the result of their sum in our MinHeap
-        //        //But at the end we need to return the pairs not the results
-        //        //We can use a dictionary to have pairs as the value and the sum as the key
-        //        //After we iterate over all possible elements in num one and num two
-        //        //we put the results in the minHeap
-        //        //Then we can extractMin from the heap and use it to access our dictionary to get the related pair.
-
-        //        var result = new List<IList<int>>();
-        //        if (nums1.Length == 0 || nums2.Length == 0 || k == 0) return result;
-
-        //        MinHeap heap = new(nums1.Length);
-
-        //        // 1. Initialize Heap with the first column (i, 0)
-        //        // This treats every item in nums1 as the "head" of a potential sorted list
-        //        for (int i = 0; i < nums1.Length && i < k; i++)
-        //        {
-        //            // We store the Sum, plus the indices i and j
-        //            heap.Insert(nums1[i] + nums2[0], i, 0);
-        //        }
-
-        //        // 2. Extract min and push the neighbor
-        //        while (k > 0 && !heap.IsEmpty())
-        //        {
-        //            MinHeap.HeapNode minNode = heap.ExtractMin();
-
-        //            int i = minNode.Index1;
-        //            int j = minNode.Index2;
-
-        //            // Add to result
-        //            result.Add(new List<int> { nums1[i], nums2[j] });
-
-        //            // 3. Push the NEXT element from the same "row" (i, j+1)
-        //            // If there is a next number in nums2...
-        //            if (j + 1 < nums2.Length)
-        //            {
-        //                int nextSum = nums1[i] + nums2[j + 1];
-        //                heap.Insert(nextSum, i, j + 1);
-        //            }
-
-        //            k--;
-        //        }
-
-        //        return result;
-        //    }
-
-        //    public class MinHeap
-        //    {
-        //        public struct HeapNode
-        //        {
-        //            public int Sum;
-        //            public int Index1; // Index in nums1
-        //            public int Index2; // Index in nums2
-        //        }
-
-        //        private HeapNode[] _heap;
-        //        private int _size;
-        //        private int _capacity;
-
-        //        public MinHeap(int capacity)
-        //        {
-        //            _capacity = capacity;
-        //            _heap = new int[_capacity];
-        //        }
-
-        //        public bool IsEmpty() => _size == 0;
-
-        //        private int Parent(int index) => (index - 1) / 2;
-        //        private int Left(int index) => (index * 2) + 1;
-        //        private int Right(int index) => (index * 2) + 2;
-
-        //        private void Swap(int i, int j)
-        //        {
-        //            HeapNode temp = _heap[i];
-        //            _heap[i] = _heap[j];
-        //            _heap[j] = temp;
-        //        }
-
-        //        public void Insert(int sum, int index1, int index2)
-        //        {
-        //            if (_size == _capacity) return;
-
-        //            int index = _size;
-        //            _heap[index] = new HeapNode { Sum = sum, Index1 = index1, Index2 = index2 };
-        //            _size++;
-
-        //            // Bubble Up
-        //            while (index != 0 && _heap[index].Sum < _heap[Parent(index)].Sum)
-        //            {
-        //                Swap(index, Parent(index));
-        //                index = Parent(index);
-        //            }
-        //        }
-
-        //        public HeapNode ExtractMin()
-        //        {
-        //            // Assuming caller checks IsEmpty()
-        //            HeapNode min = _heap[0];
-
-        //            _heap[0] = _heap[_size - 1];
-        //            _size--;
-
-        //            if (_size > 0)
-        //            {
-        //                MinHeapify(0);
-        //            }
-
-        //            return min;
-        //        }
-
-        //        private void MinHeapify(int index)
-        //        {
-        //            int left = Left(index);
-        //            int right = Right(index);
-        //            int smallest = index;
-
-        //            if (left < _size && _heap[left].Sum < _heap[smallest].Sum)
-        //                smallest = left;
-
-        //            if (right < _size && _heap[right].Sum < _heap[smallest].Sum)
-        //                smallest = right;
-
-        //            if (smallest != index)
-        //            {
-        //                Swap(index, smallest);
-        //                MinHeapify(smallest);
-        //            }
-        //        }
-        //    }
-        //}
-        //public static int NthUglyNumber(int n)
-        //{
-        //    //we start the heap with the number 1. Because we are certain its an ugly number
-        //    MinHeap heap = new(n);
-        //    heap.Insert(1);
-
-        //    int uglyCount = 0;
-        //    long lastUgly = 0;
-
-        //    while (true)
-        //    {
-        //        //Next we extract the minimum from the heap
-        //        long currUgly = heap.ExtractMin();
-
-        //        //Check if its equal to the last ugly number
-        //        if (currUgly == lastUgly)
-        //            continue;
-
-        //        lastUgly = currUgly;
-        //        uglyCount++;
-
-        //        if (uglyCount == n)
-        //            return (int)currUgly;
-
-        //        //how to accomodate for previously calculated ugly number?
-        //        //use List instead of int[] in the heap and use Any?
-        //        //Something smarter
-        //        heap.Insert(currUgly * 2);
-        //        heap.Insert(currUgly * 3);
-        //        heap.Insert(currUgly * 5);
-        //    }
-        //}
-
-        //public class MinHeap
-        //{
-        //    private long[] _heap;
-        //    private int _size;
-        //    private int _capacity;
-
-        //    public MinHeap(int capacity)
-        //    {
-        //        _capacity = capacity;
-        //        _heap = new long[_capacity];
-        //    }
-
-        //    public bool IsEmpty() => _size == 0;
-        //    private int Parent(int index) => (index - 1) / 2;
-        //    private int Left(int index) => (index * 2) + 1;
-        //    private int Right(int index) => (index * 2) + 2;
-        //    private void Swap(int i, int j)
-        //    {
-        //        long temp = _heap[i];
-        //        _heap[i] = _heap[j];
-        //        _heap[j] = temp;
-        //    }
-
-        //    public void Insert(long value)
-        //    {
-        //        if (_size == _capacity) return;
-
-        //        int index = _size;
-        //        _heap[index] = value;
-        //        _size++;
-
-        //        while (index != 0 && _heap[index] < _heap[Parent(index)])
-        //        {
-        //            Swap(index, Parent(index));
-        //            index = Parent(index);
-        //        }
-        //    }
-
-        //    public long ExtractMin()
-        //    {
-        //        if (_size == 1)
-        //        {
-        //            _size--;
-        //            return _heap[_size];
-        //        }
-
-        //        long min = _heap[0];
-        //        _heap[0] = _heap[_size - 1];
-        //        _size--;
-
-        //        MinHeapify(0);
-        //        return min;
-        //    }
-
-        //    private void MinHeapify(int index)
-        //    {
-        //        int left = Left(index);
-        //        int right = Right(index);
-        //        int smallest = index;
-
-        //        if (left < _size && _heap[left] < _heap[smallest])
-        //            smallest = left;
-        //        if (right < _size && _heap[right] < _heap[smallest])
-        //            smallest = right;
-
-        //        if (smallest != index)//we found a new smallest!
-        //        {
-        //            Swap(smallest, index);
-        //            MinHeapify(smallest);
-        //        }
-        //    }
-        //}
-
-
-        ///<summary>
-        ///MinStone
-        ///</summary>
-        //        public int MinStoneSum(int[] piles, int k)
-        //        {
-        //            MaxHeap maxHeap = new MaxHeap(piles.Length);
-        //        int minStones = 0;
-
-        //            foreach (var item in piles)
-        //            {
-        //                minStones += item;
-        //                maxHeap.Insert(item);
-        //            }
-
-        //            while (k != 0)
-        //            {
-        //                int maxPile = maxHeap.ExtractMax();
-        //    double newPile = Math.Ceiling((double)maxPile / 2);
-        //    minStones -= maxPile - (int) newPile;
-        //    maxHeap.Insert((int) newPile);
-        //                k--;
-        //            }
-
-        //return minStones;
-        //        }
-        //        public class MaxHeap
-        //{
-        //    private int[] _heapArray;
-        //    private int _capacity;
-        //    private int _size;
-
-        //    public MaxHeap(int capacity)
-        //    {
-        //        _capacity = capacity;
-        //        _heapArray = new int[_capacity];
-        //        _size = 0;
-        //    }
-
-        //    public static int Parent(int index) => (index - 1) / 2;
-        //    public static int Left(int index) => index * 2 + 1;
-        //    public static int Right(int index) => index * 2 + 2;
-        //    public static void Swap<T>(ref T left, ref T right)
-        //    {
-        //        T temp = left;
-        //        left = right;
-        //        right = temp;
-        //    }
-
-        //    public bool Insert(int key)
-        //    {
-        //        if (_size == _capacity)
-        //        {
-        //            _capacity *= 2;
-        //            Array.Resize(ref _heapArray, _capacity);
-        //        }
-        //        int index = _size;
-        //        _heapArray[index] = key;
-        //        _size++;
-        //        while (index != 0 && _heapArray[index] > _heapArray[Parent(index)])
-        //        {
-        //            Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
-        //            index = Parent(index);
-        //        }
-
-        //        return true;
-        //    }
-        //    public int ExtractMax()
-        //    {
-        //        if (_size <= 0) return int.MinValue;
-
-        //        if (_size == 1)
-        //        {
-        //            _size--;
-        //            return _heapArray[_size];
-        //        }
-
-        //        int min = _heapArray[0];
-        //        _heapArray[0] = _heapArray[_size - 1];
-        //        _size--;
-
-        //        MaxHeapify(0);
-        //        return min;
-        //    }
-        //    public void MaxHeapify(int index)
-        //    {
-        //        int left = Left(index);
-        //        int right = Right(index);
-        //        int root = index;
-
-        //        if (left < _size && _heapArray[left] > _heapArray[root])
-        //            root = left;
-        //        if (right < _size && _heapArray[right] > _heapArray[root])
-        //            root = right;
-
-        //        if (root != index) // did we change the index?
-        //        {
-        //            Swap(ref _heapArray[index], ref _heapArray[root]);
-        //            MaxHeapify(root);// redo heapify starting from new root
-        //        }
-        //    }
-        //}
-
-        ///<summary>
-        ///Furthest Building
-        /// </summary>
-        //public static class Solution
-        //{
-        //    public static int FurthestBuilding(int[] heights, int bricks, int ladders)
-        //    {
-        //        PriorityQueue<int, int> minHeap = new();
-
-        //        for (int i = 0; i < heights.Length - 1; i++)
-        //        {
-        //            int jmp = heights[i + 1] - heights[i];
-
-        //            if (jmp <= 0)
-        //                continue;
-
-        //            minHeap.Enqueue(jmp, jmp); //we jumped using ladders and insert it into the heap
-
-        //            if (minHeap.Count > ladders) //if we suprassed the ladders we change the smallest amount of ladder jump with brick jump
-        //            {
-        //                int smallestJmp = minHeap.Dequeue();
-        //                bricks -= smallestJmp;
-        //            }
-
-        //            if (bricks < 0) return i; //If bricks is negative we can't jump ahead, return current index
-        //        }
-
-        //        return heights.Length - 1; //We jumped till the end!!
-
-
-        //        ///<summary>
-        //        ///This whole solution is wrong at its heart because it doesn't allow us to later swap ladders and bricks if a smaller jump appears
-        //        ///</summary>
-        //        for (int i = 0; i < heights.Length; i++)
-        //        {
-        //            if (i == heights.Length - 1)
-        //                return i;
-
-        //            if (heights[i] >= heights[i + 1])
-        //                continue;
-
-        //            if (bricks != 0 && heights[i + 1] - heights[i] <= Math.Ceiling((decimal)bricks / 2))
-        //                bricks -= heights[i + 1] - heights[i];
-        //            else if (ladders != 0)
-        //                ladders--;
-        //            else if (ladders == 0 && heights[i + 1] - heights[i] <= bricks)
-        //                bricks -= heights[i + 1] - heights[i];
-        //            else
-        //                return i;
-        //        }
-
-        //        return -1;
-
-        //        // //          Input: heights = [4, 2, 7, 6, 9, 14, 12], bricks = 5, ladders = 1
-        //        // //          Output: 4
-        //        // //          Explanation: Starting at building 0, you can follow these steps:
-        //        // //            -Go to building 1 without using ladders nor bricks since 4 >= 2.
-        //        // //            - Go to building 2 using 5 bricks.You must use either bricks or ladders because 2 < 7.
-        //        // //            - Go to building 3 without using ladders nor bricks since 7 >= 6.
-        //        // //            - Go to building 4 using your only ladder.You must use either bricks or ladders because 6 < 9.
-        //        // //            It is impossible to go beyond building 4 because you do not have any more bricks or ladders.
-
-
-        //        // [4, 2, 7, 6, 9, 14, 12]
-        //        // [2, 7, 6, 9, 14, 12]
-        //        // [7, 6, 9, 14, 12] //bricks = 5, ladder = 0
-        //        // [6, 9, 14, 12] //bricks = 5, ladder = 0
-        //        // [9, 14, 12] //bricks = 2, ladder = 0
-
-
-        //        // //heights = [4, 12, 2, 7, 3, 18, 20, 3, 19], bricks = 10, ladders = 2
-        //        // [4, 12, 2, 7, 3, 18, 20, 3, 19] //12 - 4 = 8 and 10 / 2 < 8 use ladder
-        //        // [12, 2, 7, 3, 18, 20, 3, 19] //bricks = 10, ladders = 1
-        //        // [2, 7, 3, 18, 20, 3, 19] //7 - 2 = 5 and 5 <= 10 / 2 use bricks
-        //        // [7, 3, 18, 20, 3, 19] //bricks = 5, ladders = 1
-        //        // [3, 18, 20, 3, 19] //18 - 3 = 15 and 15 / 2 < 15 use ladder
-        //        // [18, 20, 3, 19] //bricks = 5, ladders = 0
-        //        // [20, 3, 19] //bricks = 3, ladders = 0
-        //        // [3, 19] //bricks = 3, ladders = 0
-
-
-        //        ////heights = [14,3,19,3], bricks = 17, ladders = 0
-        //        //[14,3,19,3] // bricks = 17 ladders = 0
-        //        //[3,19,3] // İF (ladders == 0 || 19 - 3 = 16 <= 17 / 2)
-        //        //[19,3] // bricks = 1
-        //        //[3] // bricks = 1
-        //    }
-        //}
-        #endregion
-        #region Sort
-        /// <summary>
-        /// Bubble sort
-        /// </summary>
-        //public static class Solution
-        //{
-        //    public static int[] BubbleSort(int[] nums)
-        //    {
-        //        for (int i = 0; i < nums.Length; i++)
-        //        {
-        //            for (int j = 0; j < nums.Length - 1 - i; j++)
-        //            {
-        //                if (nums[j] > nums[j + 1])
-        //                    (nums[j], nums[j + 1]) = (nums[j + 1], nums[j]);
-        //            }
-        //        }
-
-        //        return nums;
-        //    }
-        //}
-
-        /// <summary>
-        /// Optimized bubble sort
-        /// </summary>
-        //public static class Solution
-        //{
-        //    public static int[] BubbleSort(int[] nums)
-        //    {
-        //        for (int i = 0; i < nums.Length; i++)
-        //        {
-        //            bool swapped = false;
-        //            for (int j = 0; j < nums.Length - 1 - i; j++)
-        //            {
-        //                if (nums[j] > nums[j + 1])
-        //                {
-        //                    (nums[j], nums[j + 1]) = (nums[j + 1], nums[j]);
-        //                    swapped = true;
-        //                }
-        //            }
-
-        //            if (!swapped)
-        //                break;
-        //        }
-
-        //        return nums;
-        //    }
-        //}
-
-        ///<summary
-        ///Selection sort
-        ///</summary>
-        //public static class Solution
-        //{
-        //    public static int[] SelectionSort(int[] nums)
-        //    {
-        //        for (int i = 0; i < nums.Length - 1; i++)
-        //        {
-        //            int minIdx = i;
-        //            for (int j = i + 1; j < nums.Length; j++)
-        //            {
-        //                if (nums[j] < nums[minIdx])
-        //                    minIdx = j;
-        //            }
-
-        //            if (minIdx != i)
-        //            {
-        //                int tmp = nums[i];
-        //                nums[i] = nums[minIdx];
-        //                nums[minIdx] = tmp;
-        //            }
-        //        }
-
-        //        return nums;
-        //    }
-        //}
-
-
-
-        ///<summary
-        ///InsertionSort
-        ///</summary>
-        //public static int[] InsertionSort(int[] nums)
-        //{
-        //    for (int i = 1; i < nums.Length; i++)
-        //    {
-        //        int j = i;
-        //        while (j > 0 && nums[j] < nums[j - 1])
-        //        {
-        //            int tmp = nums[j];
-        //            nums[j] = nums[j - 1];
-        //            nums[j - 1] = tmp;
-
-        //            j -= 1;
-        //        }
-        //    }
-        //    return nums;
-        //}
-
-        ///<summary
-        ///InsertionSortList with duplicate array
-        ///</summary>
-        //public static class Solution
-        //{
-        //    public class ListNode
-        //    {
-        //        public int val;
-        //        public ListNode next;
-        //        public ListNode(int val = 0, ListNode next = null)
-        //        {
-        //            this.val = val;
-        //            this.next = next;
-        //        }
-        //    }
-        //    public static ListNode InsertionSortList(ListNode head)
-        //    {
-        //        List<int> list = new();
-        //        while (head != null)
-        //        {
-        //            list.Add(head.val);
-        //            head = head.next;
-        //        }
-
-        //        for (int i = 1; i < list.Count; i++)
-        //        {
-        //            int j = i;
-        //            while (0 < j && list[j] < list[j - 1])
-        //            {
-        //                (list[j], list[j - 1]) = (list[j - 1], list[j]);
-        //                j--;
-        //            }
-        //        }
-
-        //        ListNode head2 = new();
-        //        ListNode dummy = new();
-        //        dummy.next = head2;
-        //        for (int i = 0; i < list.Count; i++)
-        //        {
-        //            head2 ??= new();
-        //            head2.val = list[i];
-        //            if (i != list.Count - 1)
-        //                head2.next = new();
-        //            head2 = head2.next;
-        //        }
-
-        //        return dummy.next;
-        //    }
-
-        ///<summary
-        ///InsertionSortList with the optimal solution
-        ///</summary>
-        //public static class Solution
-        //{
-        //    public class ListNode
-        //    {
-        //        public int val;
-        //        public ListNode next;
-        //        public ListNode(int val = 0, ListNode next = null)
-        //        {
-        //            this.val = val;
-        //            this.next = next;
-        //        }
-        //    }
-        //    public static ListNode InsertionSortList(ListNode head)
-        //    {
-        //        ListNode dummy = new(0);
-        //        ListNode prev = dummy;
-        //        while (head != null)
-        //        {
-        //            ListNode next = head.next;
-        //            if (prev.val >= head.val)
-        //            {
-        //                prev = dummy;
-        //            }
-        //            while (prev.next != null && prev.next.val < head.val)
-        //            {
-        //                prev = prev.next;
-        //            }
-        //            head.next = prev.next;
-        //            prev.next = head;
-        //            head = next;
-        //        }
-        //        return dummy.next;
-        //    }
-        //}
-
-        ///<summary>
-        ///MergeSort
-        ///</summary>
-        //public static class Solution
-        //{
-        //    public static int[] MergeSort(int[] nums)
-        //    {
-        //        if (nums.Length == 1)
-        //            return nums;
-
-        //        int mid = nums.Length / 2;
-        //        int[] left = nums[0..mid];
-        //        int[] right = nums[mid..nums.Length];
-
-        //        left = MergeSort(left);
-        //        right = MergeSort(right);
-
-        //        return Merge(left, right);
-        //    }
-
-        //    private static int[] Merge(int[] a, int[] b)
-        //    {
-        //        int[] c = new int[a.Length + b.Length];
-        //        int firstIdx = 0;
-        //        while (a.Length != 0 && b.Length != 0)
-        //        {
-        //            if (a[0] > b[0])
-        //            {
-        //                c[firstIdx] = b[0];
-        //                b = b[1..];
-        //            }
-        //            else
-        //            {
-        //                c[firstIdx] = a[0];
-        //                a = a[1..];
-        //            }
-        //            firstIdx++;
-        //        }
-
-        //        while (a.Length != 0)
-        //        {
-        //            c[firstIdx] = a[0];
-        //            a = a[1..];
-        //            firstIdx++;
-        //        }
-        //        while (b.Length != 0)
-        //        {
-        //            c[firstIdx] = b[0];
-        //            b = b[1..];
-        //            firstIdx++;
-        //        }
-
-        //        return c;
-        //    }
-        //}
-
-
-        /// <summary>
-        /// SortArray using heap sort
-        /// </summary>
-        //public static class Solution
-        //{
-        //    public static int[] SortArray(int[] nums)
-        //    {
-        //        MinHeap heap = new(nums.Length);
-        //        foreach (int num in nums)
-        //        {
-        //            heap.Insert(num);
-        //        }
-
-        //        int index = 0;
-        //        while (!heap.IsEmpty() && index < nums.Length)
-        //        {
-        //            int minVal = heap.ExtractMin();
-        //            nums[index] = minVal;
-        //            index++;
-        //        }
-
-        //        return nums;
-        //    }
-
-        //    public class MinHeap
-        //    {
-        //        private int _size;
-        //        private int[] _heap;
-        //        private int _capacity;
-
-        //        public MinHeap(int capacity)
-        //        {
-        //            _capacity = capacity;
-        //            _heap = new int[_capacity];
-        //        }
-
-        //        public bool IsEmpty() => _size == 0;
-        //        private static int Left(int index) => (index * 2) + 1;
-        //        private static int Right(int index) => (index * 2) + 2;
-        //        private static int Parent(int index) => (index - 1) / 2;
-        //        private static void Swap(ref int l, ref int r)
-        //        {
-        //            int tmp = l;
-        //            l = r;
-        //            r = tmp;
-        //        }
-
-        //        public void Insert(int value)
-        //        {
-        //            if (_size == _capacity)
-        //            {
-        //                _capacity *= 2;
-        //                Array.Resize(ref _heap, _capacity);
-        //            }
-
-        //            int index = _size;
-        //            _heap[index] = value;
-        //            _size++;
-
-        //            while (index != 0 && _heap[index] < _heap[Parent(index)])
-        //            {
-        //                Swap(ref _heap[index], ref _heap[Parent(index)]);
-        //                index = Parent(index);
-        //            }
-        //        }
-
-        //        public int ExtractMin()
-        //        {
-        //            if (_size <= 0) return int.MaxValue;
-
-        //            if (_size == 1)
-        //            {
-        //                _size--;
-        //                return _heap[_size];
-        //            }
-
-        //            int minVal = _heap[0];
-        //            _heap[0] = _heap[_size - 1];
-        //            _size--;
-
-        //            MinHeapify(0);
-
-        //            return minVal;
-        //        }
-
-        //        public void MinHeapify(int index)
-        //        {
-        //            int left = Left(index);
-        //            int right = Right(index);
-        //            int root = index;
-
-        //            if (left < _size && _heap[left] < _heap[root])
-        //                root = left;
-        //            if (right < _size && _heap[right] < _heap[root])
-        //                root = right;
-
-        //            if (root != index)
-        //            {
-        //                Swap(ref _heap[root], ref _heap[index]);
-        //                MinHeapify(root);
-        //            }
-        //        }
-        //    }
-        //}
-
-        ///<summary>
-        ///QuickSort explanation of both Partition functions
-        ///</summary>
-        //public static int[] QuickSort(int[] nums, int low, int high)
-        //{
-        //    if (low < high)
-        //    {
-        //        int pivot = HoarePartition(nums, low, high);
-        //        QuickSort(nums, low, pivot - 1); //Exclude pivot as its already in the correct position
-        //        QuickSort(nums, pivot + 1, high);
-        //    }
-
-        //    return nums;
-        //}
-
-        ///// <summary>
-        ///// Hoare Partition Scheme
-        ///// </summary>
-        //private static int HoarePartition(int[] nums, int low, int high)
-        //{
-        //    int pivot = nums[low];
-        //    int i = low, j = high;
-
-        //    while (i < j)
-        //    {
-        //        while (nums[j] > pivot && j > low)
-        //            j--;
-
-        //        while (nums[i] <= pivot && i < high)
-        //            i++;
-
-
-        //        if (i < j)
-        //            (nums[i], nums[j]) = (nums[j], nums[i]);
-        //    }
-
-        //    //swap pivot with the element at j which will put pivot in the center of the nums
-        //    (nums[low], nums[j]) = (nums[j], nums[low]);
-
-        //    //return the partition position
-        //    return j;
-        //}
-
-        ///// <summary>
-        ///// Lomuto Partition Scheme
-        ///// </summary>
-        //private static int LomutoPartition(int[] nums, int low, int high)
-        //{
-        //    int pivot = nums[low];
-        //    int leftWall = low;
-
-        //    [1, 5, 2, 7, 10/*pivot*/, 11, 9, 13]
-        //    [1, 5, 2, 7, 9 , 11/*left_wall*/, 10/*pivot*/, 13]
-
-        //    for (int i = low + 1; i < high; i++)
-        //    {
-        //        if (nums[i] < pivot)
-        //        {
-        //            (nums[i], nums[leftWall]) = (nums[leftWall], nums[i]);
-        //            leftWall++;
-        //        }
-        //    }
-
-        //    int newPivotIdx = Array.IndexOf(nums, pivot);
-        //    (nums[newPivotIdx], nums[leftWall]) = (nums[leftWall], nums[newPivotIdx]);
-        //    [1, 5, 2, 7, 9, 10/*pivot*/, 11/*left_wall*/, 13]
-
-
-        //    return leftWall;
-        //}
-
-
-        ///<summary>
-        ///Counting Sort
-        /// </summary>
-        //public static int[] CountingSort(int[] nums)
-        //{
-        //    Dictionary<int, int> freqMap = new();
-        //    foreach (int key in nums)
-        //    {
-        //        if (freqMap.ContainsKey(key))
-        //            freqMap[key]++;
         //        else
-        //            freqMap.Add(key, 1);
+        //            return -1;
         //    }
 
-        //    List<int> sortedKeys = freqMap.Keys.OrderBy(k => k).ToList();
-        //    int currSum = 0;
-        //    foreach (var key in sortedKeys)
+        //    public void Put(int key, int value)
         //    {
-        //        currSum += freqMap[key];
-        //        freqMap[key] = currSum;
+        //        if (_lookupTable.TryGetValue(key, out Node node))
+        //        {
+        //            _linkedList.GetToFront(node);
+        //            node.value = value;
+        //        }
+        //        else
+        //        {
+        //            if (_length + 1 > _capacity)
+        //            {
+        //                int tailKey = _linkedList.GetTailKey();
+        //                _lookupTable.Remove(tailKey);
+        //            }
+
+        //            Node newNode = new(key, value);
+        //            _linkedList.InsertFront(newNode);
+        //            _lookupTable[key] = newNode;
+        //            _length++;
+        //        }
         //    }
 
-
-        //    int[] res = new int[nums.Length];
-        //    for (int i = nums.Length - 1; i >= 0; i--)
+        //    public class Node
         //    {
-        //        int val = nums[i];
-        //        int pos = freqMap[val] - 1;
-        //        res[pos] = val;
-        //        freqMap[val]--;
+        //        public int key;
+        //        public int value;
+        //        public Node next;
+        //        public Node prev;
+
+        //        public Node(int key, int value)
+        //        {
+        //            this.key = key;
+        //            this.value = value;
+        //        }
         //    }
 
-        //    return res;
+        //    public class LinkedList
+        //    {
+        //        public Node _head;
+        //        public Node _tail;
+        //        private int _length;
+        //        private int _capacity;
+        //        public LinkedList(int capacity)
+        //        {
+        //            _capacity = capacity;
+        //        }
+
+        //        public void InsertFront(Node node)
+        //        {
+        //            if (_head == null)
+        //            {
+        //                _head = node;
+        //                _tail = node;
+        //            }
+        //            else
+        //            {
+        //                _head.next = node;
+        //                node.prev = _head;
+        //                _head = node;
+        //            }
+
+        //            if (_length + 1 > _capacity)
+        //                RemoveTail();
+        //            _length++;
+        //        }
+
+        //        public void GetToFront(Node node)
+        //        {
+        //            if (_head == node) return;
+        //            else if (_tail == node)//If its the tail, move the tail forward
+        //            {
+        //                _tail.next.prev = null;
+        //                _tail = _tail.next;
+        //            }
+        //            else //If its a node in the middle, rewire its neighbours
+        //            {
+        //                node.next.prev = node.prev;
+        //                node.prev.next = node.next;
+        //            }
+
+        //            //Move the node to the head
+        //            node.prev = _head;
+        //            _head.next = node;
+        //            node.next = null;
+        //            _head = node;
+        //        }
+
+        //        public void RemoveTail()
+        //        {
+        //            _tail.next.prev = null;
+        //            _tail = _tail.next;
+        //            _length--;
+        //        }
+        //        public int GetTailKey() => _tail.key;
+        //    }
         //}
 
         ///<summary>
-        ///RelativeSortArray
+        ///LFU Cache
         /// </summary>
-        //public static int[] RelativeSortArray(int[] arr1, int[] arr2)
+        //    namespace Main
+    //{
+    //    public class Program
+    //    {
+    //        public static void Main(string[] args)
+    //        {
+    //            //["LFUCache","put","put","get","put","get","get","put","get","get","get"]
+    //            //[[2],[1,1],[2,2],[1],[3,3],[2],[3],[4,4],[1],[3],[4]]
+    //            LFUCache lfuCache = new(2);
+    //            lfuCache.Put(1, 1);
+    //            lfuCache.Put(2, 2);
+    //            Console.WriteLine(lfuCache.Get(1)); // returns 1
+    //            lfuCache.Put(3, 3); // evicts key 2
+    //            Console.WriteLine(lfuCache.Get(2)); // returns -1 (not found)
+    //            Console.WriteLine(lfuCache.Get(3)); // returns 3.
+    //            lfuCache.Put(4, 4); // evicts key 1.
+    //            Console.WriteLine(lfuCache.Get(1)); // returns -1 (not found)
+    //            Console.WriteLine(lfuCache.Get(3)); // returns 3 (found)
+    //            Console.WriteLine(lfuCache.Get(4)); // returns 4 (found)
+    //        }
+
+    //        public class LFUCache
+    //        {
+    //            private readonly int _capacity;
+    //            private int _length;
+
+    //            Dictionary<int, Bucket> _bucketList;
+    //            public Bucket _dummyTail;
+    //            public Bucket _dummyHead;
+    //            public LFUCache(int capacity)
+    //            {
+    //                _capacity = capacity;
+    //                _bucketList = new();
+    //                _dummyTail = new Bucket(int.MaxValue, 0);
+    //                _dummyHead = new Bucket(0, 0);
+    //                _dummyTail.prev = _dummyHead;
+    //                _dummyHead.next = _dummyTail;
+    //            }
+
+    //            public int Get(int key)
+    //            {
+    //                if (_bucketList.TryGetValue(key, out Bucket existingBucket))
+    //                {
+    //                    //Move the key to the next bucket
+    //                    int value = existingBucket.lruCache.Get(key);
+    //                    existingBucket.lruCache.RemoveKey(key);
+
+    //                    int newFrequency = existingBucket.frequency + 1;
+    //                    Bucket nextBucket = existingBucket.next;
+    //                    if (nextBucket.frequency != newFrequency)
+    //                        nextBucket = InsertBucketAfter(existingBucket, newFrequency);
+
+    //                    nextBucket.lruCache.Put(key, value);
+    //                    _bucketList[key] = nextBucket;
+
+    //                    RemoveBucketIfEmpty(existingBucket);
+
+    //                    return value;
+    //                }
+    //                return -1;
+    //            }
+    //            public void Put(int key, int value)
+    //            {
+    //                if (_capacity == 0) return;
+
+    //                if (_bucketList.TryGetValue(key, out Bucket existingBucket))
+    //                {
+    //                    // 1. Update existing key and move to next bucket
+    //                    existingBucket.lruCache.RemoveKey(key);
+
+    //                    int newFrequency = existingBucket.frequency + 1;
+    //                    Bucket nextBucket = existingBucket.next;
+    //                    if (nextBucket.frequency != newFrequency)
+    //                        nextBucket = InsertBucketAfter(existingBucket, newFrequency);
+
+    //                    nextBucket.lruCache.Put(key, value);
+    //                    _bucketList[key] = nextBucket;
+
+    //                    RemoveBucketIfEmpty(existingBucket);
+    //                }
+    //                else
+    //                {
+    //                    if (_length + 1 > _capacity)
+    //                    {
+    //                        //If the cache is full, remove the least frequently used key
+    //                        Bucket leastFreqBucket = _dummyHead.next;
+    //                        int keyToRemove = leastFreqBucket.lruCache.GetTailKey();
+
+    //                        leastFreqBucket.lruCache.RemoveKey(keyToRemove);
+    //                        _bucketList.Remove(keyToRemove);
+    //                        _length--;
+
+    //                        RemoveBucketIfEmpty(leastFreqBucket);
+    //                    }
+
+    //                    // 3. Now safely insert the new key
+    //                    Bucket firstBucket = _dummyHead.next;
+    //                    if (firstBucket.frequency != 1)
+    //                        firstBucket = InsertBucketAfter(_dummyHead, 1);
+
+    //                    firstBucket.lruCache.Put(key, value);
+    //                    _bucketList[key] = firstBucket;
+    //                    _length++;
+    //                }
+    //            }
+    //            public Bucket InsertBucketAfter(Bucket existingBucket, int frequency)
+    //            {
+    //                Bucket newBucket = new(frequency, _capacity);
+    //                newBucket.next = existingBucket.next;
+    //                newBucket.prev = existingBucket;
+
+    //                existingBucket.next.prev = newBucket;
+    //                existingBucket.next = newBucket;
+
+    //                return newBucket;
+    //            }
+
+    //            private void RemoveBucketIfEmpty(Bucket bucket)
+    //            {
+    //                if (bucket.lruCache.Length == 0) //If the bucket is empty
+    //                {
+    //                    //If the bucket is empty, remove it from the list
+    //                    bucket.prev.next = bucket.next;
+    //                    bucket.next.prev = bucket.prev;
+    //                }
+    //            }
+    //            public class Bucket
+    //            {
+    //                public int frequency;
+    //                public LRUCache lruCache;
+    //                public Bucket next;
+    //                public Bucket prev;
+    //                public Bucket(int freq, int capacity)
+    //                {
+    //                    frequency = freq;
+    //                    lruCache = new LRUCache();
+    //                }
+    //            }
+    //            public class LRUCache
+    //            {
+    //                private int _length;
+    //                public int Length { get => _length; }
+    //                private Dictionary<int, Node> _lookupTable;
+    //                private LinkedList _linkedList;
+
+    //                public LRUCache()
+    //                {
+    //                    _lookupTable = new();
+    //                    _linkedList = new();
+    //                }
+
+    //                public int Get(int key)
+    //                {
+    //                    if (_lookupTable.TryGetValue(key, out Node node))
+    //                    {
+    //                        _linkedList.GetToFront(node);
+    //                        return node.value;
+    //                    }
+    //                    else
+    //                        return -1;
+    //                }
+
+    //                public void Put(int key, int value)
+    //                {
+    //                    if (_lookupTable.TryGetValue(key, out Node node))
+    //                    {
+    //                        _linkedList.GetToFront(node);
+    //                        node.value = value;
+    //                    }
+    //                    else
+    //                    {
+    //                        Node newNode = new(key, value);
+    //                        _linkedList.InsertFront(newNode);
+    //                        _lookupTable[key] = newNode;
+    //                        _length++;
+    //                    }
+    //                }
+
+    //                public void RemoveKey(int key)
+    //                {
+    //                    if (_lookupTable.TryGetValue(key, out Node node))
+    //                    {
+    //                        _linkedList.RemoveNode(node);
+    //                        _lookupTable.Remove(key);
+    //                        _length--;
+    //                    }
+    //                }
+
+    //                public int GetTailKey() => _linkedList.GetTailKey();
+    //                public class Node
+    //                {
+    //                    public int key;
+    //                    public int value;
+    //                    public Node next;
+    //                    public Node prev;
+
+    //                    public Node(int key, int value)
+    //                    {
+    //                        this.key = key;
+    //                        this.value = value;
+    //                    }
+    //                }
+
+    //                public class LinkedList
+    //                {
+    //                    public Node _head;
+    //                    public Node _tail;
+    //                    public LinkedList()
+    //                    {
+    //                    }
+
+    //                    public void InsertFront(Node node)
+    //                    {
+    //                        if (_head == null)
+    //                        {
+    //                            _head = node;
+    //                            _tail = node;
+    //                        }
+    //                        else
+    //                        {
+    //                            _head.next = node;
+    //                            node.prev = _head;
+    //                            _head = node;
+    //                        }
+    //                    }
+
+    //                    public void GetToFront(Node node)
+    //                    {
+    //                        if (_head == node) return;
+    //                        else if (_tail == node)//If its the tail, move the tail forward
+    //                        {
+    //                            _tail.next.prev = null;
+    //                            _tail = _tail.next;
+    //                        }
+    //                        else //If its a node in the middle, rewire its neighbours
+    //                        {
+    //                            node.next.prev = node.prev;
+    //                            node.prev.next = node.next;
+    //                        }
+
+    //                        //Move the node to the head
+    //                        node.prev = _head;
+    //                        _head.next = node;
+    //                        node.next = null;
+    //                        _head = node;
+    //                    }
+
+    //                    public void RemoveNode(Node node)
+    //                    {
+    //                        if (node == _head && node == _tail)
+    //                        {
+    //                            _head = null;
+    //                            _tail = null;
+    //                        }
+    //                        else if (node == _head)
+    //                        {
+    //                            node.prev.next = null;
+    //                            _head = node.prev;
+    //                        }
+    //                        else if (node == _tail)
+    //                        {
+    //                            node.next.prev = null;
+    //                            _tail = node.next;
+    //                        }
+    //                        else
+    //                        {
+    //                            node.prev.next = node.next;
+    //                            node.next.prev = node.prev;
+    //                        }
+    //                    }
+    //                    public void RemoveTail()
+    //                    {
+    //                        if (_head == _tail)
+    //                        {
+    //                            _head = null;
+    //                            _tail = null;
+    //                            return;
+    //                        }
+    //                        _tail.next.prev = null;
+    //                        _tail = _tail.next;
+    //                    }
+    //                    public int GetTailKey() => _tail.key;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
+        ///<summary>
+        ///All O(1) Data Structure
+        /// </summary>
+        //    namespace Main
+    //{
+    //    public class Program
+    //    {
+    //        public static void Main()
+    //        {
+    //            //["AllOne","inc","inc","inc","inc","getMaxKey","inc","inc","inc","dec","inc","inc","inc","getMaxKey"]
+    //            //[[],["hello"],["goodbye"],["hello"],["hello"],[],["leet"],["code"],["leet"],["hello"],["leet"],["code"],["code"],[]]
+    //            AllOne allOne = new();
+    //            allOne.Inc("hello");
+    //            allOne.Inc("goodbye");
+    //            allOne.Inc("hello");
+    //            allOne.Inc("hello");
+    //            Console.WriteLine(allOne.GetMaxKey());
+    //            allOne.Inc("leet");
+    //            allOne.Inc("code");
+    //            allOne.Inc("leet");
+    //            allOne.Dec("hello");
+    //            allOne.Inc("leet");
+    //            allOne.Inc("code");
+    //            allOne.Inc("code");
+    //            Console.WriteLine(allOne.GetMaxKey());
+    //        }
+    //    }
+    //    public class AllOne
+    //    {
+    //        private Dictionary<string, Bucket> _lookupTable;
+    //        private Bucket _head; //dummy head
+    //        private Bucket _tail; //dummy tail
+    //        public AllOne()
+    //        {
+    //            _lookupTable = new();
+    //            _head = new Bucket(0);
+    //            _tail = new Bucket(int.MaxValue);
+    //            _head.next = _tail;
+    //            _tail.previous = _head;
+
+    //        }
+
+    //        public void Inc(string key)
+    //        {
+    //            if (!_lookupTable.TryGetValue(key, out Bucket existingBucket))
+    //            {
+    //                //Key does not exists, so we need to insert it into frequency 1 bucket
+    //                Bucket firstBucket = _head.next;
+    //                if (firstBucket.frequency != 1)
+    //                    firstBucket = InsertBucketAfter(_head, 1);
+
+    //                firstBucket.keys.Add(key);
+    //                _lookupTable[key] = firstBucket;
+    //            }
+    //            else
+    //            {
+    //                //Key exists in a bucket, we need to move it to next bucket with +1 frequency
+    //                int newFrequency = existingBucket.frequency + 1;
+    //                Bucket nextBucket = existingBucket.next;
+    //                if (nextBucket.frequency != newFrequency)
+    //                    nextBucket = InsertBucketAfter(existingBucket, newFrequency);
+
+    //                nextBucket.keys.Add(key);
+    //                _lookupTable[key] = nextBucket;
+    //                RemoveKeyFromBucket(existingBucket, key);
+    //            }
+    //        }
+
+    //        public void Dec(string key)
+    //        {
+    //            if (!_lookupTable.TryGetValue(key, out Bucket existingBucket)) return; //Key does not exists, so we can ignore the operation
+
+    //            int newFrequency = existingBucket.frequency - 1;
+
+    //            if (newFrequency > 0)
+    //            {
+    //                //New frequency is bigger than zero, we will move the current key to the previous bucket
+    //                Bucket previousBucket = existingBucket.previous;
+    //                if (previousBucket.frequency != newFrequency)
+    //                    previousBucket = InsertBucketBefore(existingBucket, newFrequency);
+
+    //                previousBucket.keys.Add(key);
+    //                _lookupTable[key] = previousBucket;
+    //            }
+    //            else //New frequency is less than or equal to zero, we will remove this key from the lookupDict
+    //                _lookupTable.Remove(key);
+
+    //            RemoveKeyFromBucket(existingBucket, key);
+    //        }
+
+    //        public string GetMaxKey() => _tail.previous == _head ? "" : _tail.previous.keys.First();
+
+    //        public string GetMinKey() => _head.next == _tail ? "" : _head.next.keys.First();
+
+    //        private Bucket InsertBucketAfter(Bucket existingBucket, int frequency)
+    //        {
+    //            Bucket newBucket = new(frequency);
+    //            newBucket.next = existingBucket.next;
+    //            newBucket.previous = existingBucket;
+    //            existingBucket.next.previous = newBucket;
+    //            existingBucket.next = newBucket;
+    //            return newBucket;
+    //        }
+
+    //        private Bucket InsertBucketBefore(Bucket existingBucket, int frequency)
+    //        {
+    //            Bucket newBucket = new(frequency);
+    //            newBucket.previous = existingBucket.previous;
+    //            newBucket.next = existingBucket;
+    //            existingBucket.previous.next = newBucket;
+    //            existingBucket.previous = newBucket;
+    //            return newBucket;
+    //        }
+    //        private void RemoveKeyFromBucket(Bucket bucket, string key)
+    //        {
+    //            bucket.keys.Remove(key);
+    //            if (bucket.keys.Count == 0)
+    //            {
+    //                bucket.next.previous = bucket.previous;
+    //                bucket.previous.next = bucket.next;
+    //            }
+    //        }
+    //        public class Bucket
+    //        {
+    //            public int frequency;
+    //            public HashSet<string> keys;
+
+    //            public Bucket next;
+    //            public Bucket previous;
+    //            public Bucket(int freq) { frequency = freq; keys = new(); }
+    //        }
+    //    }
+    //}
+    //Your AllOne object will be instantiated and called as such:
+    //AllOne obj = new AllOne();
+    //obj.Inc(key);
+    //obj.Dec(key);
+    //string param_3 = obj.GetMaxKey();
+    //string param_4 = obj.GetMinKey();
+    //public class AllOne
+    //{
+    //    //Thi hould ork like LFU cache actually.
+    //    //in order to achieve O(1) for getma and getmin e can ue a dequeue to tore them on front and back. Dequeue node ill have the key value a ell hich ill enable u to acce to hamap in O(1) time. When we inc or dec we can move the node to the front or back of the dequeue depending on the count.
+    //    //Then in dec and inc operation e can move thee node to the front or back of the dequeue depending on the count. If the count is increased we can move it to the front and if it is decreased we can move it to the back. This way we can ensure that the getmax and getmin operations will always return the correct key in O(1) time.
+    //    //Also, we should maintain a hashmap to store the key and the related node in the linked list. This way we can access the node in O(1) time when we need to inc or dec the count of a key.
+
+
+    //    LinkedList _dequeue;
+    //    HashSet<HashMapNode> _hashSet;
+
+    //    public AllOne()
+    //    {
+    //        _dequeue = new();
+    //        _hashSet = new();
+    //    }
+
+    //    public void Inc(string key)
+    //    {
+    //        HashMapNode? node = _hashSet.FirstOrDefault(x => x.Key == key);
+    //        if (node == null)
+    //        {
+    //            DequeueNode newNode = new()
+    //            {
+    //                Key = key,
+    //                Count = 1
+    //            };
+
+    //            _dequeue.AddLast(newNode);
+    //            _hashSet.Add(new HashMapNode()
+    //            {
+    //                Key = key,
+    //                Count = 1,
+    //                DequeueNode = newNode
+    //            });
+    //        }
+    //        else
+    //        {
+    //            node.Count++;
+    //            node.DequeueNode.Count++;
+    //            //How to rearrange the nodes? we need to compare the current value ith te next value until we find the correct position for the node.
+    //            //This violate O(1) though, we need to find a way to move the node to the correct position in O(1) time.
+    //            while (node.DequeueNode.next != null && node.DequeueNode.Count > node.DequeueNode.next.Count)
+    //            {
+    //                var nextNode = node.DequeueNode.next;
+    //                node.DequeueNode.next = nextNode.next;
+    //                node.DequeueNode.previousious = nextNode;
+    //                //nextNode.previousious = node.DequeueNode.previousious;
+    //                nextNode.next = node.DequeueNode;
+    //            }
+    //        }
+    //    }
+
+    //    public void Dec(string key)
+    //    {
+    //        //It is guaranteed that key exists in the data structure before the decrement.
+    //        HashMapNode node = _hashSet.FirstOrDefault(x => x.Key == key);
+    //        node.Count--;
+    //        node.DequeueNode.Count--;
+    //        //How to rearrange the nodes? we need to compare the current value with the previousious value until we find the correct position for the node.
+    //        while (node.DequeueNode.previousious != null && node.DequeueNode.Count < node.DequeueNode.previousious.Count)
+    //        {
+    //            var previousiousNode = node.DequeueNode.previousious;
+    //            node.DequeueNode.previousious = previousiousNode.previousious;
+    //            node.DequeueNode.next = previousiousNode;
+    //            previousiousNode.next = node.DequeueNode.next;
+    //            previousiousNode.previousious = node.DequeueNode;
+    //        }
+
+    //        if (node.Count == 0)
+    //        {
+    //            _hashSet.Remove(node);
+    //            _dequeue.RemoveTail();
+    //        }
+    //    }
+
+    //    public string GetMaxKey()
+    //    {
+    //        return _dequeue.Length > 0 ? _dequeue.Head.Key : "";
+    //    }
+
+    //    public string GetMinKey()
+    //    {
+    //        return _dequeue.Length > 0 ? _dequeue.Tail.Key : "";
+    //    }
+
+    //    public class HashMapNode
+    //    {
+    //        public string Key { get; set; }
+    //        public int Count { get; set; }
+    //        public DequeueNode DequeueNode { get; set; }
+    //    }
+    //    public class DequeueNode
+    //    {
+    //        public string Key { get; set; }
+    //        public int Count { get; set; }
+    //        public DequeueNode next { get; set; }
+    //        public DequeueNode previousious { get; set; }
+    //    }
+
+    //    public class LinkedList
+    //    {
+    //        public DequeueNode? Head { get; private set; }
+    //        public DequeueNode? Tail { get; private set; }
+    //        public int Length { get; private set; }
+
+    //        public LinkedList()
+    //        {
+    //            this.Head = null;
+    //            this.Tail = null;
+    //        }
+    //        public void AddFirst(DequeueNode newNode)
+    //        {
+    //            if (Head == null)
+    //            {
+    //                Head = newNode;
+    //                Tail = newNode;
+    //            }
+    //            else
+    //            {
+    //                this.Head.next = newNode;
+    //                this.Head = newNode;
+    //            }
+    //            Length++;
+    //        }
+    //        public void AddLast(DequeueNode newNode)
+    //        {
+    //            if (Head == null)
+    //            {
+    //                Head = newNode;
+    //                Tail = newNode;
+    //            }
+    //            else
+    //            {
+    //                this.Tail.previousious = newNode;
+    //                newNode.next = this.Tail;
+    //                this.Tail = newNode;
+    //            }
+
+    //            Length++;
+    //        }
+
+    //        public void RemoveTail()
+    //        {
+    //            if (Tail == null)
+    //                return;
+
+    //            DequeueNode? newTail = Tail.previousious;
+    //            newTail!.next = null;
+    //            Tail = newTail;
+    //            Length--;
+    //        }
+    //    }
+    //}
+        #endregion
+        #region Stack & Queue
+    ///<summary>
+    ///MinStack
+    /// </summary>
+    //public class MinStack
+    //{
+    //    // Main Stack storage
+    //    private int[] _stack;
+    //    private int _capacity;
+    //    private int _length;
+
+    //    // Min value storage
+    //    private int[] _minStack;
+    //    private int _minStackCapacity;
+    //    private int _minStackLength;
+
+    //    public MinStack()
+    //    {
+    //        _length = 0;
+    //        _capacity = 10;
+    //        _stack = new int[_capacity];
+
+    //        _minStackLength = 0;
+    //        _minStackCapacity = 10;
+    //        _minStack = new int[_minStackCapacity];
+    //    }
+
+    //    public void Push(int val)
+    //    {
+    //        if (_length == _capacity)
+    //        {
+    //            _capacity *= 2;
+    //            int[] newStack = new int[_capacity];
+    //            for (int i = 0; i < _stack.Length; i++)
+    //            {
+    //                newStack[i] = _stack[i];
+    //            }
+    //            _stack = newStack;
+    //        }
+    //        _stack[_length] = val;
+    //        _length++;
+
+
+    //        //Only push to minStack if new value is <= current min
+    //        if (!(_minStackLength == 0 || val <= _minStack[_minStackLength - 1])) return;
+
+    //        if (_minStackLength == _minStackCapacity)
+    //        {
+    //            _minStackCapacity *= 2;
+    //            int[] newMinStack = new int[_minStackCapacity];
+    //            for (int i = 0; i < _minStack.Length; i++)
+    //            {
+    //                newMinStack[i] = _minStack[i];
+    //            }
+    //            _minStack = newMinStack;
+    //        }
+    //        _minStack[_minStackLength] = val;
+    //        _minStackLength++;
+    //    }
+
+    //    public void Pop()
+    //    {
+    //        if (_length <= 0) return;
+
+    //        int valBeingPopped = _stack[_length - 1];
+
+    //        // Only pop from minStack if the values match
+    //        if (_minStackLength > 0 && valBeingPopped == _minStack[_minStackLength - 1])
+    //            _minStackLength--;
+
+    //        //Always pop from mainStack
+    //        _length--;
+
+    //        //By only decreasing the _length we actually don't replace actual values in the array.
+    //        //However, they are now considered "out of bounds" and will be overwritten on the next Push.
+    //    }
+
+    //    public int Top()
+    //    {
+    //        if (_length > 0)
+    //            return _stack[_length - 1];
+
+    //        return -1;
+    //    }
+
+    //    public int GetMin()
+    //    {
+    //        if (_minStackLength > 0)
+    //            return _minStack[_minStackLength - 1];
+
+    //        return -1;
+    //    }
+    //}
+
+    /// <summary>
+    /// CustomStack
+    /// </summary>
+    //public class CustomStack
+    //{
+    //    private int _length;
+    //    private readonly int[] _stack;
+    //    private readonly int _capacity;
+
+    //    public CustomStack(int maxSize)
+    //    {
+    //        _length = 0;
+    //        _capacity = maxSize;
+    //        _stack = new int[_capacity];
+
+    //    }
+
+    //    public void Push(int x)
+    //    {
+    //        if (_length == _capacity) return;
+
+    //        _stack[_length] = x;
+    //        _length++;
+    //    }
+
+    //    public int Pop()
+    //    {
+    //        if (_length == 0) return -1;
+
+    //        int poppedVal = _stack[_length - 1];
+    //        _length--;
+    //        return poppedVal;
+    //    }
+
+    //    public void Increment(int k, int val)
+    //    {
+    //        int incVal = k;
+    //        if (_length < k) incVal = _length;
+
+    //        for (int i = 0; i < incVal; i++)
+    //        {
+    //            _stack[i] += val;
+    //        }
+    //    }
+    //}
+
+    /// <summary>
+    /// PrevSmaller
+    /// </summary>
+    //public List<int> prevSmaller(List<int> A)
+    //{
+    //    List<int> result = new();
+
+    //    Stack<int> stack = new();
+    //    foreach (int a in A)
+    //    {
+    //        while (stack.Count > 0 && stack.Peek() >= a)
+    //            stack.Pop();
+
+    //        if (stack.Peek() < a)
+    //            result.Add(stack.Peek());
+    //        else
+    //            result.Add(-1);
+
+    //        stack.Push(a);
+    //    }
+    //    return result;
+    //}
+
+    /// <summary>
+    /// StockSpanner
+    /// </summary>
+    //public static class Solution
+    //{
+    //    public class StockSpanner
+    //    {
+    //        private Stack<(int price, int count)> _stack;
+
+    //        public StockSpanner()
+    //        {
+    //            _stack = new();
+    //        }
+
+    //        public int Next(int price)
+    //        {
+    //            int count = 1;
+
+    //            while (_stack.Count > 0 && _stack.Peek().price <= price)
+    //            {
+    //                (int price, int count) prevDay = _stack.Pop();
+    //                count += prevDay.count;
+    //            }
+
+    //            _stack.Push((price, count));
+
+    //            return count;
+    //        }
+    //    }
+
+    //}
+
+    #endregion
+        #region Heap
+    ///<summary>
+    ///Merge K Lists
+    ///</summary>
+    //public static ListNode MergeKLists(ListNode[] lists)
+    //{
+    //    MinHeap minHeap = new(lists.Length * 10);
+
+    //    for (int i = 0; i < lists.Length; i++)
+    //    {
+    //        ListNode? currNode = lists[i];
+    //        while (currNode != null)
+    //        {
+    //            minHeap.Insert(currNode.val);
+    //            currNode = currNode.next;
+    //        }
+    //    }
+
+    //    return minHeap.GetMergedList();
+    //}
+
+    ///<summary>
+    ///K Smallest Pairs
+    /// </summary>
+    //public class Program
+    //{
+    //    public static void Main()
+    //    {
+    //        int[] nums1 = new int[] { -15, 20, 45, 117, 223 };
+    //        int[] nums2 = new int[] { -15, 20, 45, 117, 223, 546, 663, 714, 749, 801 };
+
+    //        var res = Solution.KSmallestPairs(nums1, nums2, 10);
+
+    //        foreach (var list in res)
+    //        {
+    //            Console.WriteLine($"[{list[0]}, {list[1]}] (Sum: {list[0] + list[1]})");
+    //        }
+    //    }
+    //}
+
+    //public static class Solution
+    //{
+    //    public static IList<IList<int>> KSmallestPairs(int[] nums1, int[] nums2, int k)
+    //    {
+    //        //nums1 and nums2 are sorted in ascending order
+    //        //we need pair of (nums1i, nums2i) with the smallest sums
+    //        //For that, we need to store the result of their sum in our MinHeap
+    //        //But at the end we need to return the pairs not the results
+    //        //We can use a dictionary to have pairs as the value and the sum as the key
+    //        //After we iterate over all possible elements in num one and num two
+    //        //we put the results in the minHeap
+    //        //Then we can extractMin from the heap and use it to access our dictionary to get the related pair.
+
+    //        var result = new List<IList<int>>();
+    //        if (nums1.Length == 0 || nums2.Length == 0 || k == 0) return result;
+
+    //        MinHeap heap = new(nums1.Length);
+
+    //        // 1. Initialize Heap with the first column (i, 0)
+    //        // This treats every item in nums1 as the "head" of a potential sorted list
+    //        for (int i = 0; i < nums1.Length && i < k; i++)
+    //        {
+    //            // We store the Sum, plus the indices i and j
+    //            heap.Insert(nums1[i] + nums2[0], i, 0);
+    //        }
+
+    //        // 2. Extract min and push the neighbor
+    //        while (k > 0 && !heap.IsEmpty())
+    //        {
+    //            MinHeap.HeapNode minNode = heap.ExtractMin();
+
+    //            int i = minNode.Index1;
+    //            int j = minNode.Index2;
+
+    //            // Add to result
+    //            result.Add(new List<int> { nums1[i], nums2[j] });
+
+    //            // 3. Push the NEXT element from the same "row" (i, j+1)
+    //            // If there is a next number in nums2...
+    //            if (j + 1 < nums2.Length)
+    //            {
+    //                int nextSum = nums1[i] + nums2[j + 1];
+    //                heap.Insert(nextSum, i, j + 1);
+    //            }
+
+    //            k--;
+    //        }
+
+    //        return result;
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        public struct HeapNode
+    //        {
+    //            public int Sum;
+    //            public int Index1; // Index in nums1
+    //            public int Index2; // Index in nums2
+    //        }
+
+    //        private HeapNode[] _heap;
+    //        private int _size;
+    //        private int _capacity;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heap = new int[_capacity];
+    //        }
+
+    //        public bool IsEmpty() => _size == 0;
+
+    //        private int Parent(int index) => (index - 1) / 2;
+    //        private int Left(int index) => (index * 2) + 1;
+    //        private int Right(int index) => (index * 2) + 2;
+
+    //        private void Swap(int i, int j)
+    //        {
+    //            HeapNode temp = _heap[i];
+    //            _heap[i] = _heap[j];
+    //            _heap[j] = temp;
+    //        }
+
+    //        public void Insert(int sum, int index1, int index2)
+    //        {
+    //            if (_size == _capacity) return;
+
+    //            int index = _size;
+    //            _heap[index] = new HeapNode { Sum = sum, Index1 = index1, Index2 = index2 };
+    //            _size++;
+
+    //            // Bubble Up
+    //            while (index != 0 && _heap[index].Sum < _heap[Parent(index)].Sum)
+    //            {
+    //                Swap(index, Parent(index));
+    //                index = Parent(index);
+    //            }
+    //        }
+
+    //        public HeapNode ExtractMin()
+    //        {
+    //            // Assuming caller checks IsEmpty()
+    //            HeapNode min = _heap[0];
+
+    //            _heap[0] = _heap[_size - 1];
+    //            _size--;
+
+    //            if (_size > 0)
+    //            {
+    //                MinHeapify(0);
+    //            }
+
+    //            return min;
+    //        }
+
+    //        private void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int smallest = index;
+
+    //            if (left < _size && _heap[left].Sum < _heap[smallest].Sum)
+    //                smallest = left;
+
+    //            if (right < _size && _heap[right].Sum < _heap[smallest].Sum)
+    //                smallest = right;
+
+    //            if (smallest != index)
+    //            {
+    //                Swap(index, smallest);
+    //                MinHeapify(smallest);
+    //            }
+    //        }
+    //    }
+    //}
+    //public static int NthUglyNumber(int n)
+    //{
+    //    //we start the heap with the number 1. Because we are certain its an ugly number
+    //    MinHeap heap = new(n);
+    //    heap.Insert(1);
+
+    //    int uglyCount = 0;
+    //    long lastUgly = 0;
+
+    //    while (true)
+    //    {
+    //        //Next we extract the minimum from the heap
+    //        long currUgly = heap.ExtractMin();
+
+    //        //Check if its equal to the last ugly number
+    //        if (currUgly == lastUgly)
+    //            continue;
+
+    //        lastUgly = currUgly;
+    //        uglyCount++;
+
+    //        if (uglyCount == n)
+    //            return (int)currUgly;
+
+    //        //how to accomodate for previously calculated ugly number?
+    //        //use List instead of int[] in the heap and use Any?
+    //        //Something smarter
+    //        heap.Insert(currUgly * 2);
+    //        heap.Insert(currUgly * 3);
+    //        heap.Insert(currUgly * 5);
+    //    }
+    //}
+
+    //public class MinHeap
+    //{
+    //    private long[] _heap;
+    //    private int _size;
+    //    private int _capacity;
+
+    //    public MinHeap(int capacity)
+    //    {
+    //        _capacity = capacity;
+    //        _heap = new long[_capacity];
+    //    }
+
+    //    public bool IsEmpty() => _size == 0;
+    //    private int Parent(int index) => (index - 1) / 2;
+    //    private int Left(int index) => (index * 2) + 1;
+    //    private int Right(int index) => (index * 2) + 2;
+    //    private void Swap(int i, int j)
+    //    {
+    //        long temp = _heap[i];
+    //        _heap[i] = _heap[j];
+    //        _heap[j] = temp;
+    //    }
+
+    //    public void Insert(long value)
+    //    {
+    //        if (_size == _capacity) return;
+
+    //        int index = _size;
+    //        _heap[index] = value;
+    //        _size++;
+
+    //        while (index != 0 && _heap[index] < _heap[Parent(index)])
+    //        {
+    //            Swap(index, Parent(index));
+    //            index = Parent(index);
+    //        }
+    //    }
+
+    //    public long ExtractMin()
+    //    {
+    //        if (_size == 1)
+    //        {
+    //            _size--;
+    //            return _heap[_size];
+    //        }
+
+    //        long min = _heap[0];
+    //        _heap[0] = _heap[_size - 1];
+    //        _size--;
+
+    //        MinHeapify(0);
+    //        return min;
+    //    }
+
+    //    private void MinHeapify(int index)
+    //    {
+    //        int left = Left(index);
+    //        int right = Right(index);
+    //        int smallest = index;
+
+    //        if (left < _size && _heap[left] < _heap[smallest])
+    //            smallest = left;
+    //        if (right < _size && _heap[right] < _heap[smallest])
+    //            smallest = right;
+
+    //        if (smallest != index)//we found a new smallest!
+    //        {
+    //            Swap(smallest, index);
+    //            MinHeapify(smallest);
+    //        }
+    //    }
+    //}
+
+    ///<summary>
+    ///Ugly Number II
+    /// </summary>
+    //    public class Solution
+    //{
+    //    public int NthUglyNumber(int n)
+    //    {
+    //        //we start the heap with the number 1. Because we are certain its an ugly number
+    //        MinHeap heap = new(n);
+    //        List<long> prevUglyNumbers = new() { 1 };
+    //        heap.Insert(1);
+    //        int uglyCount = 1;
+
+    //        while (!heap.IsEmpty())
+    //        {
+    //            //Next we extract the minimum from the heap
+    //            long minUgly = heap.ExtractMin();
+    //            if (uglyCount == n)
+    //                return (int)minUgly;
+
+    //            //how to accomodate for previously calculated ugly number?
+    //            //use List instead of int[] in the heap and use Any?
+    //            //Something smarter
+    //            long ugly1 = minUgly * 2;
+    //            long ugly2 = minUgly * 3;
+    //            long ugly3 = minUgly * 5;
+    //            if (!prevUglyNumbers.Contains(ugly1))
+    //            {
+    //                heap.Insert(ugly1);
+    //                prevUglyNumbers.Add(ugly1);
+    //            }
+    //            if (!prevUglyNumbers.Contains(ugly2))
+    //            {
+    //                heap.Insert(ugly2);
+    //                prevUglyNumbers.Add(ugly2);
+    //            }
+    //            if (!prevUglyNumbers.Contains(ugly3))
+    //            {
+    //                heap.Insert(ugly3);
+    //                prevUglyNumbers.Add(ugly3);
+    //            }
+    //            uglyCount++;
+    //        }
+
+    //        return 1;
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        private long[] _heap;
+    //        private int _size;
+    //        private int _capacity;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heap = new long[_capacity];
+    //        }
+
+    //        public bool IsEmpty() => _size == 0;
+    //        private int Parent(int index) => (index - 1) / 2;
+    //        private int Left(int index) => (index * 2) + 1;
+    //        private int Right(int index) => (index * 2) + 2;
+    //        private void Swap(int i, int j)
+    //        {
+    //            long temp = _heap[i];
+    //            _heap[i] = _heap[j];
+    //            _heap[j] = temp;
+    //        }
+
+    //        public void Insert(long value)
+    //        {
+    //            if (_size == _capacity) return;
+
+    //            int index = _size;
+    //            _heap[index] = value;
+    //            _size++;
+
+    //            while (index != 0 && _heap[index] < _heap[Parent(index)])
+    //            {
+    //                Swap(index, Parent(index));
+    //                index = Parent(index);
+    //            }
+    //        }
+
+    //        public long ExtractMin()
+    //        {
+    //            if (_size == 1)
+    //            {
+    //                _size--;
+    //                return _heap[_size];
+    //            }
+
+    //            long min = _heap[0];
+    //            _heap[0] = _heap[_size - 1];
+    //            _size--;
+
+    //            MinHeapify(0);
+    //            return min;
+    //        }
+
+    //        private void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int smallest = index;
+
+    //            if (left < _size && _heap[left] < _heap[smallest])
+    //                smallest = left;
+    //            if (right < _size && _heap[right] < _heap[smallest])
+    //                smallest = right;
+
+    //            if (smallest != index)//we found a new smallest!
+    //            {
+    //                Swap(smallest, index);
+    //                MinHeapify(smallest);
+    //            }
+    //        }
+    //    }
+    //}
+    //    public class Solution
+    //{
+    //    public int NthUglyNumber(int n)
+    //    {
+    //        //we start the heap with the number 1. Because we are certain its an ugly number
+    //        MinHeap heap = new(n);
+    //        heap.Insert(1);
+
+    //        int uglyCount = 0;
+    //        long lastUgly = 0;
+
+    //        while (true)
+    //        {
+    //            //Next we extract the minimum from the heap
+    //            long currUgly = heap.ExtractMin();
+
+    //            //Check if its equal to the last ugly number
+    //            if (currUgly == lastUgly)
+    //                continue;
+
+    //            lastUgly = currUgly;
+    //            uglyCount++;
+
+    //            if (uglyCount == n)
+    //                return (int)currUgly;
+
+    //            //how to accomodate for previously calculated ugly number?
+    //            //use List instead of int[] in the heap and use Any?
+    //            //Something smarter
+    //            heap.Insert(currUgly * 2);
+    //            heap.Insert(currUgly * 3);
+    //            heap.Insert(currUgly * 5);
+    //        }
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        private long[] _heap;
+    //        private int _size;
+    //        private int _capacity;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heap = new long[_capacity];
+    //        }
+
+    //        public bool IsEmpty() => _size == 0;
+    //        private int Parent(int index) => (index - 1) / 2;
+    //        private int Left(int index) => (index * 2) + 1;
+    //        private int Right(int index) => (index * 2) + 2;
+    //        private void Swap(int i, int j)
+    //        {
+    //            long temp = _heap[i];
+    //            _heap[i] = _heap[j];
+    //            _heap[j] = temp;
+    //        }
+
+    //        public void Insert(long value)
+    //        {
+    //            if (_size == _capacity) return;
+
+    //            int index = _size;
+    //            _heap[index] = value;
+    //            _size++;
+
+    //            while (index != 0 && _heap[index] < _heap[Parent(index)])
+    //            {
+    //                Swap(index, Parent(index));
+    //                index = Parent(index);
+    //            }
+    //        }
+
+    //        public long ExtractMin()
+    //        {
+    //            if (_size == 1)
+    //            {
+    //                _size--;
+    //                return _heap[_size];
+    //            }
+
+    //            long min = _heap[0];
+    //            _heap[0] = _heap[_size - 1];
+    //            _size--;
+
+    //            MinHeapify(0);
+    //            return min;
+    //        }
+
+    //        private void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int smallest = index;
+
+    //            if (left < _size && _heap[left] < _heap[smallest])
+    //                smallest = left;
+    //            if (right < _size && _heap[right] < _heap[smallest])
+    //                smallest = right;
+
+    //            if (smallest != index)//we found a new smallest!
+    //            {
+    //                Swap(smallest, index);
+    //                MinHeapify(smallest);
+    //            }
+    //        }
+    //    }
+    //}
+
+    ///<summary>
+    ///Find Kth Largest
+    /// </summary>
+    //public class Solution
+    //{
+    //    public int FindKthLargest(int[] nums, int k)
+    //    {
+    //        MinHeap heap = new(nums.Length);
+
+
+    //        for (int i = 0; i < nums.Length; i++)
+    //        {
+    //            heap.Insert(nums[i]);
+    //            if (heap.Count > k)
+    //                heap.ExtractMin();
+    //        }
+
+
+    //        return heap.ExtractMin();
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        private int[] _heapArray;
+    //        private int _capacity;
+    //        private int _size;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heapArray = new int[_capacity];
+    //            _size = 0;
+    //        }
+
+    //        public int Count { get => _size; }
+    //        public static int Parent(int index) => (index - 1) / 2;
+    //        public static int Left(int index) => index * 2 + 1;
+    //        public static int Right(int index) => index * 2 + 2;
+    //        public static void Swap<T>(ref T left, ref T right)
+    //        {
+    //            T temp = left;
+    //            left = right;
+    //            right = temp;
+    //        }
+
+    //        public bool Insert(int key)
+    //        {
+    //            if (_size == _capacity)
+    //            {
+    //                _capacity *= 2;
+    //                Array.Resize(ref _heapArray, _capacity);
+    //            }
+    //            int index = _size;
+    //            _heapArray[index] = key;
+    //            _size++;
+    //            while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
+    //            {
+    //                Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
+    //                index = Parent(index);
+    //            }
+
+    //            return true;
+    //        }
+    //        public int ExtractMin()
+    //        {
+    //            if (_size <= 0) return int.MaxValue;
+
+    //            if (_size == 1)
+    //            {
+    //                _size--;
+    //                return _heapArray[_size];
+    //            }
+
+    //            int min = _heapArray[0];
+    //            _heapArray[0] = _heapArray[_size - 1];
+    //            _size--;
+
+    //            MinHeapify(0);
+    //            return min;
+    //        }
+    //        public void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int root = index;
+
+    //            if (left < _size && _heapArray[left] < _heapArray[root])
+    //                root = left;
+    //            if (right < _size && _heapArray[right] < _heapArray[root])
+    //                root = right;
+
+    //            if (root != index) // did we change the index?
+    //            {
+    //                Swap(ref _heapArray[index], ref _heapArray[root]);
+    //                MinHeapify(root);// redo heapify starting from new root
+    //            }
+    //        }
+    //        public ListNode GetMergedList()
+    //        {
+    //            ListNode dummy = new(0);
+    //            ListNode current = dummy;
+
+    //            while (_size > 0)
+    //            {
+    //                int minVal = ExtractMin();
+
+    //                current.next = new ListNode(minVal);
+    //                current = current.next;
+    //            }
+
+    //            return dummy.next;
+    //        }
+    //    }
+
+    //}
+    //public class MinHeap
+    //{
+    //    private int[] _heapArray;
+    //    private int _capacity;
+    //    private int _size;
+
+    //    public MinHeap(int capacity)
+    //    {
+    //        _capacity = capacity;
+    //        _heapArray = new int[_capacity];
+    //        _size = 0;
+    //    }
+
+    //    public static int Parent(int index) => (index - 1) / 2;
+    //    public static int Left(int index) => index * 2 + 1;
+    //    public static int Right(int index) => index * 2 + 2;
+    //    public static void Swap<T>(ref T left, ref T right)
+    //    {
+    //        T temp = left;
+    //        left = right;
+    //        right = temp;
+    //    }
+
+    //    public bool Insert(int key)
+    //    {
+    //        if (_size == _capacity)
+    //        {
+    //            _capacity *= 2;
+    //            Array.Resize(ref _heapArray, _capacity);
+    //        }
+    //        int index = _size;
+    //        _heapArray[index] = key;
+    //        _size++;
+    //        while (index != 0 && _heapArray[index] < _heapArray[Parent(index)])
+    //        {
+    //            Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
+    //            index = Parent(index);
+    //        }
+
+    //        return true;
+    //    }
+    //    public int ExtractMin()
+    //    {
+    //        if (_size <= 0) return int.MaxValue;
+
+    //        if (_size == 1)
+    //        {
+    //            _size--;
+    //            return _heapArray[_size];
+    //        }
+
+    //        int min = _heapArray[0];
+    //        _heapArray[0] = _heapArray[_size - 1];
+    //        _size--;
+
+    //        MinHeapify(0);
+    //        return min;
+    //    }
+    //    public void MinHeapify(int index)
+    //    {
+    //        int left = Left(index);
+    //        int right = Right(index);
+    //        int root = index;
+
+    //        if (left < _size && _heapArray[left] < _heapArray[root])
+    //            root = left;
+    //        if (right < _size && _heapArray[right] < _heapArray[root])
+    //            root = right;
+
+    //        if (root != index) // did we change the index?
+    //        {
+    //            Swap(ref _heapArray[index], ref _heapArray[root]);
+    //            MinHeapify(root);// redo heapify starting from new root
+    //        }
+    //    }
+    //    public ListNode GetMergedList()
+    //    {
+    //        ListNode dummy = new(0);
+    //        ListNode current = dummy;
+
+    //        while (_size > 0)
+    //        {
+    //            int minVal = ExtractMin();
+
+    //            current.next = new ListNode(minVal);
+    //            current = current.next;
+    //        }
+
+    //        return dummy.next;
+    //    }
+    //}
+
+    ///<summary>
+    ///MinStone
+    ///</summary>
+    //        public int MinStoneSum(int[] piles, int k)
+    //        {
+    //            MaxHeap maxHeap = new MaxHeap(piles.Length);
+    //        int minStones = 0;
+
+    //            foreach (var item in piles)
+    //            {
+    //                minStones += item;
+    //                maxHeap.Insert(item);
+    //            }
+
+    //            while (k != 0)
+    //            {
+    //                int maxPile = maxHeap.ExtractMax();
+    //                double newPile = Math.Ceiling((double)maxPile / 2);
+    //                minStones -= maxPile - (int) newPile;
+    //                maxHeap.Insert((int) newPile);
+    //                k--;
+    //            }
+
+    //return minStones;
+    //        }
+    //        public class MaxHeap
+    //{
+    //    private int[] _heapArray;
+    //    private int _capacity;
+    //    private int _size;
+
+    //    public MaxHeap(int capacity)
+    //    {
+    //        _capacity = capacity;
+    //        _heapArray = new int[_capacity];
+    //        _size = 0;
+    //    }
+
+    //    public static int Parent(int index) => (index - 1) / 2;
+    //    public static int Left(int index) => index * 2 + 1;
+    //    public static int Right(int index) => index * 2 + 2;
+    //    public static void Swap<T>(ref T left, ref T right)
+    //    {
+    //        T temp = left;
+    //        left = right;
+    //        right = temp;
+    //    }
+
+    //    public bool Insert(int key)
+    //    {
+    //        if (_size == _capacity)
+    //        {
+    //            _capacity *= 2;
+    //            Array.Resize(ref _heapArray, _capacity);
+    //        }
+    //        int index = _size;
+    //        _heapArray[index] = key;
+    //        _size++;
+    //        while (index != 0 && _heapArray[index] > _heapArray[Parent(index)])
+    //        {
+    //            Swap(ref _heapArray[index], ref _heapArray[Parent(index)]);
+    //            index = Parent(index);
+    //        }
+
+    //        return true;
+    //    }
+    //    public int ExtractMax()
+    //    {
+    //        if (_size <= 0) return int.MinValue;
+
+    //        if (_size == 1)
+    //        {
+    //            _size--;
+    //            return _heapArray[_size];
+    //        }
+
+    //        int min = _heapArray[0];
+    //        _heapArray[0] = _heapArray[_size - 1];
+    //        _size--;
+
+    //        MaxHeapify(0);
+    //        return min;
+    //    }
+    //    public void MaxHeapify(int index)
+    //    {
+    //        int left = Left(index);
+    //        int right = Right(index);
+    //        int root = index;
+
+    //        if (left < _size && _heapArray[left] > _heapArray[root])
+    //            root = left;
+    //        if (right < _size && _heapArray[right] > _heapArray[root])
+    //            root = right;
+
+    //        if (root != index) // did we change the index?
+    //        {
+    //            Swap(ref _heapArray[index], ref _heapArray[root]);
+    //            MaxHeapify(root);// redo heapify starting from new root
+    //        }
+    //    }
+    //}
+
+    ///<summary>
+    ///Furthest Building
+    /// </summary>
+    //public static class Solution
+    //{
+    //    public static int FurthestBuilding(int[] heights, int bricks, int ladders)
+    //    {
+    //        PriorityQueue<int, int> minHeap = new();
+
+    //        for (int i = 0; i < heights.Length - 1; i++)
+    //        {
+    //            int jmp = heights[i + 1] - heights[i];
+
+    //            if (jmp <= 0)
+    //                continue;
+
+    //            minHeap.Enqueue(jmp, jmp); //we jumped using ladders and insert it into the heap
+
+    //            if (minHeap.Count > ladders) //if we suprassed the ladders we change the smallest amount of ladder jump with brick jump
+    //            {
+    //                int smallestJmp = minHeap.Dequeue();
+    //                bricks -= smallestJmp;
+    //            }
+
+    //            if (bricks < 0) return i; //If bricks is negative we can't jump ahead, return current index
+    //        }
+
+    //        return heights.Length - 1; //We jumped till the end!!
+
+
+    //        ///<summary>
+    //        ///This whole solution is wrong at its heart because it doesn't allow us to later swap ladders and bricks if a smaller jump appears
+    //        ///</summary>
+    //        for (int i = 0; i < heights.Length; i++)
+    //        {
+    //            if (i == heights.Length - 1)
+    //                return i;
+
+    //            if (heights[i] >= heights[i + 1])
+    //                continue;
+
+    //            if (bricks != 0 && heights[i + 1] - heights[i] <= Math.Ceiling((decimal)bricks / 2))
+    //                bricks -= heights[i + 1] - heights[i];
+    //            else if (ladders != 0)
+    //                ladders--;
+    //            else if (ladders == 0 && heights[i + 1] - heights[i] <= bricks)
+    //                bricks -= heights[i + 1] - heights[i];
+    //            else
+    //                return i;
+    //        }
+
+    //        return -1;
+
+    //        // //          Input: heights = [4, 2, 7, 6, 9, 14, 12], bricks = 5, ladders = 1
+    //        // //          Output: 4
+    //        // //          Explanation: Starting at building 0, you can follow these steps:
+    //        // //            -Go to building 1 without using ladders nor bricks since 4 >= 2.
+    //        // //            - Go to building 2 using 5 bricks.You must use either bricks or ladders because 2 < 7.
+    //        // //            - Go to building 3 without using ladders nor bricks since 7 >= 6.
+    //        // //            - Go to building 4 using your only ladder.You must use either bricks or ladders because 6 < 9.
+    //        // //            It is impossible to go beyond building 4 because you do not have any more bricks or ladders.
+
+
+    //        // [4, 2, 7, 6, 9, 14, 12]
+    //        // [2, 7, 6, 9, 14, 12]
+    //        // [7, 6, 9, 14, 12] //bricks = 5, ladder = 0
+    //        // [6, 9, 14, 12] //bricks = 5, ladder = 0
+    //        // [9, 14, 12] //bricks = 2, ladder = 0
+
+
+    //        // //heights = [4, 12, 2, 7, 3, 18, 20, 3, 19], bricks = 10, ladders = 2
+    //        // [4, 12, 2, 7, 3, 18, 20, 3, 19] //12 - 4 = 8 and 10 / 2 < 8 use ladder
+    //        // [12, 2, 7, 3, 18, 20, 3, 19] //bricks = 10, ladders = 1
+    //        // [2, 7, 3, 18, 20, 3, 19] //7 - 2 = 5 and 5 <= 10 / 2 use bricks
+    //        // [7, 3, 18, 20, 3, 19] //bricks = 5, ladders = 1
+    //        // [3, 18, 20, 3, 19] //18 - 3 = 15 and 15 / 2 < 15 use ladder
+    //        // [18, 20, 3, 19] //bricks = 5, ladders = 0
+    //        // [20, 3, 19] //bricks = 3, ladders = 0
+    //        // [3, 19] //bricks = 3, ladders = 0
+
+
+    //        ////heights = [14,3,19,3], bricks = 17, ladders = 0
+    //        //[14,3,19,3] // bricks = 17 ladders = 0
+    //        //[3,19,3] // İF (ladders == 0 || 19 - 3 = 16 <= 17 / 2)
+    //        //[19,3] // bricks = 1
+    //        //[3] // bricks = 1
+    //    }
+    //}
+    #endregion
+        #region Sort
+    /// <summary>
+    /// Bubble sort
+    /// </summary>
+    //public static class Solution
+    //{
+    //    public static int[] BubbleSort(int[] nums)
+    //    {
+    //        for (int i = 0; i < nums.Length; i++)
+    //        {
+    //            for (int j = 0; j < nums.Length - 1 - i; j++)
+    //            {
+    //                if (nums[j] > nums[j + 1])
+    //                    (nums[j], nums[j + 1]) = (nums[j + 1], nums[j]);
+    //            }
+    //        }
+
+    //        return nums;
+    //    }
+    //}
+
+    /// <summary>
+    /// Optimized bubble sort
+    /// </summary>
+    //public static class Solution
+    //{
+    //    public static int[] BubbleSort(int[] nums)
+    //    {
+    //        for (int i = 0; i < nums.Length; i++)
+    //        {
+    //            bool swapped = false;
+    //            for (int j = 0; j < nums.Length - 1 - i; j++)
+    //            {
+    //                if (nums[j] > nums[j + 1])
+    //                {
+    //                    (nums[j], nums[j + 1]) = (nums[j + 1], nums[j]);
+    //                    swapped = true;
+    //                }
+    //            }
+
+    //            if (!swapped)
+    //                break;
+    //        }
+
+    //        return nums;
+    //    }
+    //}
+
+    ///<summary
+    ///Selection sort
+    ///</summary>
+    //public static class Solution
+    //{
+    //    public static int[] SelectionSort(int[] nums)
+    //    {
+    //        for (int i = 0; i < nums.Length - 1; i++)
+    //        {
+    //            int minIdx = i;
+    //            for (int j = i + 1; j < nums.Length; j++)
+    //            {
+    //                if (nums[j] < nums[minIdx])
+    //                    minIdx = j;
+    //            }
+
+    //            if (minIdx != i)
+    //            {
+    //                int tmp = nums[i];
+    //                nums[i] = nums[minIdx];
+    //                nums[minIdx] = tmp;
+    //            }
+    //        }
+
+    //        return nums;
+    //    }
+    //}
+
+
+
+    ///<summary
+    ///InsertionSort
+    ///</summary>
+    //public static int[] InsertionSort(int[] nums)
+    //{
+    //    for (int i = 1; i < nums.Length; i++)
+    //    {
+    //        int j = i;
+    //        while (j > 0 && nums[j] < nums[j - 1])
+    //        {
+    //            int tmp = nums[j];
+    //            nums[j] = nums[j - 1];
+    //            nums[j - 1] = tmp;
+
+    //            j -= 1;
+    //        }
+    //    }
+    //    return nums;
+    //}
+
+    ///<summary
+    ///InsertionSortList with duplicate array
+    ///</summary>
+    //public static class Solution
+    //{
+    //    public class ListNode
+    //    {
+    //        public int val;
+    //        public ListNode next;
+    //        public ListNode(int val = 0, ListNode next = null)
+    //        {
+    //            this.val = val;
+    //            this.next = next;
+    //        }
+    //    }
+    //    public static ListNode InsertionSortList(ListNode head)
+    //    {
+    //        List<int> list = new();
+    //        while (head != null)
+    //        {
+    //            list.Add(head.val);
+    //            head = head.next;
+    //        }
+
+    //        for (int i = 1; i < list.Count; i++)
+    //        {
+    //            int j = i;
+    //            while (0 < j && list[j] < list[j - 1])
+    //            {
+    //                (list[j], list[j - 1]) = (list[j - 1], list[j]);
+    //                j--;
+    //            }
+    //        }
+
+    //        ListNode head2 = new();
+    //        ListNode dummy = new();
+    //        dummy.next = head2;
+    //        for (int i = 0; i < list.Count; i++)
+    //        {
+    //            head2 ??= new();
+    //            head2.val = list[i];
+    //            if (i != list.Count - 1)
+    //                head2.next = new();
+    //            head2 = head2.next;
+    //        }
+
+    //        return dummy.next;
+    //    }
+
+    ///<summary
+    ///InsertionSortList with the optimal solution
+    ///</summary>
+    //public static class Solution
+    //{
+    //    public class ListNode
+    //    {
+    //        public int val;
+    //        public ListNode next;
+    //        public ListNode(int val = 0, ListNode next = null)
+    //        {
+    //            this.val = val;
+    //            this.next = next;
+    //        }
+    //    }
+    //    public static ListNode InsertionSortList(ListNode head)
+    //    {
+    //        ListNode dummy = new(0);
+    //        ListNode prev = dummy;
+    //        while (head != null)
+    //        {
+    //            ListNode next = head.next;
+    //            if (prev.val >= head.val)
+    //            {
+    //                prev = dummy;
+    //            }
+    //            while (prev.next != null && prev.next.val < head.val)
+    //            {
+    //                prev = prev.next;
+    //            }
+    //            head.next = prev.next;
+    //            prev.next = head;
+    //            head = next;
+    //        }
+    //        return dummy.next;
+    //    }
+    //}
+
+    ///<summary>
+    ///MergeSort
+    ///</summary>
+    //public static class Solution
+    //{
+    //    public static int[] MergeSort(int[] nums)
+    //    {
+    //        if (nums.Length == 1)
+    //            return nums;
+
+    //        int mid = nums.Length / 2;
+    //        int[] left = nums[0..mid];
+    //        int[] right = nums[mid..nums.Length];
+
+    //        left = MergeSort(left);
+    //        right = MergeSort(right);
+
+    //        return Merge(left, right);
+    //    }
+
+    //    private static int[] Merge(int[] a, int[] b)
+    //    {
+    //        int[] c = new int[a.Length + b.Length];
+    //        int firstIdx = 0;
+    //        while (a.Length != 0 && b.Length != 0)
+    //        {
+    //            if (a[0] > b[0])
+    //            {
+    //                c[firstIdx] = b[0];
+    //                b = b[1..];
+    //            }
+    //            else
+    //            {
+    //                c[firstIdx] = a[0];
+    //                a = a[1..];
+    //            }
+    //            firstIdx++;
+    //        }
+
+    //        while (a.Length != 0)
+    //        {
+    //            c[firstIdx] = a[0];
+    //            a = a[1..];
+    //            firstIdx++;
+    //        }
+    //        while (b.Length != 0)
+    //        {
+    //            c[firstIdx] = b[0];
+    //            b = b[1..];
+    //            firstIdx++;
+    //        }
+
+    //        return c;
+    //    }
+    //}
+
+
+    /// <summary>
+    /// SortArray using heap sort
+    /// </summary>
+    //public static class Solution
+    //{
+    //    public static int[] SortArray(int[] nums)
+    //    {
+    //        MinHeap heap = new(nums.Length);
+    //        foreach (int num in nums)
+    //        {
+    //            heap.Insert(num);
+    //        }
+
+    //        int index = 0;
+    //        while (!heap.IsEmpty() && index < nums.Length)
+    //        {
+    //            int minVal = heap.ExtractMin();
+    //            nums[index] = minVal;
+    //            index++;
+    //        }
+
+    //        return nums;
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        private int _size;
+    //        private int[] _heap;
+    //        private int _capacity;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heap = new int[_capacity];
+    //        }
+
+    //        public bool IsEmpty() => _size == 0;
+    //        private static int Left(int index) => (index * 2) + 1;
+    //        private static int Right(int index) => (index * 2) + 2;
+    //        private static int Parent(int index) => (index - 1) / 2;
+    //        private static void Swap(ref int l, ref int r)
+    //        {
+    //            int tmp = l;
+    //            l = r;
+    //            r = tmp;
+    //        }
+
+    //        public void Insert(int value)
+    //        {
+    //            if (_size == _capacity)
+    //            {
+    //                _capacity *= 2;
+    //                Array.Resize(ref _heap, _capacity);
+    //            }
+
+    //            int index = _size;
+    //            _heap[index] = value;
+    //            _size++;
+
+    //            while (index != 0 && _heap[index] < _heap[Parent(index)])
+    //            {
+    //                Swap(ref _heap[index], ref _heap[Parent(index)]);
+    //                index = Parent(index);
+    //            }
+    //        }
+
+    //        public int ExtractMin()
+    //        {
+    //            if (_size <= 0) return int.MaxValue;
+
+    //            if (_size == 1)
+    //            {
+    //                _size--;
+    //                return _heap[_size];
+    //            }
+
+    //            int minVal = _heap[0];
+    //            _heap[0] = _heap[_size - 1];
+    //            _size--;
+
+    //            MinHeapify(0);
+
+    //            return minVal;
+    //        }
+
+    //        public void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int root = index;
+
+    //            if (left < _size && _heap[left] < _heap[root])
+    //                root = left;
+    //            if (right < _size && _heap[right] < _heap[root])
+    //                root = right;
+
+    //            if (root != index)
+    //            {
+    //                Swap(ref _heap[root], ref _heap[index]);
+    //                MinHeapify(root);
+    //            }
+    //        }
+    //    }
+    //}
+
+    ///<summary>
+    ///QuickSort explanation of both Partition functions
+    ///</summary>
+    //public static int[] QuickSort(int[] nums, int low, int high)
+    //{
+    //    if (low < high)
+    //    {
+    //        int pivot = HoarePartition(nums, low, high);
+    //        QuickSort(nums, low, pivot - 1); //Exclude pivot as its already in the correct position
+    //        QuickSort(nums, pivot + 1, high);
+    //    }
+
+    //    return nums;
+    //}
+
+    ///// <summary>
+    ///// Hoare Partition Scheme
+    ///// </summary>
+    //private static int HoarePartition(int[] nums, int low, int high)
+    //{
+    //    int pivot = nums[low];
+    //    int i = low, j = high;
+
+    //    while (i < j)
+    //    {
+    //        while (nums[j] > pivot && j > low)
+    //            j--;
+
+    //        while (nums[i] <= pivot && i < high)
+    //            i++;
+
+
+    //        if (i < j)
+    //            (nums[i], nums[j]) = (nums[j], nums[i]);
+    //    }
+
+    //    //swap pivot with the element at j which will put pivot in the center of the nums
+    //    (nums[low], nums[j]) = (nums[j], nums[low]);
+
+    //    //return the partition position
+    //    return j;
+    //}
+
+    ///// <summary>
+    ///// Lomuto Partition Scheme
+    ///// </summary>
+    //private static int LomutoPartition(int[] nums, int low, int high)
+    //{
+    //    int pivot = nums[low];
+    //    int leftWall = low;
+
+    //    [1, 5, 2, 7, 10/*pivot*/, 11, 9, 13]
+    //    [1, 5, 2, 7, 9 , 11/*left_wall*/, 10/*pivot*/, 13]
+
+    //    for (int i = low + 1; i < high; i++)
+    //    {
+    //        if (nums[i] < pivot)
+    //        {
+    //            (nums[i], nums[leftWall]) = (nums[leftWall], nums[i]);
+    //            leftWall++;
+    //        }
+    //    }
+
+    //    int newPivotIdx = Array.IndexOf(nums, pivot);
+    //    (nums[newPivotIdx], nums[leftWall]) = (nums[leftWall], nums[newPivotIdx]);
+    //    [1, 5, 2, 7, 9, 10/*pivot*/, 11/*left_wall*/, 13]
+
+
+    //    return leftWall;
+    //}
+
+
+    ///<summary>
+    ///Counting Sort
+    /// </summary>
+    //public static int[] CountingSort(int[] nums)
+    //{
+    //    Dictionary<int, int> freqMap = new();
+    //    foreach (int key in nums)
+    //    {
+    //        if (freqMap.ContainsKey(key))
+    //            freqMap[key]++;
+    //        else
+    //            freqMap.Add(key, 1);
+    //    }
+
+    //    List<int> sortedKeys = freqMap.Keys.OrderBy(k => k).ToList();
+    //    int currSum = 0;
+    //    foreach (var key in sortedKeys)
+    //    {
+    //        currSum += freqMap[key];
+    //        freqMap[key] = currSum;
+    //    }
+
+
+    //    int[] res = new int[nums.Length];
+    //    for (int i = nums.Length - 1; i >= 0; i--)
+    //    {
+    //        int val = nums[i];
+    //        int pos = freqMap[val] - 1;
+    //        res[pos] = val;
+    //        freqMap[val]--;
+    //    }
+
+    //    return res;
+    //}
+
+    ///<summary>
+    ///RelativeSortArray
+    /// </summary>
+    //public static int[] RelativeSortArray(int[] arr1, int[] arr2)
+    //{
+    //    //Example 1:
+    //    //Input: arr1 = [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19], arr2 = [2, 1, 4, 3, 9, 6]
+    //    //Output: [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]
+
+
+    //    //Iterate over arr2 to create a dictionary that will have the key as the integer value and the value as the index of the integer in arr2.
+    //    //Then, iterate on the arr1 and sort the elements based on the index of the integer in arr2 in a separate list. If the integer is not in arr2, then we put it in another list also
+    //    //Then we sort the list of remaining numbers
+    //    //And add it to the end of the list that we created from arr1.
+    //    //Finally, we return the list as an array.
+
+    //    //Dry run
+    //    //arr1 = [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19]
+    //    //arr2 = [2, 1, 4, 3, 9, 6]
+    //    //idxMap = [2: 0, 1: 1, 4: 2, 3: 3, 9: 4, 6: 5]
+    //    //listFromArr1 = [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]
+
+    //    //Dry run wit another input
+    //    //arr1 = [28, 6, 22, 8, 44, 17]
+    //    //arr2 = [22, 28, 8, 6]
+    //    //idxMap = [22: 0, 28: 1, 8: 2, 6: 3]
+    //    //listFromArr1 = [22, 28, 8, 6]
+    //    //remainingNumbers = [44, 17]
+    //    //sortedRemainingNumbers = [17, 44]
+    //    //res = listFromArr1 + sortedRemainingNumbers = [22, 28, 8, 6, 17, 44]
+
+    //    //Dry run with another input
+    //    //arr1 = [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19 ]
+    //    //arr2 = [2, 1, 4, 3, 9, 6]
+    //    //idxMap = [2: 0, 1: 1, 4: 2, 3: 3, 9: 4, 6: 5]
+    //    //listFromArr1 = [2, 2, 2, 3, 9, 6, 0, 0, 0] This happens because we don't update the index of subsequent elements accordingly if we encounter more than one element for a previous value. We'd need yet another dictionary to act as a frequency map to keep track of the number of times we have encountered a value in arr1 and update the index accordingly.
+
+    //    //Let's use counting sort instead
+
+    //    int maxElement = arr1.Max();
+    //    int[] count = new int[maxElement + 1];
+
+    //    foreach (int i in arr1)
+    //        count[i]++;
+
+    //    List<int> result = new();
+    //    foreach (int i in arr2)//It is ensured that each element in arr2 exists in arr1
+    //    {
+    //        while (count[i] > 0)
+    //        {
+    //            result.Add(i);
+    //            count[i]--;
+    //        }
+    //    }
+
+    //    //So, the remaining values in count are the values that are not in arr2. We need to add them to the end of the result list in sorted order.
+    //    //Also since the count array is already sorted, we can just iterate over it and add the remaining values to the result list.
+    //    for (int i = 0; i < count.Length; i++)
+    //    {
+    //        while (count[i] > 0)
+    //        {
+    //            result.Add(i);
+    //            count[i]--;
+    //        }
+    //    }
+
+    //    return result.ToArray();
+    //}
+
+    ///<summary>
+    ///SortColors
+    ///</summary>
+    //public static int[] SortColors(int[] nums)
+    //{
+    //    //Simple counting sort
+    //    int red = 0, white = 0, blue = 0;
+
+    //    foreach (int i in nums)
+    //    {
+    //        switch (i)
+    //        {
+    //            case 0:
+    //                red++;
+    //                break;
+    //            case 1:
+    //                white++;
+    //                break;
+    //            case 2:
+    //                blue++;
+    //                break;
+    //        }
+    //    }
+
+    //    white += red;
+    //    blue += white;
+
+    //    int redCount = red;
+    //    while (red != 0)
+    //    {
+    //        nums[red - 1] = 0;
+    //        red--;
+    //    }
+
+    //    int whiteCount = white;
+    //    while (white != redCount)
+    //    {
+    //        nums[white - 1] = 1;
+    //        white--;
+    //    }
+
+    //    while (blue != whiteCount)
+    //    {
+    //        nums[blue - 1] = 2;
+    //        blue--;
+    //    }
+
+    //    return nums;
+    //}
+
+    ///<summary>
+    ///FindKthLargest
+    /// </summary>
+    //public static int FindKthLargest(int[] nums, int k)
+    //{
+    //    int[] sorted = QuickSort(nums, 0, nums.Length - 1);
+    //    return sorted[^k];
+    //}
+
+    //public static int[] QuickSort(int[] nums, int left, int right)
+    //{
+    //    if (left < right)
+    //    {
+    //        int pivot = Partition(nums, left, right);
+    //        QuickSort(nums, left, pivot - 1);
+    //        QuickSort(nums, pivot + 1, right);
+    //    }
+
+    //    return nums;
+    //}
+
+    //public static int Partition(int[] nums, int left, int right)
+    //{
+    //    int pivot = nums[left];
+    //    int low = left, high = right;
+
+    //    while (low < high)
+    //    {
+    //        while (high > left && nums[high] > pivot)
+    //            high--;
+    //        while (low < right && nums[low] <= pivot)
+    //            low++;
+
+    //        if (low < high)
+    //            (nums[low], nums[high]) = (nums[high], nums[low]);
+    //    }
+
+    //    (nums[left], nums[high]) = (nums[high], nums[left]);
+
+    //    return high;
+    //}
+
+    ///<summary>
+    ///KClosest
+    /// </summary>
+    //public class Solution
+    //{
+    //    private static int[] _origin = new int[2] { 0, 0 };
+    //    public static int[][] KClosest(int[][] points, int k)
+    //    {
+    //        MinHeap pq = new(points.Length);
+    //        foreach (int[] point in points)
+    //        {
+    //            pq.Insert(point);
+    //        }
+    //        int[][] res = new int[k][];
+
+    //        while (k != 0)
+    //        {
+    //            var closest = pq.ExtractMin();
+    //            res[k - 1] = closest.Point;
+    //            k--;
+    //        }
+
+    //        return res;
+    //        //int[][] sortedPoints = QuickSelect(points, 0, points.Length - 1, k);
+    //        //return sortedPoints.Take(k).ToArray();
+    //    }
+
+    //    public class MinHeapNode
+    //    {
+    //        public double Distance { get; set; }
+    //        public int[] Point { get; set; }
+    //    }
+
+    //    public class MinHeap
+    //    {
+    //        private MinHeapNode[] _heap;
+    //        private int _size;
+    //        private int _capacity;
+
+    //        public MinHeap(int capacity)
+    //        {
+    //            _capacity = capacity;
+    //            _heap = new MinHeapNode[_capacity];
+    //        }
+
+    //        public bool IsEmpty() => _size == 0;
+    //        private int Parent(int index) => (index - 1) / 2;
+    //        private int Left(int index) => (index * 2) + 1;
+    //        private int Right(int index) => (index * 2) + 2;
+    //        private void Swap(int i, int j)
+    //        {
+    //            MinHeapNode temp = _heap[i];
+    //            _heap[i] = _heap[j];
+    //            _heap[j] = temp;
+    //        }
+
+    //        public void Insert(int[] value)
+    //        {
+    //            if (_size == _capacity) return;
+
+    //            int index = _size;
+    //            _heap[index] = new MinHeapNode
+    //            {
+    //                Point = value,
+    //                Distance = DistanceToOrigin(value)
+    //            };
+    //            _size++;
+
+    //            while (index != 0 && _heap[index].Distance < _heap[Parent(index)].Distance)
+    //            {
+    //                Swap(index, Parent(index));
+    //                index = Parent(index);
+    //            }
+    //        }
+
+    //        public MinHeapNode ExtractMin()
+    //        {
+    //            if (_size == 1)
+    //            {
+    //                _size--;
+    //                return _heap[_size];
+    //            }
+
+    //            MinHeapNode min = _heap[0];
+    //            _heap[0] = _heap[_size - 1];
+    //            _size--;
+
+    //            MinHeapify(0);
+    //            return min;
+    //        }
+
+    //        private void MinHeapify(int index)
+    //        {
+    //            int left = Left(index);
+    //            int right = Right(index);
+    //            int smallest = index;
+
+    //            if (left < _size && _heap[left].Distance < _heap[smallest].Distance)
+    //                smallest = left;
+    //            if (right < _size && _heap[right].Distance < _heap[smallest].Distance)
+    //                smallest = right;
+
+    //            if (smallest != index)//we found a new smallest!
+    //            {
+    //                Swap(smallest, index);
+    //                MinHeapify(smallest);
+    //            }
+    //        }
+    //    }
+
+
+    //    //private static int[][] QuickSelect(int[][] points, int left, int right, int k)
+    //    //{
+    //    //    if (left >= right)
+    //    //        return points;
+
+    //    //    int pivot = Partition(points, left, right);
+
+    //    //    if (k == pivot)
+    //    //        return points;
+    //    //    else if (k < pivot)
+    //    //        return QuickSelect(points, left, pivot - 1, k);
+    //    //    else
+    //    //        return QuickSelect(points, pivot + 1, right, k);
+    //    //}
+
+    //    //private static int Partition(int[][] points, int left, int right)
+    //    //{
+    //    //    int[] pivot = points[left];
+    //    //    int low = left, high = right;
+
+    //    //    while (low < high)
+    //    //    {
+    //    //        double pivotDistance = DistanceToOrigin(pivot);
+
+    //    //        while (high > left && DistanceToOrigin(points[high]) > pivotDistance)
+    //    //            high--;
+    //    //        while (low < right && DistanceToOrigin(points[low]) <= pivotDistance)
+    //    //            low++;
+
+    //    //        if (low < high)
+    //    //            (points[low], points[high]) = (points[high], points[low]);
+    //    //    }
+
+    //    //    (points[left], points[high]) = (points[high], points[left]);
+
+    //    //    return high;
+    //    //}
+
+    //    private static double DistanceToOrigin(int[] p1) => Math.Sqrt(Math.Pow((p1[0] - _origin[0]), 2) + Math.Pow((p1[1] - _origin[1]), 2));
+    //}
+    #endregion
+        #region Graph
+        ///<summary>
+        ///DFS
+        /// </summary>
+        //public static void DfsRecursive(List<List<int>> graph, bool[] visited, int node, List<int> result)
         //{
-        //    //Example 1:
-        //    //Input: arr1 = [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19], arr2 = [2, 1, 4, 3, 9, 6]
-        //    //Output: [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]
+        //    visited[node] = true;
+        //    result.Add(node);
 
+        //    foreach (int adj in graph[node])
+        //    {
+        //        if (!visited[adj])
+        //            DfsRecursive(graph, visited, adj, result);
+        //    }
+        //}
 
-        //    //Iterate over arr2 to create a dictionary that will have the key as the integer value and the value as the index of the integer in arr2.
-        //    //Then, iterate on the arr1 and sort the elements based on the index of the integer in arr2 in a separate list. If the integer is not in arr2, then we put it in another list also
-        //    //Then we sort the list of remaining numbers
-        //    //And add it to the end of the list that we created from arr1.
-        //    //Finally, we return the list as an array.
+        //public static List<int> DfsRecursive(List<List<int>> graph)
+        //{
+        //    bool[] visited = new bool[graph.Count];
+        //    List<int> result = new();
+        //    DfsRecursive(graph, visited, 0, result);
+        //    return result;
+        //}
 
-        //    //Dry run
-        //    //arr1 = [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19]
-        //    //arr2 = [2, 1, 4, 3, 9, 6]
-        //    //idxMap = [2: 0, 1: 1, 4: 2, 3: 3, 9: 4, 6: 5]
-        //    //listFromArr1 = [2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]
+        //public static List<int> DfsIterative(List<List<int>> graph, int start)
+        //{
+        //    bool[] visited = new bool[graph.Count];
+        //    List<int> result = new();
 
-        //    //Dry run wit another input
-        //    //arr1 = [28, 6, 22, 8, 44, 17]
-        //    //arr2 = [22, 28, 8, 6]
-        //    //idxMap = [22: 0, 28: 1, 8: 2, 6: 3]
-        //    //listFromArr1 = [22, 28, 8, 6]
-        //    //remainingNumbers = [44, 17]
-        //    //sortedRemainingNumbers = [17, 44]
-        //    //res = listFromArr1 + sortedRemainingNumbers = [22, 28, 8, 6, 17, 44]
+        //    Stack<int> stack = new();
+        //    stack.Push(start);
 
-        //    //Dry run with another input
-        //    //arr1 = [2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19 ]
-        //    //arr2 = [2, 1, 4, 3, 9, 6]
-        //    //idxMap = [2: 0, 1: 1, 4: 2, 3: 3, 9: 4, 6: 5]
-        //    //listFromArr1 = [2, 2, 2, 3, 9, 6, 0, 0, 0] This happens because we don't update the index of subsequent elements accordingly if we encounter more than one element for a previous value. We'd need yet another dictionary to act as a frequency map to keep track of the number of times we have encountered a value in arr1 and update the index accordingly.
+        //    while (stack.Count > 0)
+        //    {
+        //        int root = stack.Pop();
+        //        if (visited[root]) continue;
 
-        //    //Let's use counting sort instead
+        //        result.Add(root);
+        //        visited[root] = true;
 
-        //    int maxElement = arr1.Max();
-        //    int[] count = new int[maxElement + 1];
+        //        for (int i = graph[root].Count - 1; i >= 0; i--)
+        //        {
+        //            int child = graph[root][i];
+        //            if (!visited[child])
+        //                stack.Push(child);
+        //        }
+        //    }
 
-        //    foreach (int i in arr1)
-        //        count[i]++;
+        //    return result;
+        //}
+
+        ///<summary>
+        ///BFS
+        ///</summary>
+        //public static List<int> BFS(List<List<int>> graph)
+        //{
+        //    int n = graph.Count;
+        //    bool[] visited = new bool[n];
+        //    List<int> result = new();
+
+        //    int start = 0;
+        //    Queue<int> queue = new();
+        //    visited[start] = true;
+        //    queue.Enqueue(start);
+
+        //    while (queue.Count > 0)
+        //    {
+        //        int currNode = queue.Dequeue();
+        //        result.Add(currNode);
+
+        //        foreach (int adj in graph[currNode])
+        //        {
+        //            if (!visited[adj])
+        //            {
+        //                visited[adj] = true;
+        //                queue.Enqueue(adj);
+        //            }
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        ///<summary>
+        ///Topological Sort w DFS
+        /// </summary>
+        //public static void FindTopoSort(int i, List<List<int>> graph, bool[] visited, Stack<int> stack)
+        //{
+        //    visited[i] = true;
+
+        //    foreach (int adj in graph[i])
+        //    {
+        //        if (!visited[adj])
+        //            FindTopoSort(adj, graph, visited, stack);
+        //    }
+
+        //    stack.Push(i);
+        //}
+
+        //public static List<int> TopologicalSort(List<List<int>> graph)
+        //{
+        //    int n = graph.Count;
+        //    bool[] visited = new bool[n];
+        //    Stack<int> stack = new();
+
+        //    for (int i = 0; i < n; i++)
+        //    {
+        //        if (!visited[i])
+        //            FindTopoSort(i, graph, visited, stack);
+        //    }
 
         //    List<int> result = new();
-        //    foreach (int i in arr2)//It is ensured that each element in arr2 exists in arr1
+
+        //    while (stack.Count > 0)
         //    {
-        //        while (count[i] > 0)
-        //        {
-        //            result.Add(i);
-        //            count[i]--;
-        //        }
+        //        result.Add(stack.Pop());
         //    }
 
-        //    //So, the remaining values in count are the values that are not in arr2. We need to add them to the end of the result list in sorted order.
-        //    //Also since the count array is already sorted, we can just iterate over it and add the remaining values to the result list.
-        //    for (int i = 0; i < count.Length; i++)
-        //    {
-        //        while (count[i] > 0)
-        //        {
-        //            result.Add(i);
-        //            count[i]--;
-        //        }
-        //    }
-
-        //    return result.ToArray();
+        //    return result;
         //}
 
         ///<summary>
-        ///SortColors
+        ///Topological Sort w BFS
         ///</summary>
-        //public static int[] SortColors(int[] nums)
+        //public static List<int> TopologicalSort(List<List<int>> graph)
         //{
-        //    //Simple counting sort
-        //    int red = 0, white = 0, blue = 0;
+        //    int n = graph.Count;
+        //    int[] inDegree = new int[n];
+        //    List<int> result = new();
+        //    Queue<int> queue = new();
 
-        //    foreach (int i in nums)
+        //    for (int i = 0; i < n; i++)
         //    {
-        //        switch (i)
+        //        foreach (int adj in graph[i])
+        //            inDegree[adj]++;
+        //    }
+
+        //    for (int i = 0; i < n; i++)
+        //        if (inDegree[i] == 0)
+        //            queue.Enqueue(i);
+
+        //    while (queue.Count > 0)
+        //    {
+        //        int zeroDegreeNode = queue.Dequeue();
+        //        result.Add(zeroDegreeNode);
+        //        foreach (int adj in graph[zeroDegreeNode])
         //        {
-        //            case 0:
-        //                red++;
-        //                break;
-        //            case 1:
-        //                white++;
-        //                break;
-        //            case 2:
-        //                blue++;
-        //                break;
+        //            inDegree[adj]--;
+        //            if (inDegree[adj] == 0)
+        //                queue.Enqueue(adj);
         //        }
         //    }
 
-        //    white += red;
-        //    blue += white;
-
-        //    int redCount = red;
-        //    while (red != 0)
-        //    {
-        //        nums[red - 1] = 0;
-        //        red--;
-        //    }
-
-        //    int whiteCount = white;
-        //    while (white != redCount)
-        //    {
-        //        nums[white - 1] = 1;
-        //        white--;
-        //    }
-
-        //    while (blue != whiteCount)
-        //    {
-        //        nums[blue - 1] = 2;
-        //        blue--;
-        //    }
-
-        //    return nums;
+        //    return result;
         //}
 
         ///<summary>
-        ///FindKthLargest
+        ///Shortest Distance w BFS
         /// </summary>
-        //public static int FindKthLargest(int[] nums, int k)
+        //public static void Main(string[] args)
         //{
-        //    int[] sorted = QuickSort(nums, 0, nums.Length - 1);
-        //    return sorted[^k];
-        //}
+        //    // no. of vertices
+        //    int V = 8;
+        //    // Source and Destination vertex
+        //    int S = 2, D = 6;
+        //    // Edge list
+        //    List<List<int>> edges = new List<List<int>>{
+        //        new List<int>{ 0, 1 }, new List<int>{ 1, 2 },
+        //        new List<int>{ 0, 3 }, new List<int>{ 3, 4 },
+        //        new List<int>{ 4, 7 }, new List<int>{ 3, 7 },
+        //        new List<int>{ 6, 7 }, new List<int>{ 4, 5 },
+        //        new List<int>{ 4, 6 }, new List<int>{ 5, 6 }
+        //    };
 
-        //public static int[] QuickSort(int[] nums, int left, int right)
-        //{
-        //    if (left < right)
+        //    // List to store the graph as an adjacency list
+        //    List<List<int>> graph = Enumerable.Range(0, V)
+        //              .Select(_ => new List<int>())
+        //              .ToList();
+
+        //    foreach (List<int> edge in edges)
         //    {
-        //        int pivot = Partition(nums, left, right);
-        //        QuickSort(nums, left, pivot - 1);
-        //        QuickSort(nums, pivot + 1, right);
+        //        graph[edge[0]].Add(edge[1]);
+        //        graph[edge[1]].Add(edge[0]);
         //    }
 
-        //    return nums;
+        //    PrintShortestDistance(graph, S, D, V);
         //}
-
-        //public static int Partition(int[] nums, int left, int right)
+        //public static void PrintShortestDistance(List<List<int>> graph, int S, int D, int V)
         //{
-        //    int pivot = nums[left];
-        //    int low = left, high = right;
+        //    List<int> parent = Enumerable.Repeat(-1, V).ToList();
+        //    List<int> distance = Enumerable.Repeat(int.MaxValue, V).ToList();
 
-        //    while (low < high)
+        //    BFS(graph, S, parent, distance);
+
+        //    if (distance[D] == int.MaxValue)
         //    {
-        //        while (high > left && nums[high] > pivot)
-        //            high--;
-        //        while (low < right && nums[low] <= pivot)
-        //            low++;
-
-        //        if (low < high)
-        //            (nums[low], nums[high]) = (nums[high], nums[low]);
+        //        Console.WriteLine("No path exists");
+        //        return;
         //    }
 
-        //    (nums[left], nums[high]) = (nums[high], nums[left]);
+        //    List<int> path = new();
+        //    int currNode = D;
+        //    path.Add(currNode);
+        //    while (parent[currNode] != -1)
+        //    {
+        //        currNode = parent[currNode];
+        //        path.Add(currNode);
+        //    }
 
-        //    return high;
+        //    for (int i = path.Count - 1; i >= 0; i--)
+        //        Console.Write(path[i] + " ");
+        //}
+
+        //public static void BFS(List<List<int>> graph, int S, List<int> parent, List<int> distance)
+        //{
+        //    Queue<int> queue = new Queue<int>();
+        //    queue.Enqueue(S);
+        //    distance[S] = 0;
+
+        //    while (queue.Count > 0)
+        //    {
+        //        int node = queue.Dequeue();
+        //        foreach (int adj in graph[node])
+        //        {
+        //            if (distance[adj] == int.MaxValue)
+        //            {
+        //                distance[adj] = distance[node] + 1;
+        //                parent[adj] = node;
+        //                queue.Enqueue(adj);
+        //            }
+        //        }
+        //    }
         //}
 
         ///<summary>
-        ///KClosest
+        ///Build Adjacency List
         /// </summary>
-        //public class Solution
+        //public List<List<int>> BuildAdjList(int[] nodes, Tuple<int, int>[] edges)
         //{
-        //    private static int[] _origin = new int[2] { 0, 0 };
-        //    public static int[][] KClosest(int[][] points, int k)
+        //    List<List<int>> graph = new();
+
+        //    foreach (int node in nodes)
+        //        graph[node] = new();
+
+        //    foreach (Tuple<int, int> edge in edges)
         //    {
-        //        MinHeap pq = new(points.Length);
-        //        foreach (int[] point in points)
-        //        {
-        //            pq.Insert(point);
-        //        }
-        //        int[][] res = new int[k][];
-
-        //        while (k != 0)
-        //        {
-        //            var closest = pq.ExtractMin();
-        //            res[k - 1] = closest.Point;
-        //            k--;
-        //        }
-
-        //        return res;
-        //        //int[][] sortedPoints = QuickSelect(points, 0, points.Length - 1, k);
-        //        //return sortedPoints.Take(k).ToArray();
+        //        graph[edge.Item1].Add(edge.Item2);
+        //        graph[edge.Item2].Add(edge.Item1);
         //    }
 
-        //    public class MinHeapNode
+        //    return graph;
+        //}
+
+        ///<summary>
+        ///Build Adjacency Matrix
+        /// </summary>
+        //public int[,] BuildAdjMatrix(int[] nodes, Tuple<int, int>[] edges)
+        //{
+        //    Dictionary<int, int> nodeToIndex = new();
+        //    for (int i = 0; i < nodes.Length; i++)
+        //        nodeToIndex[nodes[i]] = i;
+
+        //    int[,] graph = new int[nodes.Length, nodes.Length];
+
+        //    foreach (Tuple<int, int> edge in edges)
         //    {
-        //        public double Distance { get; set; }
-        //        public int[] Point { get; set; }
+        //        int i = nodeToIndex[edge.Item1];
+        //        int j = nodeToIndex[edge.Item2];
+
+        //        graph[i, j] = 1;
+        //        graph[j, i] = 1; //undirected graph
         //    }
 
-        //    public class MinHeap
-        //    {
-        //        private MinHeapNode[] _heap;
-        //        private int _size;
-        //        private int _capacity;
-
-        //        public MinHeap(int capacity)
-        //        {
-        //            _capacity = capacity;
-        //            _heap = new MinHeapNode[_capacity];
-        //        }
-
-        //        public bool IsEmpty() => _size == 0;
-        //        private int Parent(int index) => (index - 1) / 2;
-        //        private int Left(int index) => (index * 2) + 1;
-        //        private int Right(int index) => (index * 2) + 2;
-        //        private void Swap(int i, int j)
-        //        {
-        //            MinHeapNode temp = _heap[i];
-        //            _heap[i] = _heap[j];
-        //            _heap[j] = temp;
-        //        }
-
-        //        public void Insert(int[] value)
-        //        {
-        //            if (_size == _capacity) return;
-
-        //            int index = _size;
-        //            _heap[index] = new MinHeapNode
-        //            {
-        //                Point = value,
-        //                Distance = DistanceToOrigin(value)
-        //            };
-        //            _size++;
-
-        //            while (index != 0 && _heap[index].Distance < _heap[Parent(index)].Distance)
-        //            {
-        //                Swap(index, Parent(index));
-        //                index = Parent(index);
-        //            }
-        //        }
-
-        //        public MinHeapNode ExtractMin()
-        //        {
-        //            if (_size == 1)
-        //            {
-        //                _size--;
-        //                return _heap[_size];
-        //            }
-
-        //            MinHeapNode min = _heap[0];
-        //            _heap[0] = _heap[_size - 1];
-        //            _size--;
-
-        //            MinHeapify(0);
-        //            return min;
-        //        }
-
-        //        private void MinHeapify(int index)
-        //        {
-        //            int left = Left(index);
-        //            int right = Right(index);
-        //            int smallest = index;
-
-        //            if (left < _size && _heap[left].Distance < _heap[smallest].Distance)
-        //                smallest = left;
-        //            if (right < _size && _heap[right].Distance < _heap[smallest].Distance)
-        //                smallest = right;
-
-        //            if (smallest != index)//we found a new smallest!
-        //            {
-        //                Swap(smallest, index);
-        //                MinHeapify(smallest);
-        //            }
-        //        }
-        //    }
-
-
-        //    //private static int[][] QuickSelect(int[][] points, int left, int right, int k)
-        //    //{
-        //    //    if (left >= right)
-        //    //        return points;
-
-        //    //    int pivot = Partition(points, left, right);
-
-        //    //    if (k == pivot)
-        //    //        return points;
-        //    //    else if (k < pivot)
-        //    //        return QuickSelect(points, left, pivot - 1, k);
-        //    //    else
-        //    //        return QuickSelect(points, pivot + 1, right, k);
-        //    //}
-
-        //    //private static int Partition(int[][] points, int left, int right)
-        //    //{
-        //    //    int[] pivot = points[left];
-        //    //    int low = left, high = right;
-
-        //    //    while (low < high)
-        //    //    {
-        //    //        double pivotDistance = DistanceToOrigin(pivot);
-
-        //    //        while (high > left && DistanceToOrigin(points[high]) > pivotDistance)
-        //    //            high--;
-        //    //        while (low < right && DistanceToOrigin(points[low]) <= pivotDistance)
-        //    //            low++;
-
-        //    //        if (low < high)
-        //    //            (points[low], points[high]) = (points[high], points[low]);
-        //    //    }
-
-        //    //    (points[left], points[high]) = (points[high], points[left]);
-
-        //    //    return high;
-        //    //}
-
-        //    private static double DistanceToOrigin(int[] p1) => Math.Sqrt(Math.Pow((p1[0] - _origin[0]), 2) + Math.Pow((p1[1] - _origin[1]), 2));
+        //    return graph;
         //}
         #endregion
         #endregion

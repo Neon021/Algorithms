@@ -2,70 +2,46 @@
 {
     public class Program
     {
-        public static void Main()
+        public static void Main(string[] args)
         {
         }
-    }
 
-    public static class Solution
-    {
-        public static IList<IList<string>> Partition(string s)
+        public class Solution
         {
-            List<IList<string>> result = new();
-            Backtracking(s, 0, new List<string>(), result);
-            return result;
-        }
-
-        private static void Backtracking(string s, int start, List<string> currPartition, List<IList<string>> result)
-        {
-            if (start == s.Length)
+            public int CountComponents(int n, int[][] edges)
             {
-                result.Add(currPartition);
-                return;
-            }
+                int reult = 0;
+                int[] dsu = new int[n];
+                for (int i = 0; i < n; i++)
+                    dsu[i] = i;//Nodes are 0-indexed no need to add 1.
 
-            for (int end = start; end < s.Length; end++)
-            {
-                if (IsPalindrome(start, end))
-                    currPartition.Add(s[start..end]);
+                foreach (int[] edge in edges)
+                    Union(edge[0], edge[1]);
 
-                Backtracking(s, end + 1, currPartition, result);
-            }
-
-            bool IsPalindrome(int start, int end)
-            {
-                while (start < end && end > start) 
+                for (int i = 0; i < n; i++)
                 {
-                    if (s[start] != s[end]) return false;
-                    start++;
-                    end--;
+                    int unionRoot = FindUnionRoot(i);
+                    //This means that thi node is the root of a component.
+                    //In other word, it didn't get unioned with any other node.
+                    if (i == unionRoot)
+                        reult++;
                 }
 
-                return true;
-            }
-        }
-        public static int MaxConsecutive(int[] nums)
-        {
-            int result = 0;
-            int left = 0;
-            int zeroCount = 0;
-
-            for (int right = 0; right < nums.Length; right++)
-            {
-                if (nums[right] == 0)
-                    zeroCount++;
-
-                while (zeroCount > 1)
+                return reult;
+                int FindUnionRoot(int v)
                 {
-                    if (nums[left] == 0)
-                        zeroCount--;
-                    left++;
+                    if (dsu[v] == v)
+                        return v;
+                    return dsu[v] = FindUnionRoot(dsu[v]);
                 }
-
-                result = Math.Max(result, right - left + zeroCount);
+                void Union(int i, int j)
+                {
+                    int root1 = FindUnionRoot(i);
+                    int root2 = FindUnionRoot(j);
+                    if (root1 != root2)
+                        dsu[root1] = root2;
+                }
             }
-
-            return result;
         }
     }
 }
