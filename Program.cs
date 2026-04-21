@@ -8,38 +8,59 @@
 
         public class Solution
         {
+            //You have a graph of n nodes.You are given an integer n and an array edges where edges[i] = [a, b] indicates that there is an edge between a and b in the graph.
+            //Return the number of connected components in the graph.
             public int CountComponents(int n, int[][] edges)
             {
-                int reult = 0;
-                int[] dsu = new int[n];
-                for (int i = 0; i < n; i++)
-                    dsu[i] = i;//Nodes are 0-indexed no need to add 1.
-
+                DisjointSet dsu = new(n);
+                int components = n; //We assume each node is disconnected
                 foreach (int[] edge in edges)
-                    Union(edge[0], edge[1]);
+                    components = dsu.UnionByRank(edge[0], edge[1], components);
 
-                for (int i = 0; i < n; i++)
+                return components;
+            }
+            public class DisjointSet
+            {
+                private int[] _parent;
+                private int[] _size;
+
+                public DisjointSet(int n)
                 {
-                    int unionRoot = FindUnionRoot(i);
-                    //This means that thi node is the root of a component.
-                    //In other word, it didn't get unioned with any other node.
-                    if (i == unionRoot)
-                        reult++;
+                    _parent = new int[n];
+                    _size = new int[n];
+                    for (int i = 0; i < n; i++)
+                    {
+                        _parent[i] = i;
+                        _size[i] = 1;
+                    }
                 }
 
-                return reult;
-                int FindUnionRoot(int v)
+                public int Find(int v)
                 {
-                    if (dsu[v] == v)
-                        return v;
-                    return dsu[v] = FindUnionRoot(dsu[v]);
+                    if (_parent[v] == v) return v;
+
+                    return _parent[v] = Find(_parent[v]);
                 }
-                void Union(int i, int j)
+
+                public int UnionByRank(int x, int y, int componentCount)
                 {
-                    int root1 = FindUnionRoot(i);
-                    int root2 = FindUnionRoot(j);
-                    if (root1 != root2)
-                        dsu[root1] = root2;
+                    int parentX = Find(x);
+                    int parentY = Find(y);
+
+                    if (parentX == parentY) return componentCount;
+
+                    if (_size[parentX] < _size[parentY])
+                    {
+                        _parent[parentX] = parentY;
+                        _size[parentY] += _size[parentX];
+                    }
+                    else
+                    {
+                        _parent[parentY] = parentX;
+                        _size[parentX] += _size[parentY];
+                    }
+
+                    return componentCount - 1;
                 }
             }
         }
